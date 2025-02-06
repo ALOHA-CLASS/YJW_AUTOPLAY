@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AutoplayApplication<autoplay>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.aloha.autoplay.AutoplayApplication",
+            "projectName": "autoplay",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
