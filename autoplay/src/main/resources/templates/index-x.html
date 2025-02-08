@@ -110,7 +110,7 @@
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 g-3">
             <!-- 카드 -->
             <div class="col">
-              <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+              <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/액션01_담화.jpg" class="thumb w-100 object-fit-cover" alt="액션01_담화">
                 </div>
@@ -133,7 +133,7 @@
         
             <!-- 카드 -->
             <div class="col">
-              <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+              <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/액션02_비정.jpeg" class="thumb w-100 object-fit-cover" alt="액션02_비정">
                 </div>
@@ -154,7 +154,7 @@
         
             <!-- 카드 -->
             <div class="col">
-              <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+              <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/액션03_시간에이전트.jpg" class="thumb w-100 object-fit-cover" alt="드라마03_히키코모루">
                 </div>
@@ -184,7 +184,7 @@
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 g-3">
             <!-- 카드 -->
             <div class="col">
-              <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+              <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/드라마01_동창.png" class="thumb w-100 object-fit-cover" alt="액션01_담화">
                 </div>
@@ -205,7 +205,7 @@
         
             <!-- 카드 -->
             <div class="col">
-              <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+              <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/드라마02_입김.jpeg" class="thumb w-100 object-fit-cover" alt="액션01_담화">
                 </div>
@@ -226,7 +226,7 @@
         
             <!-- 카드 -->
             <div class="col">
-              <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+              <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/드라마03_히키코모루.jpg" class="thumb w-100 object-fit-cover" alt="액션01_담화">
                 </div>
@@ -256,7 +256,7 @@
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 g-3">
             <!-- 카드 -->
             <div class="col">
-              <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+              <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/판타지01_인형.png" class="thumb w-100 object-fit-cover" alt="액션01_담화">
                 </div>
@@ -277,7 +277,7 @@
         
             <!-- 카드 -->
             <div class="col">
-              <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+              <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/판타지02_꽃.png" class="thumb w-100 object-fit-cover" alt="액션01_담화">
                 </div>
@@ -298,7 +298,7 @@
         
             <!-- 카드 -->
             <div class="col">
-              <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+              <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/판타지03_세상이.png" class="thumb w-100 object-fit-cover" alt="액션01_담화">
                 </div>
@@ -328,7 +328,7 @@
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 g-3">
             <!-- 카드 -->
             <div class="col">
-              <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+              <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/로코01_비온뒤차차.jpeg" class="thumb w-100 object-fit-cover" alt="액션01_담화">
                 </div>
@@ -349,7 +349,7 @@
         
             <!-- 카드 -->
             <div class="col">
-              <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+              <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/로코02_거리의 연기자.png" class="thumb w-100 object-fit-cover" alt="액션01_담화">
                 </div>
@@ -370,7 +370,7 @@
         
             <!-- 카드 -->
             <div class="col">
-              <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+              <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/로코03_오늘의파스타.jpg" class="thumb w-100 object-fit-cover" alt="액션01_담화">
                 </div>
@@ -402,19 +402,22 @@
 
   <script>
     $(document).ready(function() {
+      // 카드 호버시 확대
       $('.card').hover(
         function() {
           $(this).css({
-            'transform': 'scale(1.1)',
-            'transition': 'transform 0.3s ease-in-out',
-            'z-index': '10'
+            'transform': 'scale(1.15)',
+            'transition': 'all 0.4s ease-in-out',
+            'z-index': '10',
+            'box-shadow': '0px 10px 25px 0px rgba(200, 200, 200, 0.5), 0px 10px 10px 0px rgba(200, 200, 200, 0.04)'
           });
         },
         function() {
           $(this).css({
             'transform': 'scale(1)',
-            'transition': 'transform 0.3s ease-in-out',
-            'z-index': '1'
+            'transition': 'all 0.4s ease-in-out',
+            'z-index': '1',
+            'box-shadow': '0px 20px 25px -5px rgba(0, 0, 0, 0.5), 0px 10px 10px -5px rgba(0, 0, 0, 0.04)'
           });
         }
       );
