@@ -1,0 +1,38 @@
+
+body {
+    font-family: "Noto Sans KR", serif;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+header {
+    background: rgb(83,45,100);
+    background: linear-gradient(90deg, rgba(83,45,100,1) 0%, rgba(117,60,111,1) 35%, rgba(131,70,79,1) 70%, rgba(101,54,46,1) 100%);
+}
+
+
+.thumb {
+    width: 100%;
+    height: 240px;
+}
+
+.video {
+    width: 100%;
+    height: 240px;
+}
+
+.card-title {
+    font-size: 18px;
+}
+
+.card-text {
+    font-size: 13px;
+    height: 7rem;
+    /* color: #aaa !important; */
+}
+
+html[data-bs-theme="light"] .card-text {
+    /* color: #6c757d !important; */
+}
