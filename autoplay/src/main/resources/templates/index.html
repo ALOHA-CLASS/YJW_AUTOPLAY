@@ -47,7 +47,7 @@
     </symbol>
   </svg>
 
-  <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+  <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle border">
     <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
             id="bd-theme"
             type="button"
@@ -85,9 +85,66 @@
 
 
   <main>
+    <style>
+      .swiper-container {
+        width: 100%;
+        /* height: 100%; */
+      }
+      .swiper-slide img {
+        width: 100%;
+        min-height: 400px;
+        height: 100%;
+        object-fit: cover;
+      }
+      .banner-content {
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 3;
+      }
+    </style>
+    <section class="pb-5 text-center position-relative overflow-hidden" style="max-height: 400px;">
 
-    <section class="py-5 text-center container">
-      <div class="row py-lg-5">
+      <div class="swiper-container z-1">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="/img/slide/slide1.jpg" alt="Slide 1" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide2.jpg" alt="Slide 2" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide3.jpg" alt="Slide 3" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide4.jpg" alt="Slide 4" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide5.jpg" alt="Slide 5" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide6.jpg" alt="Slide 6" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide7.jpg" alt="Slide 7" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide8.jpg" alt="Slide 8" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide9.jpg" alt="Slide 9" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide10.jpg" alt="Slide 10" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide11.jpg" alt="Slide 11" class="w-100" style="top: 0;"></div>
+
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next" style="color: rgba(255,255,255,0.3)"></div>
+        <div class="swiper-button-prev" style="color: rgba(255,255,255,0.3)"></div>
+      </div>
+      <script>
+        var swiper = new Swiper('.swiper-container', {
+          loop: true,
+          grabCursor: true,
+          autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+          },
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      </script>
+      <div class="row py-lg-5 z-3 banner-content">
         <div class="col-lg-6 col-md-8 mx-auto">
           <h1 class="fw-light">Welcome to IFILM</h1>
           <p class="lead text-body-secondary">
