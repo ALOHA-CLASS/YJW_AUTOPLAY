@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{ui/layouts/user_layout}"
+      data-bs-theme="dark">
+      
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IFLIM</title>
+</head>
+
+<body layout:fragment="content">
+  <div class="container-fluid d-flex justify-content-center align-items-center my-5 m-auto row">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+      <img src="/img/IFILM.png" width="200px" alt="">
+    </div>
+    <div class="card col-12 col-xl-4 p-5">
+      <div class="card-body">
+        <h5 class="card-title text-center">로그인</h5>
+        <form action="/login" method="post">
+          <!-- CSRF TOKEN -->
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+          
+          <div class="mb-3">
+            <label for="username" class="form-label">아이디</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="아이디">
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">비밀번호</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+          </div>
+          <div class="mb-3 form-check d-flex justify-content-center">
+            <input type="checkbox" class="form-check-input " id="remember-me" name="remember-me">
+            <label class="form-check" for="remember-me">자동 로그인</label>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-lg btn-primary">로그인</button>
+            <a href="/join" class="btn btn-lg btn-outline-primary">회원가입</a>
+          </div>
+          <div>
+            <div th:if="${param.error}" class="alert alert-danger mt-3 text-center" role="alert">
+              아이디 또는 비밀번호가 일치하지 않습니다.
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

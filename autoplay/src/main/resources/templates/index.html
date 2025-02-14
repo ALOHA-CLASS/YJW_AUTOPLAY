@@ -30,59 +30,6 @@
 
 <body layout:fragment="content">
 
-  <!-- 다크 모드 드랍다운 -->
-  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-    <symbol id="check2" viewBox="0 0 16 16">
-      <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-    </symbol>
-    <symbol id="circle-half" viewBox="0 0 16 16">
-      <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
-    </symbol>
-    <symbol id="moon-stars-fill" viewBox="0 0 16 16">
-      <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
-      <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
-    </symbol>
-    <symbol id="sun-fill" viewBox="0 0 16 16">
-      <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
-    </symbol>
-  </svg>
-
-  <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle border">
-    <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
-            id="bd-theme"
-            type="button"
-            aria-expanded="false"
-            data-bs-toggle="dropdown"
-            aria-label="Toggle theme (auto)">
-      <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#circle-half"></use></svg>
-      <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
-      <li>
-        <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
-          <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#sun-fill"></use></svg>
-          Light
-          <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-        </button>
-      </li>
-      <li>
-        <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
-          <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
-          Dark
-          <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-        </button>
-      </li>
-      <li>
-        <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
-          <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#circle-half"></use></svg>
-          Auto
-          <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-        </button>
-      </li>
-    </ul>
-  </div>
-
-
 
   <main>
     <style>
@@ -146,12 +93,12 @@
       </script>
       <div class="row py-lg-5 z-3 banner-content">
         <div class="col-lg-6 col-md-8 mx-auto">
-          <h1 class="fw-light">Welcome to IFILM</h1>
-          <p class="lead text-body-secondary">
+          <h1 class="fw-light text-white">Welcome to IFILM</h1>
+          <p class="lead text-white">
             Discover the allure of indi flims all in one place
           </p>
           <p>
-            <a href="#" class="btn btn-lg btn-outline-light my-2 btn-theme">Join</a>
+            <a href="/join" class="btn btn-lg btn-outline-light my-2">Join</a>
           </p>
         </div>
       </div>
@@ -170,7 +117,10 @@
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/액션01_담화.jpg" class="thumb w-100 object-fit-cover" alt="액션01_담화">
-                  <video src="/video/담화.mp4" class="video object-fit-cover d-none" controls muted></video>
+                  <video src="/video/담화.mp4" class="video object-fit-cover d-none" controls muted 
+                          onmouseenter="autoPlay( '담화' )"
+                          onmouseleave="closePlay( '담화' )">
+                  </video>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">담화</h5>
@@ -179,7 +129,8 @@
                   </p>
                   <div class="d-flex justify-content-end align-items-center">
                     <div class="btn-group">
-                      <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1104&sca=%EC%95%A1%EC%85%98" target="_blank" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                      <!-- <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1104&sca=%EC%95%A1%EC%85%98" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme"> -->
+                      <a href="javascript:;" onclick= "watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1104&sca=%EC%95%A1%EC%85%98', '담화'  )" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
                         <span class="material-icons">smart_display</span> 
                         Watch
                       </a>
@@ -194,7 +145,10 @@
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/액션02_비정.jpeg" class="thumb w-100 object-fit-cover" alt="액션02_비정">
-                  <video src="/video/비정.mp4" class="video object-fit-cover d-none" controls muted></video>
+                  <video src="/video/비정.mp4" class="video object-fit-cover d-none" controls muted
+                          onmouseenter="autoPlay( '비정' )"
+                          onmouseleave="closePlay( '비정' )">
+                  </video>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">비정</h5>
@@ -202,7 +156,8 @@
                     부패한 형사가 폭력 조직을 이용해 경쟁자를 제거하고 출세하려 하지만, 배신과 음모 속에서 새로운 권력이 떠오른다.
                   </p>
                   <div class="d-flex justify-content-end align-items-center">
-                    <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1669&sca=%EC%95%A1%EC%85%98" target="_blank" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                    <!-- <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1669&sca=%EC%95%A1%EC%85%98" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme"> -->
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1669&sca=%EC%95%A1%EC%85%98', '비정'  )" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
                         <span class="material-icons">smart_display</span> 
                         Watch
                       </a>
@@ -215,8 +170,11 @@
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
-                  <img src="/img/thumb/액션03_시간에이전트.jpg" class="thumb w-100 object-fit-cover" alt="드라마03_히키코모루">
-                  <video src="/video/시간 에이전트.mp4" class="video object-fit-cover d-none" controls muted></video>
+                  <img src="/img/thumb/액션03_시간에이전트.jpg" class="thumb w-100 object-fit-cover" alt="액션03_시간에이전트">
+                  <video src="/video/시간 에이전트.mp4" class="video object-fit-cover d-none" controls muted
+                          onmouseenter="autoPlay( '시간 에이전트' )"
+                          onmouseleave="closePlay( '시간 에이전트' )">
+                  </video>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">시간 에이전트</h5>
@@ -224,7 +182,8 @@
                     범죄를 예방하기 위해 미래에서 온 에이전트. 미래로 다시 돌아가려면 그냥 기다리는 방법 밖에 없다. 혼자 있는것에 익숙해진 에이전트는 어느날 다리에서 뛰어내리려는 소녀와 마주치는데...
                   </p>
                   <div class="d-flex justify-content-end align-items-center">
-                    <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1423&sca=SCI-FI" target="_blank" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                    <!-- <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1423&sca=SCI-FI" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme"> -->
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1423&sca=SCI-FI', '시간 에이전트'  )" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
                         <span class="material-icons">smart_display</span> 
                         Watch
                       </a>
@@ -246,8 +205,11 @@
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
-                  <img src="/img/thumb/드라마01_동창.png" class="thumb w-100 object-fit-cover" alt="액션01_담화">
-                  <video src="/video/동창.mp4" class="video object-fit-cover d-none" controls muted></video>
+                  <img src="/img/thumb/드라마01_동창.png" class="thumb w-100 object-fit-cover" alt="드라마01_동창">
+                  <video src="/video/동창.mp4" class="video object-fit-cover d-none" controls muted
+                        onmouseenter="autoPlay( '동창' )"
+                        onmouseleave="closePlay( '동창' )">
+                </video>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">동창</h5>
@@ -255,7 +217,8 @@
                     30살 카센타 알바생 성훈은 18년 만에 만나는 초등학교 동창회에 나가게 된다. 첫사랑 은주가 나온다는 소식에 들뜬 성훈은 자신의 현재 처한 모습에 실망을 하고 고민을 하게 되는데...
                   </p>
                   <div class="d-flex justify-content-end align-items-center">
-                    <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=3152&sca=%EB%93%9C%EB%9D%BC%EB%A7%88" target="_blank" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                    <!-- <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=3152&sca=%EB%93%9C%EB%9D%BC%EB%A7%88" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme"> -->
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=3152&sca=%EB%93%9C%EB%9D%BC%EB%A7%88', '동창'  )" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
                         <span class="material-icons">smart_display</span> 
                         Watch
                       </a>
@@ -268,8 +231,11 @@
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
-                  <img src="/img/thumb/드라마02_입김.jpeg" class="thumb w-100 object-fit-cover" alt="액션01_담화">
-                  <video src="/video/입김.mp4" class="video object-fit-cover d-none" controls muted></video>
+                  <img src="/img/thumb/드라마02_입김.jpeg" class="thumb w-100 object-fit-cover" alt="드라마02_입김">
+                  <video src="/video/입김.mp4" class="video object-fit-cover d-none" controls muted
+                          onmouseenter="autoPlay( '입김' )"
+                          onmouseleave="closePlay( '입김' )">
+                  </video>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">입김</h5>
@@ -277,7 +243,8 @@
                     무연원의 신입사원 나래, 첫 업무로 찾아간 한결의 집에서 그의 이야기를 듣게 되고 작은 위로가 서로에게 큰 의미가 되어가는데...
                   </p>
                   <div class="d-flex justify-content-end align-items-center">
-                    <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=3124&sca=%EB%93%9C%EB%9D%BC%EB%A7%88" target="_blank" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                    <!-- <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=3124&sca=%EB%93%9C%EB%9D%BC%EB%A7%88" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme"> -->
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=3124&sca=%EB%93%9C%EB%9D%BC%EB%A7%88', '입김'  )" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
                         <span class="material-icons">smart_display</span> 
                         Watch
                       </a>
@@ -290,8 +257,11 @@
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
-                  <img src="/img/thumb/드라마03_히키코모루.jpg" class="thumb w-100 object-fit-cover" alt="액션01_담화">
-                  <video src="/video/히키코모루.mp4" class="video object-fit-cover d-none" controls muted></video>
+                  <img src="/img/thumb/드라마03_히키코모루.jpg" class="thumb w-100 object-fit-cover" alt="드라마03_히키코모루">
+                  <video src="/video/히키코모루.mp4" class="video object-fit-cover d-none" controls muted
+                          onmouseenter="autoPlay( '히키코모루' )"
+                          onmouseleave="closePlay( '히키코모루' )">
+                  </video>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">히키코모루</h5>
@@ -299,7 +269,8 @@
                     그녀의 일상은 규칙적이고 통제된 상태로 진행된다. 그녀는 무언가로 부터 도망치고 방안에 틀어 박혔다. 완벽하고 싶었던 그녀가 도망친 것은 소중했던 관계 그리고 절실 했었던 꿈이다. 하지만 집안으로 스며 들어오는 사소한 자극은 그녀가 도망친 것들을 다시 생각나게 한다.
                   </p>
                   <div class="d-flex justify-content-end align-items-center">
-                    <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1958&sca=%EB%93%9C%EB%9D%BC%EB%A7%88&page=2" target="_blank" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                    <!-- <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1958&sca=%EB%93%9C%EB%9D%BC%EB%A7%88&page=2" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme"> -->
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1958&sca=%EB%93%9C%EB%9D%BC%EB%A7%88&page=2', '히키코모루'  )" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
                         <span class="material-icons">smart_display</span> 
                         Watch
                       </a>
@@ -321,8 +292,11 @@
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
-                  <img src="/img/thumb/판타지01_인형.png" class="thumb w-100 object-fit-cover" alt="액션01_담화">
-                  <video src="/video/인형.mp4" class="video object-fit-cover d-none" controls muted></video>
+                  <img src="/img/thumb/판타지01_인형.png" class="thumb w-100 object-fit-cover" alt="판타지01_인형">
+                  <video src="/video/인형.mp4" class="video object-fit-cover d-none" controls muted
+                          onmouseenter="autoPlay( '인형' )"
+                          onmouseleave="closePlay( '인형' )">
+                  </video>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">인형</h5>
@@ -330,7 +304,8 @@
                     자신을 제외한 모든 사람들의 얼굴이 다 똑같이 생긴 세상 속에서 홀로 소외감을 느끼는 소녀, 자신의 절친한 친구마저 똑같은 얼굴로 변해버리자 극단적인 선택을 한다.
                   </p>
                   <div class="d-flex justify-content-end align-items-center">
-                    <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=213&sca=%ED%8C%90%ED%83%80%EC%A7%80" target="_blank" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                    <!-- <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=213&sca=%ED%8C%90%ED%83%80%EC%A7%80" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme"> -->
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=213&sca=%ED%8C%90%ED%83%80%EC%A7%80', '인형'  )" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
                         <span class="material-icons">smart_display</span> 
                         Watch
                       </a>
@@ -343,8 +318,11 @@
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
-                  <img src="/img/thumb/판타지02_꽃.png" class="thumb w-100 object-fit-cover" alt="액션01_담화">
-                  <video src="/video/꽃.mp4" class="video object-fit-cover d-none" controls muted></video>
+                  <img src="/img/thumb/판타지02_꽃.png" class="thumb w-100 object-fit-cover" alt="판타지02_꽃">
+                  <video src="/video/꽃.mp4" class="video object-fit-cover d-none" controls muted
+                          onmouseenter="autoPlay( '꽃' )"
+                          onmouseleave="closePlay( '꽃' )">
+                  </video>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">애플</h5>
@@ -352,7 +330,8 @@
                     톱스타를 꿈꾸고 있는 한 여자, 텔레비전 속에는 톱스타들이 환호를 받으며 레드카펫을 밟고 있지만 그녀는 자취방에서 컵라면을 먹으며 오디션 결과만 기다리고 있다. 무기력하게 쓰러진 그녀 앞에 갑자기 하늘에서 사과가 떨어진다. 그녀는 사과를 잡기 위해 홀린 듯이 레드카펫 위를 기어가기 시작한다.
                   </p>
                   <div class="d-flex justify-content-end align-items-center">
-                    <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=372&sca=%ED%8C%90%ED%83%80%EC%A7%80" target="_blank" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                    <!-- <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=372&sca=%ED%8C%90%ED%83%80%EC%A7%80" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme"> -->
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=372&sca=%ED%8C%90%ED%83%80%EC%A7%80', '애플'  )" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
                         <span class="material-icons">smart_display</span> 
                         Watch
                       </a>
@@ -365,8 +344,12 @@
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
-                  <img src="/img/thumb/판타지03_세상이.png" class="thumb w-100 object-fit-cover" alt="액션01_담화">
-                  <video src="/video/세상이 망했으면 좋겠다.mp4" class="video object-fit-cover d-none" controls muted></video>
+                  <img src="/img/thumb/판타지03_세상이.png" class="thumb w-100 object-fit-cover" alt="판타지03_세상이">
+                  <video src="/video/세상이 망했으면 좋겠다.mp4" class="video object-fit-cover d-none" controls muted
+                          onmouseenter="autoPlay( '세상이 망했으면 좋겠다' )"
+                          onmouseleave="closePlay( '세상이 망했으면 좋겠다')">
+                  </video>
+
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">세상이 망했으면 좋겠다</h5>
@@ -374,7 +357,8 @@
                     ‘그냥 다 망해버렸으면 좋겠다.’ 라는 말을 입에 달고 사는 균. 그는 사회 부 적응 자, 즉 흔히 말하는 히키모코리 이다. 취업은커녕 사회생활 조차 엄두도 내지 못한다. 밖에 나가는 것을 극도로 꺼려 집에서만 생활하는 균. 부모님이 보내준 생활비로 그럭저럭 생활한다. 그러던 어느 날 균은 바깥세상이 심상치 않게 돌아가고 있음을 느끼는데..
                   </p>
                   <div class="d-flex justify-content-end align-items-center">
-                    <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=503&sca=%ED%8C%90%ED%83%80%EC%A7%80" target="_blank" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                    <!-- <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=503&sca=%ED%8C%90%ED%83%80%EC%A7%80" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme"> -->
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=503&sca=%ED%8C%90%ED%83%80%EC%A7%80', '세상이 망했으면 좋겠다'  )" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
                         <span class="material-icons">smart_display</span> 
                         Watch
                       </a>
@@ -396,8 +380,11 @@
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
-                  <img src="/img/thumb/로코01_비온뒤차차.jpeg" class="thumb w-100 object-fit-cover" alt="액션01_담화">
-                  <video src="/video/비 온 뒤 차차.mp4" class="video object-fit-cover d-none" controls muted></video>
+                  <img src="/img/thumb/로코01_비온뒤차차.jpeg" class="thumb w-100 object-fit-cover" alt="로코01_비온뒤차차">
+                  <video src="/video/비 온 뒤 차차.mp4" class="video object-fit-cover d-none" controls muted
+                          onmouseenter="autoPlay( '비 온 뒤 차차' )"
+                          onmouseleave="closePlay( '비 온 뒤 차차' )">
+                  </video>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">비 온 뒤 차차</h5>
@@ -405,7 +392,8 @@
                     철거 전문 일을 하며 성실하게 살아가는 신우와 디자인 회사의 촉망받는 인재였던 수정, 어느 날 전 직장 선배를 통해 소개팅 기회가 찾아오고 설레는 마음으로 소개팅에 나가게 되는데...
                   </p>
                   <div class="d-flex justify-content-end align-items-center">
-                    <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=2700&sca=%EB%A9%9C%EB%A1%9C%EB%A1%9C%EB%A7%A8%EC%8A%A4" target="_blank" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                    <!-- <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=2700&sca=%EB%A9%9C%EB%A1%9C%EB%A1%9C%EB%A7%A8%EC%8A%A4" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme"> -->
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=2700&sca=%EB%A9%9C%EB%A1%9C%EB%A1%9C%EB%A7%A8%EC%8A%A4', '비 온 뒤 차차'  )" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
                         <span class="material-icons">smart_display</span> 
                         Watch
                       </a>
@@ -418,8 +406,11 @@
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
-                  <img src="/img/thumb/로코02_거리의 연기자.png" class="thumb w-100 object-fit-cover" alt="액션01_담화">
-                  <video src="/video/거리의 연기자.mp4" class="video object-fit-cover d-none" controls muted></video>
+                  <img src="/img/thumb/로코02_거리의 연기자.png" class="thumb w-100 object-fit-cover" alt="로코02_거리의 연기자">
+                  <video src="/video/거리의 연기자.mp4" class="video object-fit-cover d-none" controls muted
+                          onmouseenter="autoPlay( '거리의 연기자' )"
+                          onmouseleave="closePlay( '거리의 연기자' )">  
+                  </video>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">거리의 연기자</h5>
@@ -427,7 +418,8 @@
                     거장 감독의 작품 오디션 연락을 받은 태희. 오랜만의 오디션이라 설레는 기대감으로 오디션에 나서지만 모든 것이 예상 밖이다. 기대했던 감독과의 만남도 없고, 사무실이나 연습실이 아닌 길거리에서 연기를 해보라고 하는 조감독. 이 모든 상황이 당황스러운데...
                   </p>
                   <div class="d-flex justify-content-end align-items-center">
-                    <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1302&sca=%EB%A9%9C%EB%A1%9C%EB%A1%9C%EB%A7%A8%EC%8A%A4" target="_blank" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                    <!-- <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1302&sca=%EB%A9%9C%EB%A1%9C%EB%A1%9C%EB%A7%A8%EC%8A%A4" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme"> -->
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1302&sca=%EB%A9%9C%EB%A1%9C%EB%A1%9C%EB%A7%A8%EC%8A%A4', '거리의 연기자'  )" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
                         <span class="material-icons">smart_display</span> 
                         Watch
                       </a>
@@ -440,8 +432,11 @@
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
-                  <img src="/img/thumb/로코03_오늘의파스타.jpg" class="thumb w-100 object-fit-cover" alt="액션01_담화">
-                  <video src="/video/오늘의 파스타.mp4" class="video object-fit-cover d-none" controls muted></video>
+                  <img src="/img/thumb/로코03_오늘의파스타.jpg" class="thumb w-100 object-fit-cover" alt="로코03_오늘의파스타">
+                  <video src="/video/오늘의 파스타.mp4" class="video object-fit-cover d-none" controls muted
+                          onmouseenter="autoPlay( '오늘의 파스타' )"
+                          onmouseleave="closePlay( '오늘의 파스타' )">
+                  </video>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">오늘의 파스타</h5>
@@ -449,7 +444,8 @@
                     우주는 석현과 연애한지 2년을 기념하기 위해 집에서 파스타를 해준다. 석현의 마음과 우주의 마음 그둘 사이의 거리와 온도 모든게 다르다.
                   </p>
                   <div class="d-flex justify-content-end align-items-center">
-                    <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=904&sca=%EB%A9%9C%EB%A1%9C%EB%A1%9C%EB%A7%A8%EC%8A%A4" target="_blank" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                    <!-- <a href="https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=904&sca=%EB%A9%9C%EB%A1%9C%EB%A1%9C%EB%A7%A8%EC%8A%A4" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme"> -->
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=904&sca=%EB%A9%9C%EB%A1%9C%EB%A1%9C%EB%A7%A8%EC%8A%A4', '오늘의 파스타'  )" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
                         <span class="material-icons">smart_display</span> 
                         Watch
                       </a>
@@ -506,5 +502,127 @@
     });
 
   </script>
+
+  <script th:inline="javascript">
+    // 로그인 여부 확인
+    let isLogin = [[ ${session.SPRING_SECURITY_CONTEXT != null } ]]
+    var username = [[${ session.SPRING_SECURITY_CONTEXT != null ? #authentication.principal.user.username : '' }]] == '' ? '비회원' : [[${ session.SPRING_SECURITY_CONTEXT != null ? #authentication.principal.user.username : '' }]];
+  
+    if( !isLogin ) {
+      alertLogin()
+    }
+
+  </script>
+
+  <!-- 데이터 산출 -->
+  <script>
+
+    /**
+     * 클릭 기록
+     * 
+    */
+    function watch( url, contentName ) {
+      console.log( contentName + '을(를) 시청합니다.' )
+      console.log( url );
+      
+      $ajax({
+        url: '/api/click',
+        type: 'POST',
+        data: {
+          username: username, // Replace with actual username
+          contentName: contentName
+        }
+      }).then(response => {
+        if (response === "FAIL") {
+          console.error('Failed to log click');
+          $toast({
+            title: '클릭 기록 실패',
+            icon: 'error',            // success, error, warning, info, question
+            position: 'bottom-end',     
+            showConfirmButton: false,
+            timer: 3000
+          })  
+        } else {
+          $toast({
+              title: '클릭 기록 성공',
+              icon: 'success',            // success, error, warning, info, question
+              position: 'bottom-end',     
+              showConfirmButton: false,
+              timer: 3000
+          })  
+          window.open(url, '_blank');
+        }
+      });
+    }
+
+
+    var currContentName = '';
+    var stdTime;
+    var endTime;
+    var playTime;
+
+    /**
+     * 오토 플레이 재생
+     * 
+    */
+    function autoPlay( contentName ) {
+      stdTime = new Date().getTime();
+      endTime = null;
+      currContentName = contentName;
+    }
+
+    /**
+     * 오토 플레이 종료
+     * 
+    */
+    function closePlay( contentName ) {
+      if( endTime != null ) {
+        return
+      }
+      endTime = new Date().getTime();
+      playTime = endTime - stdTime;
+
+      console.log( contentName + '을(를) ' + playTime + 'ms 동안 시청했습니다.' )
+
+
+      $ajax({
+        url: '/api/autoplay',
+        type: 'POST',
+        data: {
+          username: username,
+          contentName: contentName,
+          stdTime: stdTime,
+          endTime: endTime,
+          playTime: playTime
+        }
+      }).then(response => {
+        if (response === "FAIL") {
+          console.error('Failed to log autoplay');
+          $toast({
+            title: '오토 플레이 기록 실패',
+            icon: 'error',
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 3000
+          });
+          } else {
+          $toast({
+            title: '오토 플레이 기록 성공',
+            icon: 'success',
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 3000
+          });
+        }
+      });
+    }
+  </script>
+
+  <script>
+   
+  </script>
+
+  
   </body>
 </html>
+

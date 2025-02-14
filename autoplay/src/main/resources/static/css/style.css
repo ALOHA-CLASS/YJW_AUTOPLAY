@@ -39,3 +39,7 @@ header {
 html[data-bs-theme="light"] .card-text {
     /* color: #6c757d !important; */
 }
+
+[type='search']::placeholder {
+    color: white;
+}

@@ -4,6 +4,9 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- [CSRF]-->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 
     <meta property="og:image" content="/img/og-logo.png">
     <meta property="og:image:secure_url" content="/img/og-logo.png">

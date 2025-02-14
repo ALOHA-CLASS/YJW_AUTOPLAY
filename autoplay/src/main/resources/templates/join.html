@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{ui/layouts/user_layout}"
+      data-bs-theme="dark">
+      
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IFLIM</title>
+</head>
+
+<body layout:fragment="content">
+  <div class="container-fluid d-flex justify-content-center align-items-center my-5 m-auto row">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+      <img src="/img/IFILM.png" width="200px" alt="">
+    </div>
+    <div class="card col-12 col-xl-4 p-5">
+      <div class="card-body">
+        <h5 class="card-title text-center">회원가입</h5>
+        <form id="form" action="/join" method="post" onsubmit="return checkSubmit(event)">
+          <!-- CSRF TOKEN -->
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" id="username" name="username" placeholder="아이디" aria-describedby="username-addon">
+            <button type="button" class="input-group-text" id="username-addon" onclick="checkId()">
+              중복확인
+            </button>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">비밀번호</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호" required>
+          </div>
+          <div class="mb-3">
+            <label for="passwordCheck" class="form-label">비밀번호 확인</label>
+            <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="비밀번호 확인" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">성별</label>
+            <div class="d-flex justify-content-around align-items-center">
+              <div>
+                <div class="border py-2 ps-4 pe-5 rounded-3 d-flex align-items-center gap-4 cursor-pointer"
+                     onclick="document.getElementById('male').click();">
+                  <input type="radio" id="male" name="gender" value="남자" class="form-check-input">
+                  <label for="male" class="form-check-label cursor-pointer">남자</label>
+                </div>
+              </div>
+              <div class="position-relative">
+                <div class="border py-2 ps-4 pe-5 rounded-3 d-flex align-items-center gap-4 cursor-pointer"
+                     onclick="document.getElementById('female').click();">
+                  <input type="radio" id="female" name="gender" value="여자" class="form-check-input">
+                  <label for="female" class="form-check-label">여자</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-5">
+            <label for="birth" class="form-label">생년월일</label>
+            <input type="text" class="form-control" id="birth" name="birth" placeholder="생년월일 ( 양식 : 19990415, 8자리)" required>
+          </div>
+          <button type="submit" class="btn btn-lg btn-primary w-100">회원가입</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 💍 CRSF TOKEN
+    const csrfToken = "[[${_csrf.token}]]"
+    /*
+        아이디 중복 확인
+    */
+    async function checkId() {
+        const username = document.getElementById("username").value;
+
+        // null 또는 undefined
+        if (!username) {
+            // alert("아이디를 입력해주세요");
+            $toast({
+              title: '아이디를 입력해주세요.',
+              icon: 'warning',            // success, error, warning, info, question
+              position: 'top-end',     
+              showConfirmButton: false,
+              timer: 3000
+            })  
+            return;
+        }
+
+        try {
+            // 아이디 중복 확인
+            // fetch( URL, 정보 )
+            // - 정보 : method, headers (헤더)
+            const response = await fetch(`/check/${username}`, {
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            });
+
+            if (response.ok) {
+                const result = await response.text();
+                if (result === 'true') {
+                    // alert('사용 가능한 아이디입니다.');
+                    $toast({
+                      title: '사용 가능한 아이디입니다.',
+                      icon: 'success',            // success, error, warning, info, question
+                      position: 'top-end',     
+                      showConfirmButton: false,
+                      timer: 3000
+                    })  
+                    return true;
+                } else {
+                    // alert('중복된 아이디입니다.');
+                    $toast({
+                      title: '중복된 아이디입니다.',
+                      icon: 'error',            // success, error, warning, info, question
+                      position: 'top-end',     
+                      showConfirmButton: false,
+                      timer: 3000
+                    }) 
+                }
+                return false;
+            } else {
+                // alert('아이디 중복 확인 중 오류가 발생했습니다.');
+                $toast({
+                  title: '아이디 중복 확인 중 오류가 발생했습니다.',
+                  icon: 'warning',            // success, error, warning, info, question
+                  position: 'top-end',     
+                  showConfirmButton: false,
+                  timer: 3000
+                })
+                return false;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            // alert('아이디 중복 확인 중 오류가 발생했습니다.');
+            $toast({
+              title: '아이디 중복 확인 중 오류가 발생했습니다.',
+              icon: 'warning',            // success, error, warning, info, question
+              position: 'top-end',     
+              showConfirmButton: false,
+              timer: 3000
+            })
+            return false;
+        }
+    }
+
+
+    /*
+        제출 확인
+        - 아이디 중복 체크
+    */
+    async function checkSubmit(event) {
+        event.preventDefault();                         // 폼 제출 방지
+        
+        // 아이디 중복 체크
+        const isIdAvailable = await checkId();
+        if (!isIdAvailable) {
+            return;
+        }
+
+        document.getElementById("form").submit();   
+        return true;
+
+    }
+
+  </script>
+</body>
+</html>
