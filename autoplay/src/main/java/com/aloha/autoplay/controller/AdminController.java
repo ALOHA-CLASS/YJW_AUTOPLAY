@@ -21,6 +21,25 @@ public class AdminController {
         log.info("/admin");
         return "admin/index";
     }
+
+
+    @GetMapping("/autoplay")
+    public String autoplay() {
+        log.info("/admin/autoplay");
+        return "admin/autoplay";
+    }
+
+    @GetMapping("/click")
+    public String click() {
+        log.info("/admin/click");
+        return "admin/click";
+    }
+
+    @GetMapping("/usetime")
+    public String usetime() {
+        log.info("/admin/usetime");
+        return "admin/usetime";
+    }
     
     
 }
