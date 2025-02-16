@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class ClickServiceImpl extends ServiceImpl<ClickMapper, Click> implements ClickService  {
 
-    @Autowired private ClickMapper ClickMapper;
+    @Autowired private ClickMapper clickMapper;
 
     @Override
     public List<Click> getList() {
@@ -29,7 +29,7 @@ public class ClickServiceImpl extends ServiceImpl<ClickMapper, Click> implements
     @Override
     public PageInfo<Click> getPageList(int page, int pageSize) {
         PageHelper.startPage(page, pageSize);
-        List<Click> list = ClickMapper.selectList(null);
+        List<Click> list = clickMapper.selectList(null);
         PageInfo<Click> pageInfo = new PageInfo<Click>(list);
         log.info("pageInfo: {}", pageInfo);
         return pageInfo;
@@ -82,6 +82,18 @@ public class ClickServiceImpl extends ServiceImpl<ClickMapper, Click> implements
         QueryWrapper<Click> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", id);
         return this.remove(queryWrapper);
+    }
+
+    @Override
+    public long count() {
+        return clickMapper.selectCount(null);
+    }
+
+    @Override
+    public long todayCount() {
+        QueryWrapper<Click> queryWrapper = new QueryWrapper<>();
+        queryWrapper.apply("DATE_FORMAT(`CREATED_AT`, '%y%m%d') = DATE_FORMAT(NOW(), '%y%m%d')");
+        return this.count(queryWrapper);
     }
     
 }

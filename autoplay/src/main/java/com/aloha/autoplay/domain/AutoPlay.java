@@ -30,6 +30,11 @@ public class AutoPlay {
   private Long playTime;              // 시청시간( ms, 밀리초 )
   private Date createdAt;             // 생성일
   private Date updatedAt;             // 수정일
+
+  // 누적 오토플레이 시간
+  private Long total;
+  // today 오토플레이 시간
+  private Long today;
   
   public AutoPlay() {
       this.id = UUID.randomUUID().toString();         // UUID로 ID 생성

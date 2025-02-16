@@ -1,5 +1,9 @@
 package com.aloha.autoplay.service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aloha.autoplay.domain.UserAuth;
 import com.aloha.autoplay.domain.Users;
 import com.aloha.autoplay.mapper.UserMapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -19,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements UserService {
 
     @Autowired
     private UserMapper userMapper;
@@ -84,15 +92,121 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int update(Users user) throws Exception {
-        int result = userMapper.update(user);
+    public int insertAuth(UserAuth userAuth) throws Exception {
+        int result = userMapper.insertAuth(userAuth);
         return result;
     }
 
     @Override
-    public int insertAuth(UserAuth userAuth) throws Exception {
-        int result = userMapper.insertAuth(userAuth);
+    public long todayCount() {
+        QueryWrapper<Users> query = new QueryWrapper<>();
+
+        // 오늘 날짜
+        query.apply("DATE_FORMAT(`CREATED_AT`, '%y%m%d') = DATE_FORMAT(NOW(), '%y%m%d')")
+        .and(
+            wrapper -> wrapper.isNotNull(true, "gender")
+                         .or().isNotNull(true, "birth")
+        )
+        ;
+        long result = this.count(query);
         return result;
+    }
+
+    @Override
+    public List<Users> getList() {
+        return this.list();
+    }
+
+    @Override
+    public PageInfo<Users> getPageList(int page, int pageSize) {
+        PageHelper.startPage(page, pageSize);
+        List<Users> list = this.list();
+        PageInfo<Users> pageInfo = new PageInfo<Users>(list);
+        log.info("pageInfo: {}", pageInfo);
+        return pageInfo;
+    }
+
+    @Override
+    public Users get(Long no) {
+        QueryWrapper<Users> queryWrapper = new QueryWrapper<Users>();
+        queryWrapper.eq("no", no);
+        return this.getOne(queryWrapper);
+    }
+
+    @Override
+    public Users getById(String id) {
+        QueryWrapper<Users> queryWrapper = new QueryWrapper<Users>();
+        queryWrapper.eq("id", id);
+        return this.getOne(queryWrapper);
+    }
+
+    @Override
+    public boolean create(Users entity) {
+        return this.save(entity);
+    }
+
+    @Override
+    public boolean update(Users user) {
+        QueryWrapper<Users> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("no", user.getNo());
+        return this.update(user, queryWrapper);
+    }
+
+    @Override
+    public boolean updateById(Users entity) {
+        QueryWrapper<Users> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", entity.getId());
+        return this.update(entity, queryWrapper);
+    }
+
+    @Override
+    public boolean delete(Long no) {
+        QueryWrapper<Users> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("no", no);
+        return this.remove(queryWrapper);
+    }
+
+    @Override
+    public boolean deleteById(String id) {
+        QueryWrapper<Users> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", id);
+        return this.remove(queryWrapper);
+    }
+
+    @Override
+    public long count() {
+        QueryWrapper<Users> queryWrapper = new QueryWrapper<>();
+        queryWrapper.isNotNull(true, "gender").or().isNotNull(true, "birth");
+        return userMapper.selectCount(queryWrapper);
+    }
+
+    @Override
+    public Map<String, Long> genderCount() throws Exception {
+        QueryWrapper<Users> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("gender", "COUNT(*) as count").groupBy("gender").having("gender IS NOT NULL");
+
+        List<Map<String, Object>> results = userMapper.selectMaps(queryWrapper);
+        return results.stream().collect(Collectors.toMap(
+            result -> (String) result.get("gender"),
+            result -> (Long) result.get("count")
+        ));
+    }
+
+    @Override
+    public Map<String, Long> ageCount() throws Exception {
+        QueryWrapper<Users> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("FLOOR(DATEDIFF(CURDATE(), birth) / 365.25 / 10) * 10 AS age, COUNT(*) AS count")
+                    .groupBy("age")
+                    .having("age IS NOT NULL")
+                    .orderByAsc("age")
+                    ;
+
+        List<Map<String, Object>> results = userMapper.selectMaps(queryWrapper);
+        log.info("results: {}", results);
+        return results.stream().collect(Collectors.toMap(
+            result -> (String) result.get("age").toString(),
+            result -> (Long) result.get("count")
+        ));
     }
     
 }

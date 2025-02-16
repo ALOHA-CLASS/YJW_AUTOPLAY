@@ -83,5 +83,16 @@ public class SampleServiceImpl extends ServiceImpl<SampleMapper, Sample> impleme
         queryWrapper.eq("id", id);
         return this.remove(queryWrapper);
     }
+
+    @Override
+    public long count() {
+        return sampleMapper.selectCount(null);
+    }
+
+    @Override
+    public long todayCount() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'todayCount'");
+    }
     
 }

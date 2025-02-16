@@ -1,6 +1,7 @@
 package com.aloha.autoplay.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class AutoPlayServiceImpl extends ServiceImpl<AutoPlayMapper, AutoPlay> implements AutoPlayService  {
 
-    @Autowired private AutoPlayMapper AutoPlayMapper;
+    @Autowired private AutoPlayMapper autoPlayMapper;
 
     @Override
     public List<AutoPlay> getList() {
@@ -29,7 +30,7 @@ public class AutoPlayServiceImpl extends ServiceImpl<AutoPlayMapper, AutoPlay> i
     @Override
     public PageInfo<AutoPlay> getPageList(int page, int pageSize) {
         PageHelper.startPage(page, pageSize);
-        List<AutoPlay> list = AutoPlayMapper.selectList(null);
+        List<AutoPlay> list = autoPlayMapper.selectList(null);
         PageInfo<AutoPlay> pageInfo = new PageInfo<AutoPlay>(list);
         log.info("pageInfo: {}", pageInfo);
         return pageInfo;
@@ -82,6 +83,77 @@ public class AutoPlayServiceImpl extends ServiceImpl<AutoPlayMapper, AutoPlay> i
         QueryWrapper<AutoPlay> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", id);
         return this.remove(queryWrapper);
+    }
+
+    @Override
+    public long count() {
+        return autoPlayMapper.selectCount(null);
+    }
+
+    @Override
+    public long todayCount() {
+        QueryWrapper<AutoPlay> queryWrapper = new QueryWrapper<>();
+        queryWrapper.apply("DATE_FORMAT(`created_at`, '%Y%m%d') = DATE_FORMAT(NOW(), '%Y%m%d')");
+        return this.count(queryWrapper);
+    }
+
+    @Override
+    public String total() {
+        QueryWrapper<AutoPlay> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("SUM(play_time) as total");
+        AutoPlay autoPlay = autoPlayMapper.selectOne(queryWrapper);
+        if( autoPlay == null ) {
+            return "00:00:00";
+        }
+        Long totalPlayTime = autoPlay.getTotal();
+        totalPlayTime = totalPlayTime == null ? 0 : totalPlayTime;
+
+        long hours = totalPlayTime / 3600000;
+        long minutes = (totalPlayTime % 3600000) / 60000;
+        long seconds = ((totalPlayTime % 3600000) % 60000) / 1000;
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    @Override
+    public String today() {
+        QueryWrapper<AutoPlay> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("SUM(play_time) as today");
+        queryWrapper.apply("DATE_FORMAT(`created_at`, '%Y%m%d') = DATE_FORMAT(NOW(), '%Y%m%d')");
+        AutoPlay autoPlay = autoPlayMapper.selectOne(queryWrapper);
+        if( autoPlay == null ) {
+            return "00:00:00";
+        }
+        Long todayPlayTime = autoPlay.getTotal();
+        todayPlayTime = todayPlayTime == null ? 0 : todayPlayTime;
+
+        long hours = todayPlayTime / 3600000;
+        long minutes = (todayPlayTime % 3600000) / 60000;
+        long seconds = ((todayPlayTime % 3600000) % 60000) / 1000;
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    /**
+     * 단위별 오토플레이
+     * - 5분, 10분, 15분, 20분, 25분, 30분이상
+     * - play_time을 5분 단위로 그룹핑하여 count
+     */
+    @Override
+    public Map<String, Long> groupCount() throws Exception {
+        
+    }
+
+    @Override
+    public Map<String, Long> genderAvg() throws Exception {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'genderAvg'");
+    }
+
+    @Override
+    public Map<String, Long> ageAvg() throws Exception {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'ageAvg'");
     }
     
 }

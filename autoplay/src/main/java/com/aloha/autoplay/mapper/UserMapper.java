@@ -4,9 +4,10 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.aloha.autoplay.domain.UserAuth;
 import com.aloha.autoplay.domain.Users;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<Users> {
 
     // 회원 조회
     public Users select(String id) throws Exception;

@@ -21,4 +21,7 @@ public interface BaseService<T> {
     boolean updateById(T entity);                       // id(PK) 수정
     boolean delete(Long no);                            // no(PK) 삭제
     boolean deleteById(String id);                      // id(PK) 삭제
+
+    long count();                                        // 전체 건수
+    long todayCount();                                   // 오늘 건수
 }

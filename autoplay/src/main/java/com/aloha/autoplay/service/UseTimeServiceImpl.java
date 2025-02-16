@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class UseTimeServiceImpl extends ServiceImpl<UseTimeMapper, UseTime> implements UseTimeService  {
 
-    @Autowired private UseTimeMapper UseTimeMapper;
+    @Autowired private UseTimeMapper useTimeMapper;
 
     @Override
     public List<UseTime> getList() {
@@ -29,7 +29,7 @@ public class UseTimeServiceImpl extends ServiceImpl<UseTimeMapper, UseTime> impl
     @Override
     public PageInfo<UseTime> getPageList(int page, int pageSize) {
         PageHelper.startPage(page, pageSize);
-        List<UseTime> list = UseTimeMapper.selectList(null);
+        List<UseTime> list = useTimeMapper.selectList(null);
         PageInfo<UseTime> pageInfo = new PageInfo<UseTime>(list);
         log.info("pageInfo: {}", pageInfo);
         return pageInfo;
@@ -82,6 +82,18 @@ public class UseTimeServiceImpl extends ServiceImpl<UseTimeMapper, UseTime> impl
         QueryWrapper<UseTime> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", id);
         return this.remove(queryWrapper);
+    }
+
+    @Override
+    public long count() {
+        return useTimeMapper.selectCount(null);
+    }
+
+    @Override
+    public long todayCount() {
+        QueryWrapper<UseTime> queryWrapper = new QueryWrapper<>();
+        queryWrapper.apply("DATE_FORMAT(`created_at`, '%y%m%d') = DATE_FORMAT(NOW(), '%y%m%d')");
+        return this.count(queryWrapper);
     }
     
 }
