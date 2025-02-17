@@ -72,8 +72,14 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         // 세션에 username 저장
         request.getSession().setAttribute("username", user.getUsername());
 
+        // 리다이렉트 처리
+        boolean autoplay = request.getParameter("autoplay") != null && Boolean.parseBoolean(request.getParameter("autoplay"));
+        if (autoplay) {
+            getRedirectStrategy().sendRedirect(request, response, "/");
+        } else {
+            getRedirectStrategy().sendRedirect(request, response, "/auto-x");
+        }
 
-        
         super.onAuthenticationSuccess(request, response, authentication);
     }
 

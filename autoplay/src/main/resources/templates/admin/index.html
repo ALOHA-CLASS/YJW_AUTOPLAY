@@ -10,7 +10,7 @@
   <title>IFLIM</title>
 </head>
 
-<body layout:fragment="content" class="bg-light bg-gradient">
+<body layout:fragment="content" class="bg-gradient">
 
   <div class="container-xl">
 			    
@@ -73,10 +73,15 @@
       <div class="col-6 col-lg-3">
         <div class="app-card app-card-stat shadow-sm h-100">
           <div class="app-card-body p-3 p-lg-4">
-            <h4 class="stats-type mb-1">총 클릭수</h4>
+            <h4 class="stats-type mb-1">총 클릭수 (%)</h4>
             <div class="stats-figure">
-              <div class="d-flex justify-content-end align-items-center">
-                <th:block th:text="${#numbers.formatInteger(clickTotal, 0, 'COMMA')}"></th:block>
+              <div class="d-flex justify-content-end align-items-center gap-1">
+                <span>
+                  <th:block th:text="${#numbers.formatInteger(clickTotal, 0, 'COMMA')}"></th:block>
+                </span>
+                <span>
+                  <th:block th:text="| (${clickRate }%) |"></th:block>
+                </span>
               </div>
             </div>
             <div class="stats-meta text-success">
@@ -128,7 +133,9 @@
             <h4 class="stats-type mb-1">누적 잔류시간</h4>
             <div class="stats-figure">
               <div class="d-flex justify-content-end align-items-center">
-                <span>100:23:22</span>
+                <span>
+                  <th:block th:text="${totalStayTime}"></th:block>
+                </span>
               </div>
             </div>
             <div class="stats-meta text-success">
@@ -137,8 +144,9 @@
                   <span>today</span>
                   <span class="material-icons">trending_up</span> 
                 </div>
-                <span>10:22</span>
-              </div>
+                <span>
+                  <th:block th:text="${todayStayTime}"></th:block>
+                </span>
             </div>
           </div><!--//app-card-body-->
           <a class="app-card-link-mask" href="#"></a>
@@ -154,7 +162,7 @@
             <div class="app-card-header p-3">
               <div class="row justify-content-between align-items-center">
                 <div class="col-auto">
-                      <h4 class="app-card-title">참여자 성별</h4>
+                      <h4 class="app-card-title">참여자 성별 (:명)</h4>
                 </div><!--//col-->
                 <div class="col-auto">
                   <div class="card-header-action">
@@ -164,6 +172,7 @@
               </div><!--//row-->
             </div><!--//app-card-header-->
             <div class="app-card-body p-3 p-lg-4">
+              <!-- [차트] ======================================================== -->
               <div>
                 <canvas id="chart-usercount-gender"></canvas>
               </div>
@@ -177,6 +186,7 @@
                 Chart.register(ChartDataLabels);
                 chart('chart-usercount-gender', 'bar', '남여별 참여자 수', genderList, genderData, (value) => value + '명');
               </script>
+              <!-- [차트] ======================================================== -->
             </div><!--//app-card-body-->
           </div><!--//app-card-->
         </div><!--//col-->
@@ -187,7 +197,7 @@
             <div class="app-card-header p-3">
               <div class="row justify-content-between align-items-center">
                 <div class="col-auto">
-                      <h4 class="app-card-title">참여자 나이</h4>
+                      <h4 class="app-card-title">참여자 나이 (:명)</h4>
                 </div><!--//col-->
                 <div class="col-auto">
                   <div class="card-header-action">
@@ -197,19 +207,23 @@
               </div><!--//row-->
             </div><!--//app-card-header-->
             <div class="app-card-body p-3 p-lg-4">
+              <!-- [차트] ======================================================== -->
               <div>
                 <canvas id="chart-usercount-age"></canvas>
               </div>
-              
               <script th:inline="javascript">
                 var ageCount = [[ ${ageCount} ]]
-                var ageList = Object.keys(ageCount).map(age => age + '대');
+                var ageList = Object.keys(ageCount).map(age => {
+                  if( age == '0' ) return '1~9';
+                  return age + '대'
+                });
                 var ageData = Object.values(ageCount);
               </script>
               <script>
                 Chart.register(ChartDataLabels);
                 chart('chart-usercount-age', 'bar', '연령별 참여자 수', ageList, ageData, (value) => value + '명');
               </script>
+              <!-- [차트] ======================================================== -->
           
             </div><!--//app-card-body-->
           </div><!--//app-card-->
@@ -221,7 +235,7 @@
             <div class="app-card-header p-3">
               <div class="row justify-content-between align-items-center">
                 <div class="col-auto">
-                      <h4 class="app-card-title">단위별 오토플레이</h4>
+                      <h4 class="app-card-title">단위별 오토플레이 (:ms)</h4>
                 </div><!--//col-->
                 <div class="col-auto">
                   <div class="card-header-action">
@@ -231,25 +245,22 @@
               </div><!--//row-->
             </div><!--//app-card-header-->
             <div class="app-card-body p-3 p-lg-4">
-            <!-- <div class="mb-3 d-flex">   
-                <select class="form-select form-select-sm ms-auto d-inline-flex w-auto">
-                  <option value="1" selected="">This week</option>
-                  <option value="2">Today</option>
-                  <option value="3">This Month</option>
-                  <option value="3">This Year</option>
-              </select>
-            </div> -->
-              <div class="chart-container">
-                <div class="chartjs-size-monitor">
-                  <div class="chartjs-size-monitor-expand">
-                    <div class=""></div>
-                  </div>
-                  <div class="chartjs-size-monitor-shrink">
-                    <div class=""></div>
-                  </div>
-                </div>
-                <canvas id="canvas-barchart" class="chartjs-render-monitor"></canvas>
+              <!-- [차트] ======================================================== -->
+              <div>
+                <canvas id="chart-group-count"></canvas>
               </div>
+              
+              <script th:inline="javascript">
+                var groupCount = [[ ${groupCount} ]]
+                var groupList = Object.keys(groupCount).sort();
+                var groupData = groupList.map(key => groupCount[key]);
+                groupList = groupList.map(item => item.substring(1));
+              </script>
+              <script>
+                Chart.register(ChartDataLabels);
+                chart('chart-group-count', 'bar', '단위별 오토플레이', groupList, groupData, (value) => value + '명');
+              </script>
+              <!-- [차트] ======================================================== -->
             </div><!--//app-card-body-->
           </div><!--//app-card-->
         </div><!--//col-->
@@ -260,7 +271,7 @@
             <div class="app-card-header p-3">
               <div class="row justify-content-between align-items-center">
                 <div class="col-auto">
-                      <h4 class="app-card-title">단위별 잔류시간</h4>
+                      <h4 class="app-card-title">단위별 잔류시간 (:ms)</h4>
                 </div><!--//col-->
                 <div class="col-auto">
                   <div class="card-header-action">
@@ -270,25 +281,23 @@
               </div><!--//row-->
             </div><!--//app-card-header-->
             <div class="app-card-body p-3 p-lg-4">
-            <!-- <div class="mb-3 d-flex">   
-                <select class="form-select form-select-sm ms-auto d-inline-flex w-auto">
-                  <option value="1" selected="">This week</option>
-                  <option value="2">Today</option>
-                  <option value="3">This Month</option>
-                  <option value="3">This Year</option>
-              </select>
-            </div> -->
-              <div class="chart-container">
-                <div class="chartjs-size-monitor">
-                  <div class="chartjs-size-monitor-expand">
-                    <div class=""></div>
-                  </div>
-                  <div class="chartjs-size-monitor-shrink">
-                    <div class=""></div>
-                  </div>
-                </div>
-                <canvas id="canvas-barchart" class="chartjs-render-monitor"></canvas>
+              <!-- [차트] ======================================================== -->
+              <div>
+                <canvas id="chart-stay-group-count"></canvas>
               </div>
+              
+              <script th:inline="javascript">
+                var groupStayTime = [[ ${groupStayTime} ]]
+                var stayGroupList = Object.keys(groupStayTime).sort();
+                var stayGroupData = stayGroupList.map(key => groupStayTime[key]);
+                stayGroupList = stayGroupList.map(item => item.substring(1));
+              </script>
+              <script>
+                Chart.register(ChartDataLabels);
+                chart('chart-stay-group-count', 'bar', '단위별 잔류시간', stayGroupList, stayGroupData, (value) => value + '명');
+              </script>
+              <!-- [차트] ======================================================== -->
+            
             </div><!--//app-card-body-->
           </div><!--//app-card-->
         </div><!--//col-->

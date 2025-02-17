@@ -1,5 +1,7 @@
 // 차트 그리기
-function chart(id, type, label, labelList, dataList, formatter) {
+function chart(id, type, label, labelList, dataList, formatter, 
+                option={'anchor':'end', 'align':'top', 'offset':-30, 'fontSize':14}
+              ) {
   ctx = document.getElementById(id).getContext('2d');
   new Chart(ctx, {
     type: type,
@@ -12,6 +14,11 @@ function chart(id, type, label, labelList, dataList, formatter) {
       }]
     },
     options: {
+      // responsive: false,
+      // maintainAspectRatio: false,
+      width: '100%',
+      // height: 400,
+      
       scales: {
         y: {
           beginAtZero: true,
@@ -23,15 +30,15 @@ function chart(id, type, label, labelList, dataList, formatter) {
       plugins: {
         datalabels: {
           color: 'black',
-          anchor: 'end',
-          align: 'top',
-          offset: 10,
+          anchor: option.anchor,
+          align: option.align,
+          offset: option.offset,
           font: {
             weight: 'normal',
-            size: 14
+            size: option.fontSize
           },
           formatter: (value, ctx) => {
-            return formatter(value); 
+            return formatter(value, ctx); 
           },
         }
       }

@@ -1,6 +1,9 @@
 package com.aloha.autoplay.service;
 
+import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -92,8 +95,71 @@ public class UseTimeServiceImpl extends ServiceImpl<UseTimeMapper, UseTime> impl
     @Override
     public long todayCount() {
         QueryWrapper<UseTime> queryWrapper = new QueryWrapper<>();
-        queryWrapper.apply("DATE_FORMAT(`created_at`, '%y%m%d') = DATE_FORMAT(NOW(), '%y%m%d')");
+        queryWrapper.apply("DATE_FORMAT(`created_at`, '%Y%m%d') = DATE_FORMAT(NOW(), '%Y%m%d')");
         return this.count(queryWrapper);
     }
-    
+
+    @Override
+    public String total() {
+        QueryWrapper<UseTime> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("SUM(use_time) as total");
+        UseTime useTime = useTimeMapper.selectOne(queryWrapper);
+        if (useTime == null) {
+            return "00:00:00";
+        }
+        Long totalUseTime = useTime.getTotal();
+        totalUseTime = totalUseTime == null ? 0 : totalUseTime;
+
+        long hours = totalUseTime / 3600000;
+        long minutes = (totalUseTime % 3600000) / 60000;
+        long seconds = ((totalUseTime % 3600000) % 60000) / 1000;
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    @Override
+    public String today() {
+        QueryWrapper<UseTime> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("SUM(use_time) as today");
+        queryWrapper.apply("DATE_FORMAT(`created_at`, '%Y%m%d') = DATE_FORMAT(NOW(), '%Y%m%d')");
+        UseTime useTime = useTimeMapper.selectOne(queryWrapper);
+        if (useTime == null) {
+            return "00:00:00";
+        }
+        Long todayUseTime = useTime.getToday();
+        todayUseTime = todayUseTime == null ? 0 : todayUseTime;
+
+        long hours = todayUseTime / 3600000;
+        long minutes = (todayUseTime % 3600000) / 60000;
+        long seconds = ((todayUseTime % 3600000) % 60000) / 1000;
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    @Override
+    public Map<String, Long> groupCount() throws Exception {
+        List<Map<String, Object>> results = useTimeMapper.groupCount();
+        return results.stream().collect(Collectors.toMap(
+            result -> (String) result.get("use_time_range"),
+            result -> (Long) result.get("count")
+        ));
+    }
+
+    @Override
+    public Map<String, Long> genderAvg() throws Exception {
+        List<Map<String, Object>> results = useTimeMapper.genderAvg();
+        return results.stream().collect(Collectors.toMap(
+            result -> (String) result.get("gender"),
+            result -> ((BigInteger) result.get("avg_use_time")).longValue()
+        ));
+    }
+
+    @Override
+    public Map<String, Long> ageAvg() throws Exception {
+        List<Map<String, Object>> results = useTimeMapper.ageAvg();
+        return results.stream().collect(Collectors.toMap(
+            result -> result.get("age").toString(),
+            result -> ((BigInteger) result.get("avg_use_time")).longValue()
+        ));
+    }
 }

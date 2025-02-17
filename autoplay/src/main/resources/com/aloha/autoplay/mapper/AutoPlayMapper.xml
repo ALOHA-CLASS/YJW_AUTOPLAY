@@ -6,17 +6,17 @@
 <mapper namespace="com.aloha.autoplay.mapper.AutoPlayMapper">
 
     <!-- 단위별 오토플레이 -->
-    <select id="groupCount" resultType="java.util.Map">
+    <select id="groupCount" resultType="map">
         SELECT 
             <![CDATA[
                 CASE 
-                        WHEN total_play_time < (1 * 1000 * 60) THEN '0~1 분'
-                        WHEN total_play_time < (3 * 1000 * 60) THEN '1~3 분'
-                        WHEN total_play_time < (5 * 1000 * 60) THEN '3~5 분'
-                        WHEN total_play_time < (10 * 1000 * 60) THEN '5~10 분'
-                        WHEN total_play_time < (15 * 1000 * 60) THEN '10~15 분'
-                        WHEN total_play_time < (20 * 1000 * 60) THEN '15~20 분'
-                        ELSE '20분~'
+                        WHEN total_play_time < (1 * 1000 * 60) THEN 'a0~1 분'
+                        WHEN total_play_time < (3 * 1000 * 60) THEN 'b1~3 분'
+                        WHEN total_play_time < (5 * 1000 * 60) THEN 'c3~5 분'
+                        WHEN total_play_time < (10 * 1000 * 60) THEN 'd5~10 분'
+                        WHEN total_play_time < (15 * 1000 * 60) THEN 'e10~15 분'
+                        WHEN total_play_time < (20 * 1000 * 60) THEN 'f15~20 분'
+                        ELSE 'g20분~'
                 END AS play_time_range,
                 COUNT(*) AS count
             ]]>
@@ -29,6 +29,47 @@
         ) user_play_time
         GROUP BY play_time_range
         ORDER BY play_time_range
+    </select>
+
+    <!-- [평균] 남녀별 오토플레이 -->
+    <select id="genderAvg" resultType="map">
+        SELECT gender
+            ,CAST(AVG(total_play_time) AS UNSIGNED) AS avg_play_time
+        FROM (
+            SELECT 
+                    u.gender,
+                    user_play_time.total_play_time
+            FROM
+            (
+                    SELECT 
+                        username, 
+                        SUM(play_time) as total_play_time
+                    FROM autoplay
+                    GROUP BY username
+            )  user_play_time LEFT JOIN users u ON u.username = user_play_time.username
+        ) a
+        GROUP BY gender HAVING gender IS NOT NULL
+    </select>
+
+    <!-- [평균] 연령별 오토플레이 -->
+    <select id="ageAvg" resultType="map" >
+        SELECT age
+            ,CAST(AVG(total_play_time) AS UNSIGNED) AS avg_play_time
+        FROM (
+            SELECT 
+                    FLOOR(DATEDIFF(CURDATE(), u.birth) / 365.25 / 10) * 10 AS age,
+                    user_play_time.total_play_time
+            FROM
+            (
+                    SELECT 
+                        username, 
+                        SUM(play_time) as total_play_time
+                    FROM autoplay
+                    GROUP BY username
+            )  user_play_time LEFT JOIN users u ON u.username = user_play_time.username
+        ) a
+        GROUP BY age HAVING age IS NOT NULL
+        ORDER BY age
     </select>
 
 </mapper>

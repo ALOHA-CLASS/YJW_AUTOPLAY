@@ -117,7 +117,7 @@ async function $toast(obj = {}) {
 /**
  * 로그인 필요 알림창 - 회원가입, 로그인
  */
-function alertLogin() {
+function alertLogin(autoplay=true) {
 
     Swal.fire({
         title: "로그인 필요",
@@ -133,7 +133,7 @@ function alertLogin() {
         if (result.isConfirmed) {
           location.href = "/join";
         } else if (result.isDenied) {
-          location.href = "/login";
+          location.href = `/login?autoplay=${autoplay}`;
         }
     });
 

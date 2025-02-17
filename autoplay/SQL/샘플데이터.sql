@@ -1,5 +1,5 @@
--- Active: 1737895063812@@127.0.0.1@3306@autoplay
--- Active: 1732873618524@@ckitsir.cvykeuqaa8lg.ap-northeast-2.rds.amazonaws.com@3306@ckauto
+-- Active: 1731904938494@@203.245.44.15@3306@ifilm
+-- Active: 1731384027892@@127.0.0.1@3306@autoplay
 
 TRUNCATE TABLE users;
 INSERT INTO `users` (`NO`, `ID`, `USERNAME`, `PASSWORD`, `GENDER`, `BIRTH`, `ENABLED`)

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aloha.autoplay.domain.Users;
@@ -32,6 +33,17 @@ public class MainController {
     @GetMapping({"", "/"})
     public String home() {
         return "index";
+    }
+
+
+    @GetMapping("/auto")
+    public String auto() {
+        return "index";
+    }
+
+    @GetMapping("/auto-x")
+    public String autoX() {
+        return "index-x";
     }
 
 
@@ -71,8 +83,10 @@ public class MainController {
         if( result > 0 ) {
             // 암호화 전 비밀번호 다시 세팅
             // 회원가입 시, 비밀번호 암호화하기 때문에, 
-            user.setPassword(plainPassword);
-            loginResult = userService.login(user, request);
+
+            // ⚡바로로그인 보류
+            // user.setPassword(plainPassword);
+            // loginResult = userService.login(user, request);
         }
         if (loginResult) {
             return "redirect:/";        // 메인화면으로 이동
@@ -114,11 +128,18 @@ public class MainController {
      */
     @GetMapping("/login")
     public String login(@CookieValue(value="remember-id", required = false) Cookie cookie
+                       ,@RequestParam(value="autoplay", required = false) Boolean autoplay
                        ,Model model ) {
         // @CookieValue(value="쿠키이름", required = 필수여부)
         // - required=true (default)  : 쿠키를 필수로 가져와서 없으면 에러
         // - required=false           : 쿠키 필수 ❌ ➡ 쿠키가 없으면 null, 에러❌
         log.info(":::::::::: 로그인 페이지 ::::::::::");
+
+        if( autoplay != null && autoplay ) {
+            model.addAttribute("autoplay", true);
+        } else {
+            model.addAttribute("autoplay", false);
+        }
 
         String username = "";
         boolean rememberId = false;

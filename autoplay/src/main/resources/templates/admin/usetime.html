@@ -10,7 +10,7 @@
   <title>IFLIM</title>
 </head>
 
-<body layout:fragment="content" class="bg-light bg-gradient">
+<body layout:fragment="content" class="bg-gradient">
 
   <div class="container-xl">
 			    
@@ -51,7 +51,9 @@
             <h4 class="stats-type mb-1">누적 잔류 시간</h4>
             <div class="stats-figure">
               <div class="d-flex justify-content-end align-items-center">
-                <span>25:22:12</span>
+                <span>
+                  <th:block th:text="${totalStayTime}"></th:block>
+                </span>
               </div>
             </div>
             <div class="stats-meta text-success">
@@ -60,7 +62,9 @@
                   <span>today</span>
                   <span class="material-icons">trending_up</span> 
                 </div>
-                <span>50:11</span>
+                <span>
+                  <th:block th:text="${todayStayTime}"></th:block>
+                </span>
               </div>
             </div>
           </div><!--//app-card-body-->
@@ -71,13 +75,13 @@
       
     </div><!--//row-->
     <div class="row g-4 mb-4">
-        <!-- 참여자 성별 -->
+        <!-- 단위별 잔류시간 -->
         <div class="col-12 col-lg-6">
           <div class="app-card app-card-chart h-100 shadow-sm">
             <div class="app-card-header p-3">
               <div class="row justify-content-between align-items-center">
                 <div class="col-auto">
-                      <h4 class="app-card-title">단위별 잔류 시간</h4>
+                  <h4 class="app-card-title">단위별 잔류시간 (:ms)</h4>
                 </div><!--//col-->
                 <div class="col-auto">
                   <div class="card-header-action">
@@ -87,62 +91,150 @@
               </div><!--//row-->
             </div><!--//app-card-header-->
             <div class="app-card-body p-3 p-lg-4">
-              <!-- <div class="mb-3 d-flex">   
-                  <select class="form-select form-select-sm ms-auto d-inline-flex w-auto">
-                  <option value="1" selected="">This week</option>
-                  <option value="2">Today</option>
-                  <option value="3">This Month</option>
-                  <option value="3">This Year</option>
-              </select>
-              </div> -->
-              <div class="chart-container">
-                <div class="chartjs-size-monitor">
-                  <div class="chartjs-size-monitor-expand">
-                    <div class=""></div>
-                  </div>
-                  <div class="chartjs-size-monitor-shrink">
-                    <div class=""></div>
-                  </div>
-                </div>
-                <canvas id="canvas-barchart" class="chartjs-render-monitor"></canvas>
+              <!-- [차트] ======================================================== -->
+              <div>
+                <canvas id="chart-stay-group-count"></canvas>
               </div>
+              
+              <script th:inline="javascript">
+                var groupStayTime = [[ ${groupStayTime} ]]
+                var stayGroupList = Object.keys(groupStayTime).sort();
+                var stayGroupData = stayGroupList.map(key => groupStayTime[key]);
+                stayGroupList = stayGroupList.map(item => item.substring(1));
+              </script>
+              <script>
+                Chart.register(ChartDataLabels);
+                chart('chart-stay-group-count', 'bar', '단위별 잔류시간', stayGroupList, stayGroupData, (value) => value + '명');
+              </script>
+              <!-- [차트] ======================================================== -->
+              
             </div><!--//app-card-body-->
           </div><!--//app-card-->
         </div><!--//col-->
 
-        <!-- 평균 잔류 시간 -->
+        <!--  -->
         <div class="col-12 col-lg-6">
-          <div class="app-card app-card-chart h-100 shadow-sm">
-            <div class="app-card-header p-3">
-              <div class="row justify-content-between align-items-center">
-                <div class="col-auto">
-                      <h4 class="app-card-title">평균 잔류 시간</h4>
-                </div><!--//col-->
-                <div class="col-auto">
-                  <div class="card-header-action">
-                    
-                  </div><!--//card-header-actions-->
-                </div><!--//col-->
-              </div><!--//row-->
-            </div><!--//app-card-header-->
-            <div class="app-card-body p-3 p-lg-4">
-              <div class="chart-container">
-                <div class="chartjs-size-monitor">
-                  <div class="chartjs-size-monitor-expand">
-                    <div class=""></div>
-                  </div>
-                  <div class="chartjs-size-monitor-shrink">
-                    <div class=""></div>
-                  </div>
-                </div>
-                <canvas id="canvas-barchart" class="chartjs-render-monitor"></canvas>
-              </div>
-            </div><!--//app-card-body-->
-          </div><!--//app-card-->
+          
         </div><!--//col-->
 
         
     </div><!--//row-->
+
+    <div class="row g-4 mb-4">
+      <!-- 남녀 평균별 오토플레이 시간 -->
+      <div class="col-12 col-lg-6">
+        <div class="app-card app-card-chart h-100 shadow-sm">
+          <div class="app-card-header p-3">
+            <div class="row justify-content-between align-items-center">
+              <div class="col-auto">
+                    <h4 class="app-card-title">남녀별 연령별 평균 잔류시간 (:ms)</h4>
+              </div><!--//col-->
+              <div class="col-auto">
+                <div class="card-header-action">
+                  
+                </div><!--//card-header-actions-->
+              </div><!--//col-->
+            </div><!--//row-->
+          </div><!--//app-card-header-->
+          <div class="app-card-body p-3 p-lg-4">
+            <!-- [차트] ======================================================== -->
+            <div>
+              <canvas id="chart-gender-avg"></canvas>
+            </div>
+            
+            <script th:inline="javascript">
+              var genderAvg = [[ ${genderAvg} ]]
+              var genderList = Object.keys(genderAvg).reverse();
+              var genderData = Object.values(genderAvg).reverse();
+            </script>
+            <script>
+              Chart.register(ChartDataLabels);
+              chart('chart-gender-avg', 'pie', '', genderList, genderData, (value, ctx) => {
+                let hours = Math.floor(value / 3600000);
+                let minutes = Math.floor((value % 3600000) / 60000);
+                let seconds = Math.floor((value % 60000) / 1000);
+                let pad = (num) => String(num).padStart(2, '0');
+                hours = pad(hours);
+                minutes = pad(minutes);
+                seconds = pad(seconds);
+                let total = ctx.dataset.data.reduce((sum, val) => sum + val, 0);
+                let percentage = ((value / total) * 100).toFixed(1) + "%";
+                return `${hours}:${minutes}:${seconds}\n  (${percentage})\n   (${ctx.dataIndex == 0 ? '남자' : '여자'}) `;
+              }, {
+                anchor: 'center',
+                align: 'center',
+                offset: 0,
+                fontSize: 14
+              });
+
+              document.getElementById('chart-gender-avg').style.cssText = `
+                width: 100%;
+                max-height: 300px;
+                display: block;
+                text-align: center;
+                box-sizing: border-box;
+                object-fit: contain;
+              `;
+            </script>
+            <!-- [차트] ======================================================== -->
+          </div><!--//app-card-body-->
+        </div><!--//app-card-->
+      </div><!--//col-->
+
+      <!-- 연령별 평균 잔류시간 -->
+      <div class="col-12 col-lg-6">
+        <div class="app-card app-card-chart h-100 shadow-sm">
+          <div class="app-card-header p-3">
+            <div class="row justify-content-between align-items-center">
+              <div class="col-auto">
+                    <h4 class="app-card-title">연령별 평균 잔류시간 (:ms)</h4>
+              </div><!--//col-->
+              <div class="col-auto">
+                <div class="card-header-action">
+                  
+                </div><!--//card-header-actions-->
+              </div><!--//col-->
+            </div><!--//row-->
+          </div><!--//app-card-header-->
+          <div class="app-card-body p-3 p-lg-4">
+            <!-- [차트] ======================================================== -->
+            <div>
+              <canvas id="chart-age-avg"></canvas>
+            </div>
+            
+            <script th:inline="javascript">
+              var ageAvg = [[ ${ageAvg} ]]
+              var ageList = Object.keys(ageAvg);
+              var ageData = Object.values(ageAvg);
+            </script>
+            <script>
+              Chart.register(ChartDataLabels);
+              chart('chart-age-avg', 'bar', '연령별 평균 잔류 시간', ageList, ageData, (value, ctx) => {
+                let hours = Math.floor(value / 3600000);
+                let minutes = Math.floor((value % 3600000) / 60000);
+                let seconds = Math.floor((value % 60000) / 1000);
+                let pad = (num) => String(num).padStart(2, '0');
+                hours = pad(hours);
+                minutes = pad(minutes);
+                seconds = pad(seconds);
+                let total = ctx.dataset.data.reduce((sum, val) => sum + val, 0);
+                let percentage = ((value / total) * 100).toFixed(1) + "%";
+                return `${hours}:${minutes}:${seconds}\n  (${percentage})`;
+              }, {
+                anchor: 'center',
+                align: 'center',
+                offset: 0,
+                fontSize: 12
+              });
+            </script>
+            <!-- [차트] ======================================================== -->
+            
+          </div><!--//app-card-body-->
+        </div><!--//app-card-->
+      </div><!--//col-->
+
+      
+  </div><!--//row-->
 
     <div class="row g-4 mb-4">
       <div class="col-12 col-lg-4">

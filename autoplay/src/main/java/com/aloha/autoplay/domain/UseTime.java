@@ -30,6 +30,11 @@ public class UseTime {
   private Long useTime;                // 잔류시간 (ms, 밀리초)
   private Date createdAt;             // 생성일
   private Date updatedAt;             // 수정일
+
+  // 누적 잔류시간
+  private Long total;
+  // today 잔류시간
+  private Long today;
   
   
   public UseTime() {

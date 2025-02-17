@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aloha.autoplay.mapper.ClickMapper">
+
+    <!-- 클릭률 -->
+    <select id="clickRate" resultType="java.lang.Double">
+        SELECT ROUND(
+            (
+                SELECT SUM(total_click) AS total_click
+                FROM (
+                    SELECT 
+                            CASE 
+                                WHEN user_click.total_click > 12 THEN 12 
+                                ELSE user_click.total_click 
+                            END AS total_click 
+                    FROM
+                    (
+                            SELECT 
+                                username, 
+                                COUNT(*) as total_click
+                            FROM click
+                            GROUP BY username
+                    )  user_click LEFT JOIN users u ON u.username = user_click.username
+                ) a
+            )
+        / (( SELECT COUNT(*) FROM users ) * 12) * 100, 2) 
+            as `click_rate`
+        FROM dual
+    </select>
+
+    <!-- 남여별 클릭수 -->
+    <select id="genderCount" resultType="map">
+        SELECT gender
+            ,CAST(SUM(total_click) AS UNSIGNED) AS count
+        FROM (
+            SELECT 
+                    u.gender,
+                    user_click.total_click
+            FROM
+            (
+                    SELECT 
+                        username, 
+                        COUNT(*) as total_click
+                    FROM click
+                    GROUP BY username
+            )  user_click LEFT JOIN users u ON u.username = user_click.username
+        ) a
+        GROUP BY gender HAVING gender IS NOT NULL
+    </select>
+
+    <!-- 연령별 클릭수 -->
+    <select id="ageCount" resultType="map">
+        SELECT age
+            ,CAST(SUM(total_click) AS UNSIGNED) AS count
+        FROM (
+            SELECT 
+                    FLOOR(DATEDIFF(CURDATE(), u.birth) / 365.25 / 10) * 10 AS age,
+                    user_click.total_click
+            FROM
+            (
+                    SELECT 
+                        username, 
+                        COUNT(*) as total_click
+                    FROM click
+                    GROUP BY username
+            )  user_click LEFT JOIN users u ON u.username = user_click.username
+        ) a
+        GROUP BY age HAVING age IS NOT NULL
+        ORDER BY age
+    </select>
+
+
+    <!-- 남여별 평균 클릭률 -->
+    <select id="genderAvg" resultType="map">
+        SELECT gender
+            ,
+            ROUND( 
+                CAST(SUM(total_click) AS UNSIGNED)  
+                        / 
+                ( SELECT COUNT(*) * 12 FROM users WHERE gender = a.gender ) * 100   
+                , 2)
+            AS avg_click
+        FROM (
+            SELECT 
+                    u.gender,
+                    CASE 
+                        WHEN user_click.total_click > 12 THEN 12 
+                        ELSE user_click.total_click 
+                    END AS total_click 
+            FROM
+            (
+                    SELECT 
+                        username, 
+                        COUNT(*) as total_click
+                    FROM click
+                    GROUP BY username
+            )  user_click LEFT JOIN users u ON u.username = user_click.username
+        ) a
+        GROUP BY gender HAVING gender IS NOT NULL
+    </select>
+
+
+
+    <!-- 연령별 평균 클릭률 -->
+    <select id="ageAvg" resultType="map">
+        SELECT age
+            ,
+            ROUND(
+                CAST(SUM(total_click) AS UNSIGNED) 
+                        / 
+                ( SELECT COUNT(*) * 12 FROM users WHERE FLOOR(DATEDIFF(CURDATE(), birth) / 365.25 / 10) * 10 = a.age ) * 100   
+                , 2
+            ) AS avg_click
+
+        FROM (
+            SELECT 
+                    FLOOR(DATEDIFF(CURDATE(), u.birth) / 365.25 / 10) * 10 AS age,
+                    CASE 
+                        WHEN user_click.total_click > 12 THEN 12 
+                        ELSE user_click.total_click 
+                    END AS total_click 
+            FROM
+            (
+                    SELECT 
+                        username, 
+                        COUNT(*) as total_click
+                    FROM click
+                    GROUP BY username
+            )  user_click LEFT JOIN users u ON u.username = user_click.username
+        ) a
+        GROUP BY age HAVING age IS NOT NULL
+        ORDER BY age
+    </select>
+
+
+    
+
+</mapper>

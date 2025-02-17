@@ -1,7 +1,9 @@
 package com.aloha.autoplay.service;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -124,7 +126,7 @@ public class AutoPlayServiceImpl extends ServiceImpl<AutoPlayMapper, AutoPlay> i
         if( autoPlay == null ) {
             return "00:00:00";
         }
-        Long todayPlayTime = autoPlay.getTotal();
+        Long todayPlayTime = autoPlay.getToday();
         todayPlayTime = todayPlayTime == null ? 0 : todayPlayTime;
 
         long hours = todayPlayTime / 3600000;
@@ -141,19 +143,30 @@ public class AutoPlayServiceImpl extends ServiceImpl<AutoPlayMapper, AutoPlay> i
      */
     @Override
     public Map<String, Long> groupCount() throws Exception {
+        List<Map<String, Object>> results = autoPlayMapper.groupCount();
+        return results.stream().collect(Collectors.toMap(
+            result -> (String) result.get("play_time_range"),
+            result -> (Long) result.get("count")
+        ));
         
     }
 
     @Override
     public Map<String, Long> genderAvg() throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'genderAvg'");
+        List<Map<String, Object>> results = autoPlayMapper.genderAvg();
+        return results.stream().collect(Collectors.toMap(
+            result -> (String) result.get("gender"),
+            result -> ((BigInteger) result.get("avg_play_time")).longValue()
+        ));
     }
 
     @Override
     public Map<String, Long> ageAvg() throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ageAvg'");
+        List<Map<String, Object>> results = autoPlayMapper.ageAvg();
+        return results.stream().collect(Collectors.toMap(
+            result -> result.get("age").toString(),
+            result -> ((BigInteger) result.get("avg_play_time")).longValue()
+        ));
     }
     
 }

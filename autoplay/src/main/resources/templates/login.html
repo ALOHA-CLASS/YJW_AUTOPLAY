@@ -21,6 +21,8 @@
         <form action="/login" method="post">
           <!-- CSRF TOKEN -->
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+          <!-- 오토플레이 -->
+          <input type="hidden" name="autoplay" th:value="${autoplay}">
           
           <div class="mb-3">
             <label for="username" class="form-label">아이디</label>

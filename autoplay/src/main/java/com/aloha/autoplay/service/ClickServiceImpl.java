@@ -1,12 +1,17 @@
 package com.aloha.autoplay.service;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aloha.autoplay.domain.Click;
+import com.aloha.autoplay.mapper.AutoPlayMapper;
 import com.aloha.autoplay.mapper.ClickMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -20,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ClickServiceImpl extends ServiceImpl<ClickMapper, Click> implements ClickService  {
 
     @Autowired private ClickMapper clickMapper;
+    @Autowired private AutoPlayMapper autoPlayMapper;
 
     @Override
     public List<Click> getList() {
@@ -95,5 +101,46 @@ public class ClickServiceImpl extends ServiceImpl<ClickMapper, Click> implements
         queryWrapper.apply("DATE_FORMAT(`CREATED_AT`, '%y%m%d') = DATE_FORMAT(NOW(), '%y%m%d')");
         return this.count(queryWrapper);
     }
-    
+
+    @Override
+    public Double clickRate() {
+        Double clickRate = clickMapper.clickRate();
+        return clickRate != null ? clickRate : 0.0;
+    }
+
+    @Override
+    public Map<String, Long> genderCount() throws Exception {
+        List<Map<String, Object>> results = clickMapper.genderCount();
+        return results.stream().collect(Collectors.toMap(
+            result -> (String) result.get("gender"),
+            result -> ((BigInteger) result.get("count")).longValue()
+        ));
+    }
+
+    @Override
+    public Map<String, Long> ageCount() throws Exception {
+        List<Map<String, Object>> results = clickMapper.ageCount();
+        return results.stream().collect(Collectors.toMap(
+            result -> result.get("age").toString(),
+            result -> ((BigInteger) result.get("count")).longValue()
+        ));
+    }
+
+    @Override
+    public Map<String, Double> genderAvg() throws Exception {
+        List<Map<String, Object>> results = clickMapper.genderAvg();
+        return results.stream().collect(Collectors.toMap(
+            result -> (String) result.get("gender"),
+            result -> ((BigDecimal) result.get("avg_click")).doubleValue()
+        ));
+    }
+
+    @Override
+    public Map<String, Double> ageAvg() throws Exception {
+        List<Map<String, Object>> results = clickMapper.ageAvg();
+        return results.stream().collect(Collectors.toMap(
+            result -> result.get("age").toString(),
+            result -> ((BigDecimal) result.get("avg_click")).doubleValue()
+        ));
+    }
 }
