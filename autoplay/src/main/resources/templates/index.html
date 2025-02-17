@@ -25,6 +25,8 @@
       color: white !important;
       background-color: black !important;
     }
+
+
   </style>
 </head>
 
@@ -117,10 +119,13 @@
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/액션01_담화.jpg" class="thumb w-100 object-fit-cover" alt="액션01_담화">
-                  <video src="/video/담화.mp4" class="video object-fit-cover d-none" controls muted  preload="auto"
+                  <!-- <video src="/video/담화.mp4" class="video object-fit-cover d-none" controls muted  preload="auto"
                           onmouseenter="autoPlay( '담화' )"
                           onmouseleave="closePlay( '담화' )">
-                  </video>
+                  </video> -->
+                  <div id="player-1" class="video object-fit-cover d-none"
+                          onmouseenter="autoPlay( '담화', 0 )"
+                          onmouseleave="closePlay( '담화', 0 )"></div>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">담화</h5>
@@ -145,10 +150,13 @@
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/액션02_비정.jpeg" class="thumb w-100 object-fit-cover" alt="액션02_비정">
-                  <video src="/video/비정.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
+                  <!-- <video src="/video/비정.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
                           onmouseenter="autoPlay( '비정' )"
                           onmouseleave="closePlay( '비정' )">
-                  </video>
+                  </video> -->
+                  <div id="player-2" class="video object-fit-cover d-none"
+                          onmouseenter="autoPlay( '비정', 1 )"
+                          onmouseleave="closePlay( '비정', 1 )"></div>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">비정</h5>
@@ -171,10 +179,13 @@
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/액션03_시간에이전트.jpg" class="thumb w-100 object-fit-cover" alt="액션03_시간에이전트">
-                  <video src="/video/시간 에이전트.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
+                  <!-- <video src="/video/시간 에이전트.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
                           onmouseenter="autoPlay( '시간 에이전트' )"
                           onmouseleave="closePlay( '시간 에이전트' )">
-                  </video>
+                  </video> -->
+                  <div id="player-3" class="video object-fit-cover d-none"
+                          onmouseenter="autoPlay( '시간 에이전트', 2 )"
+                          onmouseleave="closePlay( '시간 에이전트', 2 )"></div>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">시간 에이전트</h5>
@@ -206,10 +217,13 @@
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/드라마01_동창.png" class="thumb w-100 object-fit-cover" alt="드라마01_동창">
-                  <video src="/video/동창.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
+                  <!-- <video src="/video/동창.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
                         onmouseenter="autoPlay( '동창' )"
                         onmouseleave="closePlay( '동창' )">
-                </video>
+                      </video> -->
+                  <div id="player-4" class="video object-fit-cover d-none"
+                      onmouseenter="autoPlay( '동창', 3 )"
+                      onmouseleave="closePlay( '동창', 3 )"></div>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">동창</h5>
@@ -232,10 +246,13 @@
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/드라마02_입김.jpeg" class="thumb w-100 object-fit-cover" alt="드라마02_입김">
-                  <video src="/video/입김.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
+                  <!-- <video src="/video/입김.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
                           onmouseenter="autoPlay( '입김' )"
                           onmouseleave="closePlay( '입김' )">
-                  </video>
+                  </video> -->
+                  <div id="player-5" class="video object-fit-cover d-none"
+                      onmouseenter="autoPlay( '입김', 4 )"
+                      onmouseleave="closePlay( '입김', 4 )"></div>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">입김</h5>
@@ -258,10 +275,13 @@
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/드라마03_히키코모루.jpg" class="thumb w-100 object-fit-cover" alt="드라마03_히키코모루">
-                  <video src="/video/히키코모루.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
+                  <!-- <video src="/video/히키코모루.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
                           onmouseenter="autoPlay( '히키코모루' )"
                           onmouseleave="closePlay( '히키코모루' )">
-                  </video>
+                  </video> -->
+                  <div id="player-6" class="video object-fit-cover d-none"
+                      onmouseenter="autoPlay( '히키코모루', 5 )"
+                      onmouseleave="closePlay( '히키코모루', 5 )"></div>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">히키코모루</h5>
@@ -293,10 +313,13 @@
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/판타지01_인형.png" class="thumb w-100 object-fit-cover" alt="판타지01_인형">
-                  <video src="/video/인형.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
+                  <!-- <video src="/video/인형.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
                           onmouseenter="autoPlay( '인형' )"
                           onmouseleave="closePlay( '인형' )">
-                  </video>
+                  </video> -->
+                  <div id="player-7" class="video object-fit-cover d-none"
+                      onmouseenter="autoPlay( '인형', 6 )"
+                      onmouseleave="closePlay( '인형', 6 )"></div>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">인형</h5>
@@ -319,10 +342,13 @@
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/판타지02_꽃.png" class="thumb w-100 object-fit-cover" alt="판타지02_꽃">
-                  <video src="/video/꽃.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
+                  <!-- <video src="/video/꽃.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
                           onmouseenter="autoPlay( '꽃' )"
                           onmouseleave="closePlay( '꽃' )">
-                  </video>
+                  </video> -->
+                  <div id="player-8" class="video object-fit-cover d-none"
+                      onmouseenter="autoPlay( '꽃', 7 )"
+                      onmouseleave="closePlay( '꽃', 7 )"></div>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">꽃</h5>
@@ -345,10 +371,13 @@
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/판타지03_세상이.png" class="thumb w-100 object-fit-cover" alt="판타지03_세상이">
-                  <video src="/video/세상이 망했으면 좋겠다.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
+                  <!-- <video src="/video/세상이 망했으면 좋겠다.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
                           onmouseenter="autoPlay( '세상이 망했으면 좋겠다' )"
                           onmouseleave="closePlay( '세상이 망했으면 좋겠다')">
-                  </video>
+                  </video> -->
+                  <div id="player-9" class="video object-fit-cover d-none"
+                      onmouseenter="autoPlay( '세상이 망했으면 좋겠다', 8 )"
+                      onmouseleave="closePlay( '세상이 망했으면 좋겠다', 8 )"></div>
 
                 </div>
                 <div class="card-body">
@@ -381,10 +410,13 @@
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/로코01_비온뒤차차.jpeg" class="thumb w-100 object-fit-cover" alt="로코01_비온뒤차차">
-                  <video src="/video/비 온 뒤 차차.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
+                  <!-- <video src="/video/비 온 뒤 차차.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
                           onmouseenter="autoPlay( '비 온 뒤 차차' )"
                           onmouseleave="closePlay( '비 온 뒤 차차' )">
-                  </video>
+                  </video> -->
+                  <div id="player-10" class="video object-fit-cover d-none"
+                      onmouseenter="autoPlay( '비 온 뒤 차차', 9 )"
+                      onmouseleave="closePlay( '비 온 뒤 차차', 9 )"></div>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">비 온 뒤 차차</h5>
@@ -407,10 +439,13 @@
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/로코02_거리의 연기자.png" class="thumb w-100 object-fit-cover" alt="로코02_거리의 연기자">
-                  <video src="/video/거리의 연기자.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
+                  <!-- <video src="/video/거리의 연기자.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
                           onmouseenter="autoPlay( '거리의 연기자' )"
                           onmouseleave="closePlay( '거리의 연기자' )">  
-                  </video>
+                  </video> -->
+                  <div id="player-11" class="video object-fit-cover d-none"
+                      onmouseenter="autoPlay( '거리의 연기자', 10 )"
+                      onmouseleave="closePlay( '거리의 연기자', 10 )"></div>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">거리의 연기자</h5>
@@ -433,10 +468,13 @@
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                   <img src="/img/thumb/로코03_오늘의파스타.jpg" class="thumb w-100 object-fit-cover" alt="로코03_오늘의파스타">
-                  <video src="/video/오늘의 파스타.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
+                  <!-- <video src="/video/오늘의 파스타.mp4" class="video object-fit-cover d-none" controls muted preload="auto"
                           onmouseenter="autoPlay( '오늘의 파스타' )"
                           onmouseleave="closePlay( '오늘의 파스타' )">
-                  </video>
+                  </video> -->
+                  <div id="player-12" class="video object-fit-cover d-none"
+                      onmouseenter="autoPlay( '오늘의 파스타', 11 )"
+                      onmouseleave="closePlay( '오늘의 파스타', 11 )"></div>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">오늘의 파스타</h5>
@@ -492,12 +530,14 @@
       $('.card .preview')
         .on('mouseenter', function() {
           $(this).find('img').addClass('d-none');
-          $(this).find('video').removeClass('d-none');
-          $(this).find('video').get(0).play();
+          $(this).find('.video').removeClass('d-none');
+          // $(this).find('video').removeClass('d-none');
+          // $(this).find('video').get(0).play();
         }).on('mouseleave', function() {
           $(this).find('img').removeClass('d-none');
-          $(this).find('video').addClass('d-none');
-          $(this).find('video').get(0).pause();
+          $(this).find('.video').addClass('d-none');
+          // $(this).find('video').addClass('d-none');
+          // $(this).find('video').get(0).pause();
         });
     });
 
@@ -565,17 +605,22 @@
      * 오토 플레이 재생
      * 
     */
-    function autoPlay( contentName ) {
+    function autoPlay( contentName, playerIndex ) {
+      playerList[playerIndex].playVideo();
+
       stdTime = new Date().getTime();
       endTime = null;
       currContentName = contentName;
+
+
     }
 
     /**
      * 오토 플레이 종료
      * 
     */
-    function closePlay( contentName ) {
+    function closePlay( contentName, playerIndex ) {
+      playerList[playerIndex].pauseVideo();
       if( endTime != null ) {
         return
       }
@@ -583,6 +628,8 @@
       playTime = endTime - stdTime;
 
       console.log( contentName + '을(를) ' + playTime + 'ms 동안 시청했습니다.' )
+
+
 
 
       $ajax({
@@ -598,27 +645,90 @@
       }).then(response => {
         if (response === "FAIL") {
           console.error('Failed to log autoplay');
-          // $toast({
-          //   title: '오토 플레이 기록 실패',
-          //   icon: 'error',
-          //   position: 'bottom-end',
-          //   showConfirmButton: false,
-          //   timer: 3000
-          // });
+          $toast({
+            title: '오토 플레이 기록 실패',
+            icon: 'error',
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 3000
+          });
         } else {
-          // $toast({
-          //   title: '오토 플레이 기록 성공',
-          //   icon: 'success',
-          //   position: 'bottom-end',
-          //   showConfirmButton: false,
-          //   timer: 3000
-          // });
+          $toast({
+            title: '오토 플레이 기록 성공',
+            icon: 'success',
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 3000
+          });
         }
       });
     }
   </script>
 
   <script>
+    var playerList = [];
+    // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+
+
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+    var player;
+    function onYouTubeIframeAPIReady() {
+      newPlayer('player-1' , 'T2NNaRhhFSQ', 0);
+      newPlayer('player-2' , 'UAjDIo_vX_s', 1);
+      newPlayer('player-3' , 'qyrmJ6aWX1o', 2);
+      newPlayer('player-4' , '32EZT5v_xOs', 3);
+      newPlayer('player-5' , '09Lu761VZ1g', 4);
+      newPlayer('player-6' , 'RTROgAP5jP0', 5);
+      newPlayer('player-7' , 'Ohm6WAaCjCk', 6);
+      newPlayer('player-8' , 'N-Chf0c3rkU', 7);
+      newPlayer('player-9' , 'H-dn-3tLxVE', 8);
+      newPlayer('player-10', 'Zwidok1WsbI', 9);
+      newPlayer('player-11', 'gW1bCuahX-M', 10);
+      newPlayer('player-12', 'Dn5Y9YAT3fw', 11);
+      console.log(playerList);
+      
+    }
+
+    function newPlayer(id, videoId, no) {
+      player = new YT.Player(id, {
+        videoId: videoId,
+        height: '340px',
+        width: '100%',
+        playerVars: {
+          'playsinline': 1,
+          'controls': 0,
+          'rel': 0,
+          'modestbranding': 1,
+        },
+        events: {
+          'onReady': onPlayerReady,
+          // 'onStateChange': onPlayerStateChange
+        }
+      });
+
+      playerList[no] = player;
+    }
+
+    // 4. The API will call this function when the video player is ready.
+    function onPlayerReady(event) {
+      // event.target.playVideo();
+      // playerList.push(event.target);
+      var iframe = event.target.getIframe();
+
+      iframe.style.width = "100%";  // 너비 변경
+      iframe.style.height = "340px";  // 높이 변경
+      iframe.style.position = "absolute"; 
+      iframe.style.top = "-58px"; // 위쪽 위치 조정
+      iframe.style.left = "0px"; // 왼쪽 위치 조정
+    }
+
    
   </script>
 

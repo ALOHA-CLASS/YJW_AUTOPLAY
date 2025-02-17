@@ -43,3 +43,13 @@ html[data-bs-theme="light"] .card-text {
 [type='search']::placeholder {
     color: white;
 }
+
+
+.preview {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    height: 240px;
+    width: 574px;
+    max-width: 100%;
+}
