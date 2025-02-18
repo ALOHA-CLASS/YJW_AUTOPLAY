@@ -1,4 +1,4 @@
--- Active: 1731384027892@@127.0.0.1@3306@autoplay
+-- Active: 1731904938494@@203.245.44.15@3306@ifilm
 
 
 SELECT *
@@ -329,3 +329,82 @@ SELECT ROUND(
             as `click_rate`
         FROM dual
 ;
+
+
+--
+SELECT gender
+      ,
+      ROUND( 
+            CAST(SUM(total_click) AS UNSIGNED)  
+                  / 
+            ( SELECT COUNT(*) * 12 FROM users WHERE (a.gender = '기타' AND gender IS NULL) OR gender = a.gender ) * 100   
+            , 2)
+      AS avg_click
+      FROM (
+            SELECT 
+                        IFNULL( u.gender, '기타' ) gender,
+                        CASE 
+                        WHEN user_click.total_click > 12 THEN 12 
+                        ELSE user_click.total_click 
+                        END AS total_click 
+            FROM
+            (
+                        SELECT 
+                        username, 
+                        COUNT(*) as total_click
+                        FROM click
+                        GROUP BY username
+            )  user_click LEFT JOIN users u ON u.username = user_click.username
+      ) a
+      GROUP BY gender HAVING gender IS NOT NULL;
+
+      
+
+
+--
+SELECT age
+            ,
+            ROUND(
+                CAST(SUM(total_click) AS UNSIGNED) 
+                        / 
+                ( SELECT COUNT(*) * 12 FROM users WHERE FLOOR(DATEDIFF(CURDATE(), birth) / 365.25 / 10) * 10 = a.age ) * 100   
+                , 2
+            ) AS avg_click
+
+        FROM (
+            SELECT 
+                    IFNULL(FLOOR(DATEDIFF(CURDATE(), u.birth) / 365.25 / 10) * 10, 0)  AS age,
+                    CASE 
+                        WHEN user_click.total_click > 12 THEN 12 
+                        ELSE user_click.total_click 
+                    END AS total_click 
+            FROM
+            (
+                    SELECT 
+                        username, 
+                        COUNT(*) as total_click
+                    FROM click
+                    GROUP BY username
+            )  user_click LEFT JOIN users u ON u.username = user_click.username
+        ) a
+        GROUP BY age HAVING age IS NOT NULL
+        ORDER BY age;
+
+
+--
+SELECT gender
+            ,CAST(AVG(total_play_time) AS UNSIGNED) AS avg_use_time
+        FROM (
+            SELECT 
+                    IFNULL( u.gender, '기타' ) gender,
+                    use_play_time.total_play_time
+            FROM
+            (
+                    SELECT 
+                        username, 
+                        SUM(use_time) as total_play_time
+                    FROM use_time
+                    GROUP BY username
+            )  use_play_time LEFT JOIN users u ON u.username = use_play_time.username
+        ) a
+        GROUP BY gender HAVING gender IS NOT NULL;

@@ -37,7 +37,7 @@
             ,CAST(AVG(total_play_time) AS UNSIGNED) AS avg_use_time
         FROM (
             SELECT 
-                    u.gender,
+                    IFNULL( u.gender, '기타' ) gender,
                     use_play_time.total_play_time
             FROM
             (
@@ -48,7 +48,7 @@
                     GROUP BY username
             )  use_play_time LEFT JOIN users u ON u.username = use_play_time.username
         ) a
-        GROUP BY gender HAVING gender IS NOT NULL
+        GROUP BY gender HAVING ( gender IS NOT NULL AND gender != '기타' )
     </select>
 
     <!-- [평균] 연령별 오토플레이 -->

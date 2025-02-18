@@ -58,7 +58,7 @@
 
       <div class="swiper-container z-1">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="/img/slide/slide1.jpg" alt="Slide 1" class="w-100"></div>
+          <!-- <div class="swiper-slide"><img src="/img/slide/slide1.jpg" alt="Slide 1" class="w-100"></div> -->
           <div class="swiper-slide"><img src="/img/slide/slide2.jpg" alt="Slide 2" class="w-100"></div>
           <div class="swiper-slide"><img src="/img/slide/slide3.jpg" alt="Slide 3" class="w-100"></div>
           <!-- <div class="swiper-slide"><img src="/img/slide/slide4.jpg" alt="Slide 4" class="w-100"></div>
@@ -644,21 +644,21 @@
       }).then(response => {
         if (response === "FAIL") {
           console.error('Failed to log autoplay');
-          $toast({
-            title: '오토 플레이 기록 실패',
-            icon: 'error',
-            position: 'bottom-end',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          // $toast({
+          //   title: '오토 플레이 기록 실패',
+          //   icon: 'error',
+          //   position: 'bottom-end',
+          //   showConfirmButton: false,
+          //   timer: 3000
+          // });
         } else {
-          $toast({
-            title: '오토 플레이 기록 성공',
-            icon: 'success',
-            position: 'bottom-end',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          // $toast({
+          //   title: '오토 플레이 기록 성공',
+          //   icon: 'success',
+          //   position: 'bottom-end',
+          //   showConfirmButton: false,
+          //   timer: 3000
+          // });
         }
       });
     }
@@ -702,7 +702,7 @@
         width: '100%',
         playerVars: {
           'playsinline': 1,
-          'controls': 0,
+          'controls': 1,
           'rel': 0,
           'modestbranding': 1,
         },
@@ -721,11 +721,12 @@
       // playerList.push(event.target);
       var iframe = event.target.getIframe();
 
-      iframe.style.width = "100%";  // 너비 변경
-      iframe.style.height = "340px";  // 높이 변경
-      iframe.style.position = "absolute"; 
-      iframe.style.top = "-58px"; // 위쪽 위치 조정
-      iframe.style.left = "0px"; // 왼쪽 위치 조정
+      // iframe.style.width = "100%";  // 너비 변경
+      // iframe.style.height = "340px";  // 높이 변경
+      // iframe.style.position = "absolute"; 
+      // iframe.style.top = "-58px"; 
+      // iframe.style.top = "-68px"; 
+      // iframe.style.left = "0px"; 
     }
 
    

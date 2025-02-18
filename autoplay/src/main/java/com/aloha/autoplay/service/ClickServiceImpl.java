@@ -131,7 +131,7 @@ public class ClickServiceImpl extends ServiceImpl<ClickMapper, Click> implements
         List<Map<String, Object>> results = clickMapper.genderAvg();
         return results.stream().collect(Collectors.toMap(
             result -> (String) result.get("gender"),
-            result -> ((BigDecimal) result.get("avg_click")).doubleValue()
+            result -> result.get("avg_click") != null ? ((BigDecimal) result.get("avg_click")).doubleValue() : 0.0
         ));
     }
 
@@ -140,7 +140,7 @@ public class ClickServiceImpl extends ServiceImpl<ClickMapper, Click> implements
         List<Map<String, Object>> results = clickMapper.ageAvg();
         return results.stream().collect(Collectors.toMap(
             result -> result.get("age").toString(),
-            result -> ((BigDecimal) result.get("avg_click")).doubleValue()
+            result -> result.get("avg_click") != null ? ((BigDecimal) result.get("avg_click")).doubleValue() : 0.0
         ));
     }
 }

@@ -74,3 +74,17 @@
 .bd-mode-toggle .dropdown-menu .active .bi {
   display: block !important;
 }
+
+
+
+
+.sidebar {
+  min-height: calc(100vh - 48px);
+}
+
+
+@media (max-width: 1024px) {
+  .sidebar {
+    display: none;
+  }
+}

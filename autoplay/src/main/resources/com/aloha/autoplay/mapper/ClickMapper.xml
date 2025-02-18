@@ -80,12 +80,12 @@
             ROUND( 
                 CAST(SUM(total_click) AS UNSIGNED)  
                         / 
-                ( SELECT COUNT(*) * 12 FROM users WHERE gender = a.gender ) * 100   
+                ( SELECT COUNT(*) * 12 FROM users WHERE (a.gender = '기타' AND gender IS NULL) OR gender = a.gender ) * 100   
                 , 2)
             AS avg_click
         FROM (
             SELECT 
-                    u.gender,
+                    IFNULL( u.gender, '기타' ) gender,
                     CASE 
                         WHEN user_click.total_click > 12 THEN 12 
                         ELSE user_click.total_click 
@@ -117,7 +117,7 @@
 
         FROM (
             SELECT 
-                    FLOOR(DATEDIFF(CURDATE(), u.birth) / 365.25 / 10) * 10 AS age,
+                    IFNULL(FLOOR(DATEDIFF(CURDATE(), u.birth) / 365.25 / 10) * 10, 0)  AS age,
                     CASE 
                         WHEN user_click.total_click > 12 THEN 12 
                         ELSE user_click.total_click 
