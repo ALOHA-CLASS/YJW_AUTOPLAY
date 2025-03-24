@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{ui/layouts/user_layout}"
+      data-bs-theme="dark">
+      
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IFLIM</title>
+  <style>
+    html[data-bs-theme="dark"] .btn-theme {
+      color: #fff !important;
+      border-color: #fff !important;
+    }
+    html[data-bs-theme="light"] .btn-theme {
+      color: #6c757d !important;
+      border-color: #6c757d !important;
+    }
+
+    html[data-bs-theme="dark"] .btn-theme:hover {
+      color: black !important;
+    }
+    html[data-bs-theme="light"] .btn-theme:hover {
+      color: white !important;
+      background-color: black !important;
+    }
+  </style>
+</head>
+
+<body layout:fragment="content">
+
+
+  <main>
+    <style>
+      .swiper-container {
+        width: 100%;
+        /* height: 100%; */
+      }
+      .swiper-slide img {
+        width: 100%;
+        min-height: 400px;
+        height: 100%;
+        object-fit: cover;
+      }
+      .banner-content {
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 3;
+      }
+    </style>
+    <section class="pb-5 text-center position-relative overflow-hidden" style="max-height: 400px;">
+
+      <div class="swiper-container z-1">
+        <div class="swiper-wrapper">
+          <!-- <div class="swiper-slide"><img src="/img/slide/slide1.jpg" alt="Slide 1" class="w-100"></div> -->
+          <div class="swiper-slide"><img src="/img/slide/slide2.jpg" alt="Slide 2" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide3.jpg" alt="Slide 3" class="w-100"></div>
+          <!-- <div class="swiper-slide"><img src="/img/slide/slide4.jpg" alt="Slide 4" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide5.jpg" alt="Slide 5" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide6.jpg" alt="Slide 6" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide7.jpg" alt="Slide 7" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide8.jpg" alt="Slide 8" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide9.jpg" alt="Slide 9" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide10.jpg" alt="Slide 10" class="w-100"></div>
+          <div class="swiper-slide"><img src="/img/slide/slide11.jpg" alt="Slide 11" class="w-100" style="top: 0;"></div> -->
+
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next" style="color: rgba(255,255,255,0.3)"></div>
+        <div class="swiper-button-prev" style="color: rgba(255,255,255,0.3)"></div>
+      </div>
+      <script>
+        var swiper = new Swiper('.swiper-container', {
+          loop: true,
+          grabCursor: true,
+          autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+          },
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      </script>
+      <div class="row py-lg-5 z-3 banner-content">
+        <div class="col-lg-6 col-md-8 mx-auto">
+          <h1 class="fw-light text-white">Welcome to IFILM</h1>
+          <p class="lead text-white">
+            Discover the allure of indi flims all in one place
+          </p>
+          <p>
+            <a href="/join" class="btn btn-lg btn-outline-light my-2">Join</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="album py-5 bg-body-tertiary">
+      <div class="container">
+
+        <!-- 장르 - 액션 / 어드벤처 -->
+        <section class="mb-5">
+          
+          <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 g-3">
+            <!-- 카드 -->
+            <div class="col">
+              <div class="card border-0 rounded-4 overflow-hidden">
+                <div class="preview cursor-pointer">
+                  <img src="/img/thumb/액션01_담화.jpg" class="thumb w-100 object-fit-cover" alt="액션01_담화" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1104&sca=%EC%95%A1%EC%85%98', '담화'  )" >
+                  
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">담화</h5>
+                  <p class="card-text">
+                    주황빛 가로등 불빛이 내려 비추는 어두운 충무로 기계 공구 상가 골목길, 두 남자의 피 튀는 대결이 지금 시작된다.
+                  </p>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <div class="btn-group">
+                      <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1104&sca=%EC%95%A1%EC%85%98', '담화'  )" 
+                          class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                        <span class="material-icons">smart_display</span> 
+                        Watch
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <!-- 카드 -->
+            <div class="col">
+              <div class="card border-0 rounded-4 overflow-hidden">
+                <div class="preview cursor-pointer" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1669&sca=%EC%95%A1%EC%85%98', '비정'  )" >
+                  <img src="/img/thumb/액션02_비정.jpeg" class="thumb w-100 object-fit-cover" alt="액션02_비정">
+                  
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">비정</h5>
+                  <p class="card-text">
+                    부패한 형사가 폭력 조직을 이용해 경쟁자를 제거하고 출세하려 하지만, 배신과 음모 속에서 새로운 권력이 떠오른다.
+                  </p>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1669&sca=%EC%95%A1%EC%85%98', '비정'  )" 
+                        class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                        <span class="material-icons">smart_display</span> 
+                        Watch
+                      </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <!-- 카드 -->
+            <div class="col">
+              <div class="card border-0 rounded-4 overflow-hidden">
+                <div class="preview cursor-pointer" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1423&sca=SCI-FI', '시간 에이전트'  )" >
+                  <img src="/img/thumb/액션03_시간에이전트.jpg" class="thumb w-100 object-fit-cover" alt="액션03_시간에이전트">
+                  
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">시간 에이전트</h5>
+                  <p class="card-text">
+                    범죄를 예방하기 위해 미래에서 온 에이전트. 미래로 다시 돌아가려면 그냥 기다리는 방법 밖에 없다. 혼자 있는것에 익숙해진 에이전트는 어느날 다리에서 뛰어내리려는 소녀와 마주치는데...
+                  </p>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1423&sca=SCI-FI', '시간 에이전트'  )" 
+                        class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                        <span class="material-icons">smart_display</span> 
+                        Watch
+                      </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+          </div>
+
+        </section>
+
+        <!-- 장르 - 드라마 -->
+        <section class="mb-5">
+          
+          <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 g-3">
+            <!-- 카드 -->
+            <div class="col">
+              <div class="card border-0 rounded-4 overflow-hidden">
+                <div class="preview cursor-pointer" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=3152&sca=%EB%93%9C%EB%9D%BC%EB%A7%88', '동창'  )" >
+                  <img src="/img/thumb/드라마01_동창.png" class="thumb w-100 object-fit-cover" alt="드라마01_동창">
+                
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">동창</h5>
+                  <p class="card-text">
+                    30살 카센타 알바생 성훈은 18년 만에 만나는 초등학교 동창회에 나가게 된다. 첫사랑 은주가 나온다는 소식에 들뜬 성훈은 자신의 현재 처한 모습에 실망을 하고 고민을 하게 되는데...
+                  </p>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=3152&sca=%EB%93%9C%EB%9D%BC%EB%A7%88', '동창'  )" 
+                        class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                        <span class="material-icons">smart_display</span> 
+                        Watch
+                      </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <!-- 카드 -->
+            <div class="col">
+              <div class="card border-0 rounded-4 overflow-hidden">
+                <div class="preview cursor-pointer" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=3124&sca=%EB%93%9C%EB%9D%BC%EB%A7%88', '입김'  )" >
+                  <img src="/img/thumb/드라마02_입김.jpeg" class="thumb w-100 object-fit-cover" alt="드라마02_입김">
+                  
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">입김</h5>
+                  <p class="card-text">
+                    무연원의 신입사원 나래, 첫 업무로 찾아간 한결의 집에서 그의 이야기를 듣게 되고 작은 위로가 서로에게 큰 의미가 되어가는데...
+                  </p>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=3124&sca=%EB%93%9C%EB%9D%BC%EB%A7%88', '입김'  )" 
+                        class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                        <span class="material-icons">smart_display</span> 
+                        Watch
+                      </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <!-- 카드 -->
+            <div class="col">
+              <div class="card border-0 rounded-4 overflow-hidden">
+                <div class="preview cursor-pointer" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1958&sca=%EB%93%9C%EB%9D%BC%EB%A7%88&page=2', '히키코모루'  )" >
+                  <img src="/img/thumb/드라마03_히키코모루.jpg" class="thumb w-100 object-fit-cover" alt="드라마03_히키코모루">
+                  
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">히키코모루</h5>
+                  <p class="card-text">
+                    그녀의 일상은 규칙적이고 통제된 상태로 진행된다. 그녀는 무언가로 부터 도망치고 방안에 틀어 박혔다. 완벽하고 싶었던 그녀가 도망친 것은 소중했던 관계 그리고 절실 했었던 꿈이다. 하지만 집안으로 스며 들어오는 사소한 자극은 그녀가 도망친 것들을 다시 생각나게 한다.
+                  </p>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1958&sca=%EB%93%9C%EB%9D%BC%EB%A7%88&page=2', '히키코모루'  )" 
+                        class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                        <span class="material-icons">smart_display</span> 
+                        Watch
+                      </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+          </div>
+
+        </section>
+
+        <!-- 장르 - 판타지 -->
+        <section class="mb-5">
+          
+          <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 g-3">
+            <!-- 카드 -->
+            <div class="col">
+              <div class="card border-0 rounded-4 overflow-hidden">
+                <div class="preview cursor-pointer" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=213&sca=%ED%8C%90%ED%83%80%EC%A7%80', '인형'  )" >
+                  <img src="/img/thumb/판타지01_인형.png" class="thumb w-100 object-fit-cover" alt="판타지01_인형">
+                  
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">인형</h5>
+                  <p class="card-text">
+                    자신을 제외한 모든 사람들의 얼굴이 다 똑같이 생긴 세상 속에서 홀로 소외감을 느끼는 소녀, 자신의 절친한 친구마저 똑같은 얼굴로 변해버리자 극단적인 선택을 한다.
+                  </p>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=213&sca=%ED%8C%90%ED%83%80%EC%A7%80', '인형'  )" 
+                        class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                        <span class="material-icons">smart_display</span> 
+                        Watch
+                      </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <!-- 카드 -->
+            <div class="col">
+              <div class="card border-0 rounded-4 overflow-hidden">
+                <div class="preview cursor-pointer" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=372&sca=%ED%8C%90%ED%83%80%EC%A7%80', '꽃'  )" >
+                  <img src="/img/thumb/판타지02_꽃.png" class="thumb w-100 object-fit-cover" alt="판타지02_꽃">
+                  
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">꽃</h5>
+                  <p class="card-text">
+                    톱스타를 꿈꾸고 있는 한 여자, 텔레비전 속에는 톱스타들이 환호를 받으며 레드카펫을 밟고 있지만 그녀는 자취방에서 컵라면을 먹으며 오디션 결과만 기다리고 있다. 무기력하게 쓰러진 그녀 앞에 갑자기 하늘에서 사과가 떨어진다. 그녀는 사과를 잡기 위해 홀린 듯이 레드카펫 위를 기어가기 시작한다.
+                  </p>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=372&sca=%ED%8C%90%ED%83%80%EC%A7%80', '꽃'  )" 
+                        class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                        <span class="material-icons">smart_display</span> 
+                        Watch
+                      </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <!-- 카드 -->
+            <div class="col">
+              <div class="card border-0 rounded-4 overflow-hidden">
+                <div class="preview cursor-pointer">
+                  <img src="/img/thumb/판타지03_세상이.png" class="thumb w-100 object-fit-cover" alt="판타지03_세상이" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=503&sca=%ED%8C%90%ED%83%80%EC%A7%80', '세상이 망했으면 좋겠다'  )" >
+                  
+
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">세상이 망했으면 좋겠다</h5>
+                  <p class="card-text">
+                    ‘그냥 다 망해버렸으면 좋겠다.’ 라는 말을 입에 달고 사는 균. 그는 사회 부 적응 자, 즉 흔히 말하는 히키모코리 이다. 취업은커녕 사회생활 조차 엄두도 내지 못한다. 밖에 나가는 것을 극도로 꺼려 집에서만 생활하는 균. 부모님이 보내준 생활비로 그럭저럭 생활한다. 그러던 어느 날 균은 바깥세상이 심상치 않게 돌아가고 있음을 느끼는데..
+                  </p>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=503&sca=%ED%8C%90%ED%83%80%EC%A7%80', '세상이 망했으면 좋겠다'  )" 
+                        class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                        <span class="material-icons">smart_display</span> 
+                        Watch
+                      </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+          </div>
+
+        </section>
+
+        <!-- 장르 - 로맨스 & 코미디 -->
+        <section class="mb-5">
+          
+          <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 g-3">
+            <!-- 카드 -->
+            <div class="col">
+              <div class="card border-0 rounded-4 overflow-hidden">
+                <div class="preview cursor-pointer" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=2700&sca=%EB%A9%9C%EB%A1%9C%EB%A1%9C%EB%A7%A8%EC%8A%A4', '비 온 뒤 차차'  )" >
+                  <img src="/img/thumb/로코01_비온뒤차차.jpeg" class="thumb w-100 object-fit-cover" alt="로코01_비온뒤차차">
+                  
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">비 온 뒤 차차</h5>
+                  <p class="card-text">
+                    철거 전문 일을 하며 성실하게 살아가는 신우와 디자인 회사의 촉망받는 인재였던 수정, 어느 날 전 직장 선배를 통해 소개팅 기회가 찾아오고 설레는 마음으로 소개팅에 나가게 되는데...
+                  </p>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=2700&sca=%EB%A9%9C%EB%A1%9C%EB%A1%9C%EB%A7%A8%EC%8A%A4', '비 온 뒤 차차'  )" 
+                        class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                        <span class="material-icons">smart_display</span> 
+                        Watch
+                      </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <!-- 카드 -->
+            <div class="col">
+              <div class="card border-0 rounded-4 overflow-hidden">
+                <div class="preview cursor-pointer" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1748&sfl=wr_subject&stx=%EA%B1%B0%EB%A6%AC%EC%9D%98&sop=and', '거리의 연기자'  )" >
+                  <img src="/img/thumb/로코02_거리의 연기자.png" class="thumb w-100 object-fit-cover" alt="로코02_거리의 연기자">
+                  
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">거리의 연기자</h5>
+                  <p class="card-text">
+                    거장 감독의 작품 오디션 연락을 받은 태희. 오랜만의 오디션이라 설레는 기대감으로 오디션에 나서지만 모든 것이 예상 밖이다. 기대했던 감독과의 만남도 없고, 사무실이나 연습실이 아닌 길거리에서 연기를 해보라고 하는 조감독. 이 모든 상황이 당황스러운데...
+                  </p>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=1748&sfl=wr_subject&stx=%EA%B1%B0%EB%A6%AC%EC%9D%98&sop=and', '거리의 연기자'  )" 
+                        class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                        <span class="material-icons">smart_display</span> 
+                        Watch
+                      </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <!-- 카드 -->
+            <div class="col">
+              <div class="card border-0 rounded-4 overflow-hidden">
+                <div class="preview cursor-pointer" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=904&sca=%EB%A9%9C%EB%A1%9C%EB%A1%9C%EB%A7%A8%EC%8A%A4', '오늘의 파스타'  )" >
+                  <img src="/img/thumb/로코03_오늘의파스타.jpg" class="thumb w-100 object-fit-cover" alt="로코03_오늘의파스타">
+                  
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">오늘의 파스타</h5>
+                  <p class="card-text">
+                    우주는 석현과 연애한지 2년을 기념하기 위해 집에서 파스타를 해준다. 석현의 마음과 우주의 마음 그둘 사이의 거리와 온도 모든게 다르다.
+                  </p>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=904&sca=%EB%A9%9C%EB%A1%9C%EB%A1%9C%EB%A7%A8%EC%8A%A4', '오늘의 파스타'  )" 
+                        class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                        <span class="material-icons">smart_display</span> 
+                        Watch
+                      </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+          </div>
+
+        </section>
+
+
+      </div>
+    </div>
+
+  </main>
+
+
+  <script>
+    $(document).ready(function() {
+      // 카드 호버시 확대
+      $('.card').hover(
+        function() {
+          $(this).css({
+            'transform': 'scale(1.15)',
+            'transition': 'all 0.4s ease-in-out',
+            'z-index': '10',
+            'box-shadow': '0px 10px 25px 0px rgba(200, 200, 200, 0.5), 0px 10px 10px 0px rgba(200, 200, 200, 0.04)'
+          });
+        },
+        function() {
+          $(this).css({
+            'transform': 'scale(1)',
+            'transition': 'all 0.4s ease-in-out',
+            'z-index': '1',
+            'box-shadow': '0px 20px 25px -5px rgba(0, 0, 0, 0.5), 0px 10px 10px -5px rgba(0, 0, 0, 0.04)'
+          });
+        }
+      );
+
+
+      // .card 안의 video 호버시 재생
+      // $('.card .preview')
+      //   .on('mouseenter', function() {
+      //     $(this).find('img').addClass('d-none');
+      //     $(this).find('video').removeClass('d-none');
+      //     $(this).find('video').get(0).play();
+      //   }).on('mouseleave', function() {
+      //     $(this).find('img').removeClass('d-none');
+      //     $(this).find('video').addClass('d-none');
+      //     $(this).find('video').get(0).pause();
+      //   });
+    });
+
+  </script>
+
+  <script th:inline="javascript">
+    // 로그인 여부 확인
+    let isLogin = [[ ${session.SPRING_SECURITY_CONTEXT != null } ]]
+    var username = [[${ session.SPRING_SECURITY_CONTEXT != null ? #authentication.principal.user.username : '' }]] == '' ? '비회원' : [[${ session.SPRING_SECURITY_CONTEXT != null ? #authentication.principal.user.username : '' }]];
+  
+    if( !isLogin ) {
+      alertLogin(false)
+    }
+
+  </script>
+
+  <!-- 데이터 산출 -->
+  <script>
+
+    /**
+     * 클릭 기록
+     * 
+    */
+    function watch( url, contentName ) {
+      console.log( contentName + '을(를) 시청합니다.' )
+      console.log( url );
+      
+      $ajax({
+        url: '/api/click',
+        type: 'POST',
+        data: {
+          username: username, // Replace with actual username
+          contentName: contentName
+        }
+      }).then(response => {
+        if (response === "FAIL") {
+          console.error('Failed to log click');
+          // $toast({
+          //   title: '클릭 기록 실패',
+          //   icon: 'error',            // success, error, warning, info, question
+          //   position: 'bottom-end',     
+          //   showConfirmButton: false,
+          //   timer: 3000
+          // })  
+        } else {
+          // $toast({
+          //     title: '클릭 기록 성공',
+          //     icon: 'success',            // success, error, warning, info, question
+          //     position: 'bottom-end',     
+          //     showConfirmButton: false,
+          //     timer: 3000
+          // })  
+          window.open(url, '_blank');
+        }
+      });
+    }
+
+
+    var currContentName = '';
+    var stdTime;
+    var endTime;
+    var playTime;
+
+    /**
+     * 오토 플레이 재생
+     * 
+    */
+    function autoPlay( contentName ) {
+      stdTime = new Date().getTime();
+      endTime = null;
+      currContentName = contentName;
+    }
+
+    /**
+     * 오토 플레이 종료
+     * 
+    */
+    function closePlay( contentName ) {
+      if( endTime != null ) {
+        return
+      }
+      endTime = new Date().getTime();
+      playTime = endTime - stdTime;
+
+      console.log( contentName + '을(를) ' + playTime + 'ms 동안 시청했습니다.' )
+
+
+      $ajax({
+        url: '/api/autoplay',
+        type: 'POST',
+        data: {
+          username: username,
+          contentName: contentName,
+          stdTime: stdTime,
+          endTime: endTime,
+          playTime: playTime
+        }
+      }).then(response => {
+        if (response === "FAIL") {
+          console.error('Failed to log autoplay');
+          // $toast({
+          //   title: '오토 플레이 기록 실패',
+          //   icon: 'error',
+          //   position: 'bottom-end',
+          //   showConfirmButton: false,
+          //   timer: 3000
+          // });
+        } else {
+          // $toast({
+          //   title: '오토 플레이 기록 성공',
+          //   icon: 'success',
+          //   position: 'bottom-end',
+          //   showConfirmButton: false,
+          //   timer: 3000
+          // });
+        }
+      });
+    }
+  </script>
+
+  <script>
+   
+  </script>
+
+  
+  </body>
+</html>

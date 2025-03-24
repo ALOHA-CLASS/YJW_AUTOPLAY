@@ -36,14 +36,59 @@ public class MainController {
     }
 
 
+    /**
+     * 프리뷰
+     * @return
+     */
     @GetMapping("/auto")
     public String auto() {
         return "index";
     }
 
+    /**
+     * 저시각 프리뷰
+     * @return
+     */
+    @GetMapping("/auto-a")
+    public String autoA() {
+        return "index-a";
+    }
+
+    /**
+     * 고시각 프리뷰
+     * @return
+     */
+    @GetMapping("/auto-b")
+    public String autoB() {
+        return "index-b";
+    }
+
+    /**
+     * 썸네일
+     * @return
+     */
     @GetMapping("/auto-x")
     public String autoX() {
         return "index-x";
+    }
+
+
+    /**
+     * 저시각 프리뷰
+     * @return
+     */
+    @GetMapping("/auto-x-a")
+    public String autoXA() {
+        return "index-x-a";
+    }
+
+    /**
+     * 고시각 프리뷰
+     * @return
+     */
+    @GetMapping("/auto-x-b")
+    public String autoXB() {
+        return "index-x-b";
     }
 
 
