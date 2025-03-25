@@ -504,7 +504,9 @@
         type: 'POST',
         data: {
           username: username, // Replace with actual username
-          contentName: contentName
+          contentName: contentName,
+          type: '저시각',
+          preview: '프리뷰'
         }
       }).then(response => {
         if (response === "FAIL") {
@@ -574,7 +576,8 @@
           contentName: contentName,
           stdTime: stdTime,
           endTime: endTime,
-          playTime: playTime
+          playTime: playTime,
+          type: '저시각'
         }
       }).then(response => {
         if (response === "FAIL") {

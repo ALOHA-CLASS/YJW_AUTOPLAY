@@ -30,6 +30,7 @@ public class AutoPlay {
   private Long playTime;              // 시청시간( ms, 밀리초 )
   private Date createdAt;             // 생성일
   private Date updatedAt;             // 수정일
+  private String type;                // 타입(저시각, 고시각) 
 
   // 누적 오토플레이 시간
   private Long total;

@@ -30,6 +30,8 @@ public class UseTime {
   private Long useTime;                // 잔류시간 (ms, 밀리초)
   private Date createdAt;             // 생성일
   private Date updatedAt;             // 수정일
+  private String type;                // 타입(저시각, 고시각) 
+  private String preview;             // 미리보기(프리뷰, 썸네일)
 
   // 누적 잔류시간
   private Long total;

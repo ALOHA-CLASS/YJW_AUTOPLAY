@@ -9,5 +9,6 @@ CREATE TABLE `autoplay` (
 	`end_time`	TIMESTAMP	NOT NULL	COMMENT '종료시간',
 	`play_time`	BIGINT	NOT NULL	COMMENT '시청시간( ms, 밀리초 )',
 	`created_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP	COMMENT '등록일자',
-	`updated_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP	COMMENT '수정일자'
+	`updated_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP	COMMENT '수정일자',
+	`type` ENUM('고시각', '저시각') NOT NULL COMMENT '타입'
 ) COMMENT '오토플레이';

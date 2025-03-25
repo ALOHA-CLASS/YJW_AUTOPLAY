@@ -11,7 +11,8 @@ CREATE TABLE `autoplay` (
 	`end_time`	TIMESTAMP	NOT NULL	COMMENT '종료시간',
 	`play_time`	BIGINT	NOT NULL	COMMENT '시청시간( ms, 밀리초 )',
 	`created_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP	COMMENT '등록일자',
-	`updated_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP	COMMENT '수정일자'
+	`updated_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP	COMMENT '수정일자',
+	`type` ENUM('고시각', '저시각') NOT NULL COMMENT '타입'
 ) COMMENT '오토플레이';
 
 
@@ -23,8 +24,11 @@ CREATE TABLE `click` (
 	`username`	VARCHAR(100)	NOT NULL	COMMENT '사용자ID',
 	`content_name`	TEXT	NOT NULL	COMMENT '컨텐츠명(영화명)',
 	`created_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP	COMMENT '등록일자',
-	`updated_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP	COMMENT '수정일자'
+	`updated_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP	COMMENT '수정일자',
+	`type` ENUM('고시각', '저시각') NOT NULL COMMENT '타입',
+	`preview` ENUM('프리뷰', '썸네일') NOT NULL COMMENT '프리뷰, 썸네일'
 ) COMMENT '클릭';
+
 
 DROP TABLE IF EXISTS `use_time`;
 
@@ -37,8 +41,11 @@ CREATE TABLE `use_time` (
 	`login_time`	TIMESTAMP	NOT NULL	COMMENT '로그인시간',
 	`use_time`	BIGINT	NOT NULL	COMMENT '잔류시간( ms, 밀리초 )',
 	`created_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP	COMMENT '등록일자',
-	`updated_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP	COMMENT '수정일자'
+	`updated_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP	COMMENT '수정일자',
+	`type` ENUM('고시각', '저시각') NOT NULL COMMENT '타입',
+	`preview` ENUM('프리뷰', '썸네일') NOT NULL COMMENT '프리뷰, 썸네일'
 ) COMMENT '잔류시간';
+
 
 
 
