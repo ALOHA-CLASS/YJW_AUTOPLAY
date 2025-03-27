@@ -19,5 +19,16 @@ public interface AutoPlayService extends BaseService<AutoPlay> {
 
   // [평균] 연령별 오토플레이
   Map<String, Long> ageAvg() throws Exception;
+
+
+  /* :::::::::::::::: 타입별 :::::::::::::::: */
+  // 단위별 오토플레이
+  Map<String, Long> groupCount(String type) throws Exception;
+
+  // [평균] 남녀별 오토플레이
+  Map<String, Long> genderAvg(String type) throws Exception;
+
+  // [평균] 연령별 오토플레이
+  Map<String, Long> ageAvg(String type) throws Exception;
     
 }

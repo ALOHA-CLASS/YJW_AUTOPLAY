@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.apache.ibatis.type.Alias;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -31,6 +32,9 @@ public class AutoPlay {
   private Date createdAt;             // 생성일
   private Date updatedAt;             // 수정일
   private String type;                // 타입(저시각, 고시각) 
+  @TableField(exist = false)
+  private String preview;             // 미리보기(프리뷰, 썸네일)
+  
 
   // 누적 오토플레이 시간
   private Long total;

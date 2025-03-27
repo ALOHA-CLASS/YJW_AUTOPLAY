@@ -168,5 +168,32 @@ public class AutoPlayServiceImpl extends ServiceImpl<AutoPlayMapper, AutoPlay> i
             result -> ((BigInteger) result.get("avg_play_time")).longValue()
         ));
     }
+
+    @Override
+    public Map<String, Long> groupCount(String type) throws Exception {
+        List<Map<String, Object>> results = autoPlayMapper.groupCountByType(type);
+        return results.stream().collect(Collectors.toMap(
+            result -> (String) result.get("play_time_range"),
+            result -> (Long) result.get("count")
+        ));
+    }
+
+    @Override
+    public Map<String, Long> genderAvg(String type) throws Exception {
+        List<Map<String, Object>> results = autoPlayMapper.genderAvgByType(type);
+        return results.stream().collect(Collectors.toMap(
+            result -> (String) result.get("gender"),
+            result -> ((BigInteger) result.get("avg_play_time")).longValue()
+        ));
+    }
+
+    @Override
+    public Map<String, Long> ageAvg(String type) throws Exception {
+        List<Map<String, Object>> results = autoPlayMapper.ageAvgByType(type);
+        return results.stream().collect(Collectors.toMap(
+            result -> result.get("age").toString(),
+            result -> ((BigInteger) result.get("avg_play_time")).longValue()
+        ));
+    }
     
 }

@@ -117,7 +117,8 @@ async function $toast(obj = {}) {
 /**
  * 로그인 필요 알림창 - 회원가입, 로그인
  */
-function alertLogin(autoplay=true) {
+// function alertLogin(autoplay=true) {
+function alertLogin(redirect='/') {
 
     Swal.fire({
         title: "로그인 필요",
@@ -133,8 +134,32 @@ function alertLogin(autoplay=true) {
         if (result.isConfirmed) {
           location.href = "/join";
         } else if (result.isDenied) {
-          location.href = `/login?autoplay=${autoplay}`;
+        //   location.href = `/login?autoplay=${autoplay}`;
+          location.href = `/login?redirect=${redirect}`;
         }
     });
+
+}
+
+
+/* 화면 선택 */
+function selectView() {
+
+    Swal.fire({
+        title: "화면 선택",
+        html: `
+        <div class="d-flex flex-column gap-3 justify-content-around">
+            <button class="btn btn-primary" onclick="location.href='/auto-a'">A - 프리뷰 저시각</button>
+            <button class="btn btn-secondary" onclick="location.href='/auto-b'">B - 프리뷰 고시각</button>
+            <button class="btn btn-success" onclick="location.href='/auto-x-a'">C - 썸네일 저시각</button>
+            <button class="btn btn-danger" onclick="location.href='/auto-x-b'">D - 썸네일 고시각</button>
+        </div>
+        `,
+        // icon: "info",
+        showDenyButton: false,
+        showCancelButton: false,
+        showConfirmButton: false,
+        
+      });
 
 }

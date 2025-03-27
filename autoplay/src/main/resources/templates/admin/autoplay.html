@@ -158,7 +158,8 @@
                   seconds = pad(seconds);
                   let total = ctx.dataset.data.reduce((sum, val) => sum + val, 0);
                   let percentage = ((value / total) * 100).toFixed(1) + "%";
-                  return `${hours}:${minutes}:${seconds}\n  (${percentage})\n   (${ctx.dataIndex == 0 ? '남자' : '여자'}) `;
+                  let label = genderList[ctx.dataIndex] == undefined ? '기타' : genderList[ctx.dataIndex];
+                  return `${hours}:${minutes}:${seconds}\n  (${percentage})\n   (${label}) `;
                 }, {
                   anchor: 'center',
                   align: 'center',

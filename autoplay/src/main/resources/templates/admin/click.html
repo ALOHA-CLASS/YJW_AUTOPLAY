@@ -101,13 +101,16 @@
                 var genderClickCount = [[ ${genderClickCount} ]]
                 var genderClickCountList = Object.keys(genderClickCount).reverse();
                 var genderClickCountData = Object.values(genderClickCount).reverse();
+
               </script>
               <script>
                 Chart.register(ChartDataLabels);
+
                 chart('chart-gender-click', 'pie', '남여별 클릭수', genderClickCountList, genderClickCountData, (value, ctx) => {
                   let total = ctx.dataset.data.reduce((sum, val) => sum + val, 0);
                   let percentage = ((value / total) * 100).toFixed(1) + "%";
-                  return `${value}\n(${percentage})\n(${ctx.dataIndex == 0 ? '남자' : '여자'}) `;
+                  let label = genderClickCountList[ctx.dataIndex] == undefined ? '기타' : genderClickCountList[ctx.dataIndex];
+                  return `${value}\n(${percentage})\n(${label}) `;
                 }, {
                   anchor: 'center',
                   align: 'center',
@@ -198,7 +201,8 @@
                 chart('chart-gender-avg', 'pie', '남여별 평균 클릭률', genderClickAvgList, genderClickAvgData, (value, ctx) => {
                   let total = ctx.dataset.data.reduce((sum, val) => sum + val, 0);
                   let percentage = ((value / total) * 100).toFixed(1) + "%";
-                  return `${value}%\n(${percentage})\n (${ctx.dataIndex == 0 ? '남자' : '여자'}) `;
+                  let label = genderClickCountList[ctx.dataIndex] == undefined ? '기타' : genderClickCountList[ctx.dataIndex];
+                  return `${value}\n(${percentage})\n(${label}) `;
                 }, {
                   anchor: 'center',
                   align: 'center',

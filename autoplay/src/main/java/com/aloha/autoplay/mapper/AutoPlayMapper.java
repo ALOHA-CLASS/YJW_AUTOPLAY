@@ -21,4 +21,14 @@ public interface AutoPlayMapper extends BaseMapper<AutoPlay> {
   // [평균] 연령별 오토플레이
   public List<Map<String, Object>> ageAvg() throws Exception;
 
+  /* :::::::::::::::: 타입별 :::::::::::::::: */
+  // 단위별 오토플레이
+  public List<Map<String, Object>> groupCountByType(String type) throws Exception;
+
+  // [평균] 남녀별 오토플레이
+  public List<Map<String, Object>> genderAvgByType(String type) throws Exception;
+
+  // [평균] 연령별 오토플레이
+  public List<Map<String, Object>> ageAvgByType(String type) throws Exception;
+
 }

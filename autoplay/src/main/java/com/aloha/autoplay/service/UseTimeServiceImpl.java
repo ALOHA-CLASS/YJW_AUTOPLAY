@@ -162,4 +162,31 @@ public class UseTimeServiceImpl extends ServiceImpl<UseTimeMapper, UseTime> impl
             result -> ((BigInteger) result.get("avg_use_time")).longValue()
         ));
     }
+
+    @Override
+    public Map<String, Long> groupCount(UseTime useTime) throws Exception {
+        List<Map<String, Object>> results = useTimeMapper.groupCountByTypeAndPreview(useTime);
+        return results.stream().collect(Collectors.toMap(
+            result -> (String) result.get("use_time_range"),
+            result -> (Long) result.get("count")
+        ));
+    }
+
+    @Override
+    public Map<String, Long> genderAvg(UseTime useTime) throws Exception {
+         List<Map<String, Object>> results = useTimeMapper.genderAvgByTypeAndPreview(useTime);
+        return results.stream().collect(Collectors.toMap(
+            result -> (String) result.get("gender"),
+            result -> ((BigInteger) result.get("avg_use_time")).longValue()
+        ));
+    }
+
+    @Override
+    public Map<String, Long> ageAvg(UseTime useTime) throws Exception {
+        List<Map<String, Object>> results = useTimeMapper.ageAvgByTypeAndPreview(useTime);
+        return results.stream().collect(Collectors.toMap(
+            result -> result.get("age").toString(),
+            result -> ((BigInteger) result.get("avg_use_time")).longValue()
+        ));
+    }
 }

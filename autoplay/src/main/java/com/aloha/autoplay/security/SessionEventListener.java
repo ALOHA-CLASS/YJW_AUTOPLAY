@@ -49,11 +49,16 @@ public class SessionEventListener implements ApplicationListener<SessionDestroye
             loginTime = stdTime; // 기본적으로 세션 생성 시간을 로그인 시간으로 설정
         }
 
+        String type = se.getSession().getAttribute("type").toString();
+        String preview = se.getSession().getAttribute("preview").toString();
+
         UseTime useTimeEntity = new UseTime();
         useTimeEntity.setStdTime(stdTime);
         useTimeEntity.setEndTime(endTime);
         useTimeEntity.setUseTime(useTime);
         useTimeEntity.setLoginTime(loginTime);
+        useTimeEntity.setType(type);
+        useTimeEntity.setPreview(preview);
 
         String username = (String) se.getSession().getAttribute("username");
         if (username != null) {

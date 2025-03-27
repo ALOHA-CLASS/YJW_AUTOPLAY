@@ -72,4 +72,75 @@
         ORDER BY age
     </select>
 
+
+    <!-- ############################################################################ -->
+
+    <!-- 단위별 오토플레이 -->
+    <select id="groupCountByTypeAndPreview" resultType="map">
+        SELECT 
+            <![CDATA[
+                CASE 
+                        WHEN total_play_time < (1 * 1000 * 60) THEN 'a0~1 분'
+                        WHEN total_play_time < (3 * 1000 * 60) THEN 'b1~3 분'
+                        WHEN total_play_time < (5 * 1000 * 60) THEN 'c3~5 분'
+                        WHEN total_play_time < (10 * 1000 * 60) THEN 'd5~10 분'
+                        WHEN total_play_time < (15 * 1000 * 60) THEN 'e10~15 분'
+                        WHEN total_play_time < (20 * 1000 * 60) THEN 'f15~20 분'
+                        ELSE 'g20분~'
+                END AS use_time_range,
+                COUNT(*) AS count
+            ]]>
+        FROM
+        (
+            SELECT username, SUM(use_time) as total_play_time
+            FROM use_time
+            GROUP BY username
+            ORDER BY total_play_time DESC
+        ) use_play_time
+        GROUP BY use_time_range
+        ORDER BY use_time_range
+    </select>
+
+    <!-- [평균] 남녀별 오토플레이 -->
+    <select id="genderAvgByTypeAndPreview" resultType="map">
+        SELECT gender
+            ,CAST(AVG(total_play_time) AS UNSIGNED) AS avg_use_time
+        FROM (
+            SELECT 
+                    IFNULL( u.gender, '기타' ) gender,
+                    use_play_time.total_play_time
+            FROM
+            (
+                    SELECT 
+                        username, 
+                        SUM(use_time) as total_play_time
+                    FROM use_time
+                    GROUP BY username
+            )  use_play_time LEFT JOIN users u ON u.username = use_play_time.username
+        ) a
+        GROUP BY gender HAVING ( gender IS NOT NULL AND gender != '기타' )
+    </select>
+
+    <!-- [평균] 연령별 오토플레이 -->
+    <select id="ageAvgByTypeAndPreview" resultType="map" >
+        SELECT age
+            ,CAST(AVG(total_play_time) AS UNSIGNED) AS avg_use_time
+        FROM (
+            SELECT 
+                    FLOOR(DATEDIFF(CURDATE(), u.birth) / 365.25 / 10) * 10 AS age,
+                    use_play_time.total_play_time
+            FROM
+            (
+                    SELECT 
+                        username, 
+                        SUM(use_time) as total_play_time
+                    FROM use_time
+                    GROUP BY username
+            )  use_play_time LEFT JOIN users u ON u.username = use_play_time.username
+        ) a
+        GROUP BY age HAVING age IS NOT NULL
+        ORDER BY age
+    </select>
+
+
 </mapper>

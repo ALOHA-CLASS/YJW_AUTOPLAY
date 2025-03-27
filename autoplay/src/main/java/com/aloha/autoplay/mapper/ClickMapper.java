@@ -26,6 +26,19 @@ public interface ClickMapper extends BaseMapper<Click> {
 
   // 연령별 평균 클릭률
   public List<Map<String, Object>> ageAvg() throws Exception;
+  
+  /* :::::::::::::::: 타입&프리뷰 :::::::::::::::: */
+  // 남여별 클릭수
+  public List<Map<String, Object>> genderCountByTypeAndPreview(Click click) throws Exception;
+
+  // 연령별 클릭수
+  public List<Map<String, Object>> ageCountByTypeAndPreview(Click click) throws Exception;
+
+  // 남여별 평균 클릭률
+  public List<Map<String, Object>> genderAvgByTypeAndPreview(Click click) throws Exception;
+
+  // 연령별 평균 클릭률
+  public List<Map<String, Object>> ageAvgByTypeAndPreview(Click click) throws Exception;
 
 
 }

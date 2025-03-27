@@ -1,4 +1,4 @@
--- Active: 1731904938494@@203.245.44.15@3306@ifilm
+-- Active: 1741423366434@@127.0.0.1@3306@autoplay
 
 
 SELECT *
@@ -408,3 +408,51 @@ SELECT gender
             )  use_play_time LEFT JOIN users u ON u.username = use_play_time.username
         ) a
         GROUP BY gender HAVING gender IS NOT NULL;
+
+
+
+--
+SELECT 
+      CASE 
+            WHEN total_play_time < (1 * 1000 * 60) THEN 'a0~1 분'
+            WHEN total_play_time < (3 * 1000 * 60) THEN 'b1~3 분'
+            WHEN total_play_time < (5 * 1000 * 60) THEN 'c3~5 분'
+            WHEN total_play_time < (10 * 1000 * 60) THEN 'd5~10 분'
+            WHEN total_play_time < (15 * 1000 * 60) THEN 'e10~15 분'
+            WHEN total_play_time < (20 * 1000 * 60) THEN 'f15~20 분'
+            ELSE 'g20분~'
+      END AS play_time_range,
+      COUNT(*) AS count
+FROM
+(
+      SELECT username, SUM(play_time) as total_play_time
+      FROM autoplay
+      WHERE type = '고시각'
+      GROUP BY username
+      ORDER BY total_play_time DESC
+
+) user_play_time
+GROUP BY play_time_range
+ORDER BY play_time_range
+;
+
+
+--
+SELECT gender
+,CAST(SUM(total_click) AS UNSIGNED) AS count
+FROM (
+SELECT 
+            u.gender,
+            user_click.total_click
+FROM
+(
+            SELECT 
+            username, 
+            COUNT(*) as total_click
+            FROM click
+            WHERE type = '고시각' AND preview = '프리뷰'
+            GROUP BY username
+)  user_click LEFT JOIN users u ON u.username = user_click.username
+) a
+GROUP BY gender HAVING gender IS NOT NULL
+;

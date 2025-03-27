@@ -143,4 +143,40 @@ public class ClickServiceImpl extends ServiceImpl<ClickMapper, Click> implements
             result -> result.get("avg_click") != null ? ((BigDecimal) result.get("avg_click")).doubleValue() : 0.0
         ));
     }
+
+    @Override
+    public Map<String, Long> genderCount(Click click) throws Exception {
+        List<Map<String, Object>> results = clickMapper.genderCountByTypeAndPreview(click);
+        return results.stream().collect(Collectors.toMap(
+            result -> (String) result.get("gender"),
+            result -> ((BigInteger) result.get("count")).longValue()
+        ));
+    }
+
+    @Override
+    public Map<String, Long> ageCount(Click click) throws Exception {
+        List<Map<String, Object>> results = clickMapper.ageCountByTypeAndPreview(click);
+        return results.stream().collect(Collectors.toMap(
+            result -> result.get("age").toString(),
+            result -> ((BigInteger) result.get("count")).longValue()
+        ));
+    }
+
+    @Override
+    public Map<String, Double> genderAvg(Click click) throws Exception {
+        List<Map<String, Object>> results = clickMapper.genderAvgByTypeAndPreview(click);
+        return results.stream().collect(Collectors.toMap(
+            result -> (String) result.get("gender"),
+            result -> result.get("avg_click") != null ? ((BigDecimal) result.get("avg_click")).doubleValue() : 0.0
+        ));
+    }
+
+    @Override
+    public Map<String, Double> ageAvg(Click click) throws Exception {
+        List<Map<String, Object>> results = clickMapper.ageAvgByTypeAndPreview(click);
+        return results.stream().collect(Collectors.toMap(
+            result -> result.get("age").toString(),
+            result -> result.get("avg_click") != null ? ((BigDecimal) result.get("avg_click")).doubleValue() : 0.0
+        ));
+    }
 }

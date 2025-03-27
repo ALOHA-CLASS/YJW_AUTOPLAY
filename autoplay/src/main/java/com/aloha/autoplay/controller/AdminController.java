@@ -4,14 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.aloha.autoplay.domain.AutoPlay;
+import com.aloha.autoplay.domain.Click;
+import com.aloha.autoplay.domain.UseTime;
 import com.aloha.autoplay.service.AutoPlayService;
 import com.aloha.autoplay.service.ClickService;
 import com.aloha.autoplay.service.UseTimeService;
 import com.aloha.autoplay.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
+
 
 
 @Slf4j
@@ -58,9 +64,6 @@ public class AdminController {
         model.addAttribute("groupCount", autoPlayService.groupCount());
         // 단위별 잔류시간
         model.addAttribute("groupStayTime", useTimeService.groupCount());
-
-
-        
 
         return "admin/index";
     }
@@ -128,9 +131,90 @@ public class AdminController {
         // [평균] 연령별 잔류시간
         model.addAttribute("ageAvg", useTimeService.ageAvg());
 
+        return "admin/usetime";
+    }
+
+
+    /* ########################## 카테고리 별 ########################## */
+
+
+    @GetMapping("/category/{preview}/{type}/autoplay")
+    public String categoryAutoplay(
+        Model model,
+        @PathVariable("preview") String preview, 
+        @PathVariable("type") String type
+    ) throws Exception {
+        // 누적오토플레이 시간
+        model.addAttribute("totalAutoPlayTime", autoPlayService.total());
+        model.addAttribute("todayAutoPlayTime", autoPlayService.today());
+
+        // 단위별 오토플레이
+        model.addAttribute("groupCount", autoPlayService.groupCount(type));
+        
+        // [평균] 남녀별 오토플레이
+        model.addAttribute("genderAvg", autoPlayService.genderAvg(type));
+        // [평균] 연령별 오토플레이
+        model.addAttribute("ageAvg", autoPlayService.ageAvg(type));
+
+        return "admin/autoplay";
+    }
+
+
+    @GetMapping("/category/{preview}/{type}/click")
+    public String categoryClick(
+        Model model,
+        @PathVariable("preview") String preview, 
+        @PathVariable("type") String type
+    ) throws Exception {
+
+        Click click = Click.builder().type(type).preview(preview).build();
+
+        // 총클릭수
+        model.addAttribute("clickTotal", clickService.count());
+        model.addAttribute("todayClickCount", clickService.todayCount());
+        // 총클릭률
+        model.addAttribute("clickRate", clickService.clickRate());
+
+        // 남여별 클릭수
+        model.addAttribute("genderClickCount", clickService.genderCount(click));
+        // 연령별 클릭수
+        model.addAttribute("ageClickCount", clickService.ageCount(click));
+        // 남여별 평균 클릭률
+        model.addAttribute("genderClickAvg", clickService.genderAvg(click));
+        // 연령별 평균 클릭률
+        model.addAttribute("ageClickAvg", clickService.ageAvg(click));
+
+        return "admin/click";
+    }
+
+
+    @GetMapping("/category/{preview}/{type}/usetime")
+    public String categoryUsetime(
+        Model model,
+        @PathVariable("preview") String preview, 
+        @PathVariable("type") String type
+    ) throws Exception {
+
+        UseTime useTime = UseTime.builder().type(type).preview(preview).build();
+
+        // 누적잔류시간
+        model.addAttribute("totalStayTime", useTimeService.total());
+        model.addAttribute("todayStayTime", useTimeService.today());
+
+        // 단위별 잔류시간
+        model.addAttribute("groupStayTime", useTimeService.groupCount(useTime));
+
+        // [평균] 남녀별 잔류시간
+        model.addAttribute("genderAvg", useTimeService.genderAvg(useTime));
+        // [평균] 연령별 잔류시간
+        model.addAttribute("ageAvg", useTimeService.ageAvg(useTime));
 
         return "admin/usetime";
     }
     
+    
+
+
+
     
 }

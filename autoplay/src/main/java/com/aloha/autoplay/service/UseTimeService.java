@@ -19,6 +19,17 @@ public interface UseTimeService extends BaseService<UseTime> {
 
   // [평균] 연령별 잔류시간
   Map<String, Long> ageAvg() throws Exception;
+
+
+  /* :::::::::::::::: 타입&프리뷰 :::::::::::::::: */
+  // 단위별 잔류시간
+  Map<String, Long> groupCount(UseTime useTime) throws Exception;
+
+  // [평균] 남녀별 잔류시간
+  Map<String, Long> genderAvg(UseTime useTime) throws Exception;
+
+  // [평균] 연령별 잔류시간
+  Map<String, Long> ageAvg(UseTime useTime) throws Exception;
     
     
 }

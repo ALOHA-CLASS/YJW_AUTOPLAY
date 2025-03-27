@@ -17,6 +17,7 @@ import com.aloha.autoplay.service.UserService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -50,7 +51,9 @@ public class MainController {
      * @return
      */
     @GetMapping("/auto-a")
-    public String autoA() {
+    public String autoA(HttpSession session) {
+        session.setAttribute("type", "저시각");
+        session.setAttribute("preview", "프리뷰");
         return "index-a";
     }
 
@@ -59,7 +62,9 @@ public class MainController {
      * @return
      */
     @GetMapping("/auto-b")
-    public String autoB() {
+    public String autoB(HttpSession session) {
+        session.setAttribute("type", "고시각");
+        session.setAttribute("preview", "프리뷰");
         return "index-b";
     }
 
@@ -68,26 +73,30 @@ public class MainController {
      * @return
      */
     @GetMapping("/auto-x")
-    public String autoX() {
+    public String autoX(HttpSession session) {
         return "index-x";
     }
 
 
     /**
-     * 저시각 프리뷰
+     * 저시각 썸네일
      * @return
      */
     @GetMapping("/auto-x-a")
-    public String autoXA() {
+    public String autoXA(HttpSession session) {
+        session.setAttribute("type", "저시각");
+        session.setAttribute("preview", "썸네일");
         return "index-x-a";
     }
 
     /**
-     * 고시각 프리뷰
+     * 고시각 썸네일
      * @return
      */
     @GetMapping("/auto-x-b")
-    public String autoXB() {
+    public String autoXB(HttpSession session) {
+        session.setAttribute("type", "고시각");
+        session.setAttribute("preview", "썸네일");
         return "index-x-b";
     }
 
@@ -173,18 +182,21 @@ public class MainController {
      */
     @GetMapping("/login")
     public String login(@CookieValue(value="remember-id", required = false) Cookie cookie
-                       ,@RequestParam(value="autoplay", required = false) Boolean autoplay
+                    //    ,@RequestParam(value="autoplay", required = false) Boolean autoplay
+                       ,@RequestParam(value="redirect", required = false, defaultValue = "/") String redirect
                        ,Model model ) {
         // @CookieValue(value="쿠키이름", required = 필수여부)
         // - required=true (default)  : 쿠키를 필수로 가져와서 없으면 에러
         // - required=false           : 쿠키 필수 ❌ ➡ 쿠키가 없으면 null, 에러❌
         log.info(":::::::::: 로그인 페이지 ::::::::::");
 
-        if( autoplay != null && autoplay ) {
-            model.addAttribute("autoplay", true);
-        } else {
-            model.addAttribute("autoplay", false);
-        }
+        // if( autoplay != null && autoplay ) {
+        //     model.addAttribute("autoplay", true);
+        // } else {
+        //     model.addAttribute("autoplay", false);
+        // }
+
+        model.addAttribute("redirect", redirect);
 
         String username = "";
         boolean rememberId = false;
