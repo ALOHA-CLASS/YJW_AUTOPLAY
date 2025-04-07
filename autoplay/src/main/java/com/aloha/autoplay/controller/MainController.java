@@ -211,4 +211,16 @@ public class MainController {
         return "/login";
     }
     
+
+    /**
+     * 본편 영상 재생
+     * @return
+     */
+    @GetMapping("/play/{id}")
+    public String play(@PathVariable("id") String id) {
+        log.info(":::::::::: 본편 영상 재생 ::::::::::");
+        log.info("영상 ID : " + id);
+        return "play";
+    }
+    
 }
