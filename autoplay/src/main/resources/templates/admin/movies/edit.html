@@ -15,55 +15,56 @@
 
   <div class="container-xl">
 			    
-    <h1 class="app-page-title my-2">영화 등록</h1>
+    <h1 class="app-page-title my-2">영화 수정</h1>
 
 
     <main class="my-5">
 
-      <form id="form" method="post" action="/admin/movies/create" class="needs-validation" novalidate>
+      <form id="form" method="post" action="/admin/movies/create" class="needs-validation" novalidate th:object="${movie}">
+        <input type="hidden" th:field="*{id}"/>
         <div class="mb-3">
           <label for="title" class="form-label">제목</label>
-          <input type="text" class="form-control" id="title" name="title" required>
+          <input type="text" class="form-control" th:field="*{title}" required >
           <div class="invalid-feedback">제목을 입력해주세요.</div>
         </div>
 
         <div class="mb-3">
           <label for="content" class="form-label">내용</label>
-          <textarea class="form-control" id="content" name="content" rows="3"></textarea>
+          <textarea class="form-control" th:field="*{content}" rows="3"></textarea>
         </div>
 
         <div class="mb-3">
           <label for="type" class="form-label">타입</label>
           <select class="form-select" id="type" name="type" required>
             <option value="" disabled selected>선택하세요</option>
-            <option value="고시각">고시각</option>
-            <option value="저시각">저시각</option>
+            <option value="고시각" th:selected="${ movie.type == '고시각' }">고시각</option>
+            <option value="저시각" th:selected="${ movie.type == '저시각' }">저시각</option>
           </select>
           <div class="invalid-feedback">타입을 선택해주세요.</div>
         </div>
 
         <div class="mb-3">
           <label for="url" class="form-label">URL</label>
-          <input type="url" class="form-control" id="url" name="url">
+          <input type="url" class="form-control" th:field="*{url}">
         </div>
 
         <div class="mb-3">
           <label for="player_id" class="form-label">플레이어ID</label>
-          <input type="text" class="form-control" id="player_id" name="playerId">
+          <input type="text" class="form-control" th:field="*{playerId}">
         </div>
 
         <div class="mb-3">
-          <label for="image" class="form-label">이미지</label>
-          <input type="text" class="form-control" id="img" name="img">
+          <label for="img" class="form-label">이미지</label>
+          <input type="text" class="form-control" th:field="*{img}">
         </div>
 
         <div class="mb-3">
           <label for="seq" class="form-label">순서</label>
-          <input type="number" class="form-control" id="seq" name="seq">
+          <input type="number" class="form-control" th:field="*{seq}">
         </div>
 
         <div class="d-grid">
-          <button type="button" class="btn btn-primary" onclick="create()">등록</button>
+          <button type="button" class="btn btn-primary" onclick="update()">수정</button>
         </div>
       </form>
 
@@ -73,13 +74,13 @@
 
   <script>
 
-    async function create() {
+    async function update() {
 
       let $form = $('#form')
       let formData = new FormData($form[0])
       
       let response = await $ajax({
-        type: 'POST',
+        type: 'PUT',
         url: '/api/movies',
         data: formData,
         contentType: false,
@@ -88,7 +89,7 @@
 
       if( response == 'SUCCESS' ) {
         $toast({
-            title: '등록 완료',
+            title: '수정 완료',
             icon: 'success',
             position: 'top-end',
             showConfirmButton: false,

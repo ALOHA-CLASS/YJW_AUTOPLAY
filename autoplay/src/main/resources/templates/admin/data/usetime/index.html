@@ -18,7 +18,7 @@
 
   <div class="container-xl">
 			    
-    <h1 class="app-page-title my-2">컨텐츠 관리</h1>
+    <h1 class="app-page-title my-2">잔류시간</h1>
 
 
     <main class="my-5">
@@ -30,7 +30,7 @@
               <span class="material-icons">smart_display</span> 
             </div>
             <button class="btn btn-outline-danger" id="delete-btn" onclick="deleteSelected()">삭제</button>
-            <a href="/admin/movies/create" class="btn btn-outline-primary">등록</a>
+            <!-- <a href="/admin/data/usetime/create" class="btn btn-outline-primary">등록</a> -->
             <script>
               async function deleteSelected() {
                   var ids = getIdSelections();
@@ -52,7 +52,7 @@
                       
 
                       $ajax({
-                        url: `/api/movies/${ids}`,
+                        url: `/api/usetime/${ids}`,
                         type: 'DELETE',
                       }).then(response => {
                         if (response === "FAIL") {
@@ -151,7 +151,7 @@
     function initTable() {
 
         $table.bootstrapTable('destroy').bootstrapTable({
-            url: '/api/movies',
+            url: '/api/usetime',
             method: 'get',
             queryParams: function(params) {
                 return {
@@ -172,44 +172,88 @@
             columns: [
                 {
                   field: 'state',
-                  checkbox: true
+                  checkbox: true,
+                  
                 },
                 {
                     field: 'no',
                     title: 'no',
-                    sortable: true
+                    sortable: true,
+                    align: 'center',
+                    width: '80px',
                 },
                 {
-                    field: 'title',
-                    title: '제목',
-                    sortable: true,
-                    formatter: function(value, row, index) {
-                        return `<a href="/admin/movies/${row.id}">${value}</a>`
-                    }
+                  field: 'username',
+                  title: '사용자ID',
+                  sortable: true,
+                  align: 'center',
+                  width: '120px',
+                },
+                {
+                  field: 'stdTime',
+                  title: '시작시간',
+                  sortable: true,
+                  align: 'center',
+                  formatter: function(value) {
+                  return datetime(value);
+                  },
+                  width: '150px',
+                },
+                {
+                  field: 'endTime',
+                  title: '종료시간',
+                  sortable: true,
+                  align: 'center',
+                  formatter: function(value) {
+                  return datetime(value);
+                  },
+                  width: '150px',
+                },
+                {
+                  field: 'loginTime',
+                  title: '로그인시간',
+                  sortable: true,
+                  align: 'center',
+                  formatter: function(value) {
+                  return datetime(value);
+                  },
+                  width: '150px',
+                },
+                {
+                  field: 'useTime',
+                  title: '잔류시간(ms)',
+                  sortable: true,
+                  align: 'center',
+                  width: '120px',
+                  formatter: function(value) {
+                  return msToTime(value);
+                  },
                 },
                 {
                   field: 'type',
                   title: '타입',
                   sortable: true,
+                  align: 'center',
+                  width: '50px',
                 },
                 {
                   field: 'preview',
                   title: '프리뷰',
                   sortable: true,
+                  align: 'center',
+                  width: '50px',
                 },
                 {
-                  field: 'seq',
-                  title: '순서',
+                  field: 'createdAt',
+                  title: '등록일자',
                   sortable: true,
+                  align: 'center',
+                  formatter: function(value) {
+                  return datetime(value);
+                  },
+                  width: '150px',
                 },
-                {
-                    field: 'createdAt',
-                    title: '등록일',
-                    sortable: true,
-                    formatter: function(value, row, index) {
-                        return new Date(value).toLocaleDateString()
-                    }
-                },
+               
             ]
         })
         $table.on('check.bs.table uncheck.bs.table ' +
@@ -234,6 +278,12 @@
             })
             $remove.prop('disabled', true)
         })
+
+        // 한 row 더블클릭 시 이벤트 (체크박스 말고)
+        $table.on('dbl-click-row.bs.table', function (e, row, $element) {
+          console.log('row:', row);
+          location.href = `/admin/movies/${row.id}`;
+        });
     }
 
   $(function() {
@@ -245,11 +295,19 @@
 
 <script>
   function exportExcel() {
+      const dt = datetime(new Date());
+      const formattedDatetime = dt.replaceAll('/', '').replaceAll(' ', '_').replaceAll(':', '');
+      const fileName = "잔류시간_" + formattedDatetime;
+
+      $table.bootstrapTable('hideColumn', 'state'); // Hide the 'state' column before export
+
       $table.tableExport({
-          fileName: "report",     
+          fileName: fileName,     
           type: 'xlsx',
           escape: false
       });    
+
+      $table.bootstrapTable('showColumn', 'state'); // Show the 'state' column again after export
   }
 </script>
   

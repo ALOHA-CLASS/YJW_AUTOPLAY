@@ -83,7 +83,14 @@ public class UseTimeServiceImpl extends ServiceImpl<UseTimeMapper, UseTime> impl
     @Transactional
     public boolean deleteById(String id) {
         QueryWrapper<UseTime> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("id", id);
+        if( id.contains(",")) {
+            String[] ids = id.split(",");
+            for (String i : ids) {
+                queryWrapper.or().eq("id", i);
+            }
+        } else {
+            queryWrapper.eq("id", id);
+        }
         return this.remove(queryWrapper);
     }
 

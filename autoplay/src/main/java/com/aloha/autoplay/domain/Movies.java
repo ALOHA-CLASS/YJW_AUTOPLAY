@@ -26,9 +26,10 @@ public class Movies {
     private String title;               // 제목
     private String content;             // 컨텐츠명(영화명)
     private String type;                // 타입 (고시각, 저시각)
-    private String preview;             // 프리뷰, 썸네일
+    // private String preview;          // 프리뷰, 썸네일
     private String url;                 // URL
     private String playerId;            // 플레이어ID
+    private String img;                 // 이미지
     private Integer seq;                // 순서
     private Date createdAt;             // 생성일
     private Date updatedAt;             // 수정일

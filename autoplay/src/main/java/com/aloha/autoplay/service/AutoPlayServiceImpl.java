@@ -83,7 +83,14 @@ public class AutoPlayServiceImpl extends ServiceImpl<AutoPlayMapper, AutoPlay> i
     @Transactional
     public boolean deleteById(String id) {
         QueryWrapper<AutoPlay> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("id", id);
+        if( id.contains(",")) {
+            String[] ids = id.split(",");
+            for (String i : ids) {
+                queryWrapper.or().eq("id", i);
+            }
+        } else {
+            queryWrapper.eq("id", id);
+        }
         return this.remove(queryWrapper);
     }
 

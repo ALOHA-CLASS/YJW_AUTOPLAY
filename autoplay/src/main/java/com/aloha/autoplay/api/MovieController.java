@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,7 +64,7 @@ public class MovieController {
     }
   }
 
-  @PostMapping()
+  @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> create(@RequestBody Movies movie) {
     try {
       boolean result = movieService.create(movie);
@@ -77,8 +78,37 @@ public class MovieController {
     }
   }
 
-  @PutMapping()
+
+  @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  public ResponseEntity<?> createForm(Movies movie) {
+    try {
+      boolean result = movieService.create(movie);
+      if (result) {
+        return new ResponseEntity<>("SUCCESS", HttpStatus.CREATED);
+      } else {
+        return new ResponseEntity<>("FAIL", HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    } catch (Exception e) {
+      return new ResponseEntity<>("FAIL", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @PutMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> update(@RequestBody Movies movie) {
+    try {
+      boolean result = movieService.updateById(movie);
+      if (result) {
+        return new ResponseEntity<>("SUCCESS", HttpStatus.CREATED);
+      } else {
+        return new ResponseEntity<>("FAIL", HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    } catch (Exception e) {
+      return new ResponseEntity<>("FAIL", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @PutMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  public ResponseEntity<?> updateForm(Movies movie) {
     try {
       boolean result = movieService.updateById(movie);
       if (result) {

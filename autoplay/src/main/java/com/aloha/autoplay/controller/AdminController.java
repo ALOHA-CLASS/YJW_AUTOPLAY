@@ -209,18 +209,6 @@ public class AdminController {
 
         return "admin/usetime";
     }
-    
-    
-
-    @GetMapping("/movies")
-    public String movies(
-        Model model
-    ) throws Exception {
-        log.info("/admin/movies");
-
-
-        return "admin/movies";
-    }
 
     
 }

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{ui/layouts/admin_layout}"
+      data-bs-theme="dark">
+      
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IFLIM</title>
+
+  <!-- bootstrap-table -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/bootstrap-table.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css" crossorigin="anonymous">
+</head>
+
+<body layout:fragment="content" class="bg-gradient">
+
+  <div class="container-xl">
+			    
+    <h1 class="app-page-title my-2">오토플레이 시간</h1>
+
+
+    <main class="my-5">
+
+      <div class="my-4">
+        <div class="button-group d-flex justify-content-between align-items-center gap-3" id="right-btn-box">
+          <div class="d-flex align-items-center gap-2">
+            <div class="buttons-toolbar">
+              <span class="material-icons">smart_display</span> 
+            </div>
+            <button class="btn btn-outline-danger" id="delete-btn" onclick="deleteSelected()">삭제</button>
+            <!-- <a href="/admin/data/autoplay/create" class="btn btn-outline-primary">등록</a> -->
+            <script>
+              async function deleteSelected() {
+                  var ids = getIdSelections();
+                  if (ids.length === 0) {
+                      $alert({
+                        'title': '삭제할 항목을 선택하세요',
+                        'text': '삭제할 항목을 선택하세요',
+                        'icon': 'warning',
+                      })
+                      return;
+                  }
+                  const reuslt = await $confirm('정말 삭제하시겠습니까?', '삭제 확인', 'error', '삭제', '취소' )
+
+                      
+                  if (reuslt) {
+                      $alert('삭제되었습니다', '삭제 완료', 'success')
+                      // Perform delete operation (e.g., send a request to the server)
+                      console.log('Deleting items with IDs:', ids);
+                      
+
+                      $ajax({
+                        url: `/api/autoplay/${ids}`,
+                        type: 'DELETE',
+                      }).then(response => {
+                        if (response === "FAIL") {
+                          console.error('Failed to log click');
+                          $toast({
+                            title: '삭제 실패',
+                            icon: 'error',            // success, error, warning, info, question
+                            position: 'bottom-end',     
+                            showConfirmButton: false,
+                            timer: 3000
+                          })  
+                        } else {
+                          $toast({
+                              title: '삭제 성공',
+                              icon: 'success',            // success, error, warning, info, question
+                              position: 'bottom-end',     
+                              showConfirmButton: false,
+                              timer: 3000
+                          })  
+                          window.open(url, '_blank');
+                        }
+                      });
+
+                      $table.bootstrapTable('remove', {
+                          field: 'id',
+                          values: ids
+                      });
+                  } else {
+                      // User canceled the delete operation
+                      console.log('Delete operation canceled');
+                  }
+              }
+            </script>
+          </div>
+          <div>
+            <button class="btn btn-primary" onclick="initTable()">조회</button>
+            <button class="btn btn-success" onclick="exportExcel()">
+                <img src="/img/excel_icon.png" alt="excel_icon" width="20" height="20"/>
+                엑셀 다운로드
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <table id="table"
+          class="nowrap"
+          data-buttons-toolbar=".buttons-toolbar"
+          data-search="false"
+          data-show-columns="true"
+          data-sortable="true"
+          data-pagination="true"
+          data-page-list="[10, 25, 50, 100, ALL]"
+          data-show-export="false"
+          data-export-types="['xlsx']"
+          data-export-options='{"fileName": "report"}'
+          >
+      </table>
+
+    </main>
+
+  
+    
+  
+  </div>
+
+
+
+  <!-- boots-table -->
+  <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.29.0/tableExport.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/bootstrap-table.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/bootstrap-table-locale-all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
+  <!-- XLSX Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+
+  <script>
+    var $table = $('#table')
+    var $remove = $('#remove')
+    var selections = []
+
+    function getIdSelections() {
+        return $.map($table.bootstrapTable('getSelections'), function (row) {
+          return row.id
+        })
+    }
+
+    function responseHandler(res) {
+        console.log(res.list);
+        
+        return res.list
+    }
+
+
+    // 테이블 초기화
+    function initTable() {
+
+        $table.bootstrapTable('destroy').bootstrapTable({
+            url: '/api/autoplay',
+            method: 'get',
+            queryParams: function(params) {
+                return {
+                    page: 1,
+                    size: 9999,
+                }
+            },
+            responseHandler: responseHandler,
+            exportTypes: ['xlsx'],  
+            // height: 445,
+            showColumnsToggleAll: true,
+            showColumnsSearch: true,
+            showColumns: true,
+            exportOptions: {
+                fileExtension: 'xlsx'
+            },
+            locale: 'ko-KR',
+            columns: [
+                {
+                  field: 'state',
+                  checkbox: true,
+                  
+                },
+                {
+                    field: 'no',
+                    title: 'no',
+                    sortable: true,
+                    align: 'center',
+                    width: '80px',
+                },
+                {
+                  field: 'username',
+                  title: '사용자ID',
+                  sortable: true,
+                  align: 'center',
+                  width: '120px',
+                },
+                {
+                  field: 'contentName',
+                  title: '컨텐츠명',
+                  sortable: true,
+                  align: 'center',
+                  width: '150px',
+                },
+                {
+                  field: 'type',
+                  title: '타입',
+                  sortable: true,
+                  align: 'center',
+                  width: '50px',
+                },
+                {
+                  field: 'stdTime',
+                  title: '시작시간',
+                  sortable: true,
+                  align: 'center',
+                  formatter: function(value) {
+                    return datetime(value);
+                  },
+                  width: '150px',
+                },
+                {
+                  field: 'endTime',
+                  title: '종료시간',
+                  sortable: true,
+                  align: 'center',
+                  formatter: function(value) {
+                    return datetime(value);
+                  },
+                  width: '150px',
+                },
+                {
+                  field: 'playTime',
+                  title: '시청시간(ms)',
+                  sortable: true,
+                  align: 'center',
+                  width: '100px',
+                  formatter: function(value) {
+                    return msToTime(value);
+                  },
+                },
+                {
+                  field: 'createdAt',
+                  title: '등록일자',
+                  sortable: true,
+                  align: 'center',
+                  formatter: function(value) {
+                    return datetime(value);
+                  },
+                  width: '150px',
+                },
+               
+            ]
+        })
+        $table.on('check.bs.table uncheck.bs.table ' +
+        'check-all.bs.table uncheck-all.bs.table',
+        function () {
+            $remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+            // save your data, here just save the current page
+            selections = getIdSelections()
+            // push or splice the selections if you want to save all data selections
+        })
+        $table.on('all.bs.table', function (e, name, args) {
+            console.log(name, args)
+        })
+
+        $remove.click(function () {
+            var ids = getIdSelections()
+
+            $table.bootstrapTable('remove', {
+                field: 'id',
+                values: ids
+            })
+            $remove.prop('disabled', true)
+        })
+
+        // 한 row 더블클릭 시 이벤트 (체크박스 말고)
+        $table.on('dbl-click-row.bs.table', function (e, row, $element) {
+          console.log('row:', row);
+          location.href = `/admin/data/autoplay/${row.id}`;
+        });
+    }
+
+  $(function() {
+    initTable()
+
+    // $('#locale').change(initTable)
+  })
+</script>
+
+<script>
+  function exportExcel() {
+      const dt = datetime(new Date());
+      const formattedDatetime = dt.replaceAll('/', '').replaceAll(' ', '_').replaceAll(':', '');
+      const fileName = "오토플레이시간_" + formattedDatetime;
+
+      $table.bootstrapTable('hideColumn', 'state'); // Hide the 'state' column before export
+
+      $table.tableExport({
+          fileName: fileName,     
+          type: 'xlsx',
+          escape: false
+      });    
+
+      $table.bootstrapTable('showColumn', 'state'); // Show the 'state' column again after export
+  }
+</script>
+  
+</body>
+</html>
+

@@ -86,7 +86,14 @@ public class ClickServiceImpl extends ServiceImpl<ClickMapper, Click> implements
     @Transactional
     public boolean deleteById(String id) {
         QueryWrapper<Click> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("id", id);
+        if( id.contains(",")) {
+            String[] ids = id.split(",");
+            for (String i : ids) {
+                queryWrapper.or().eq("id", i);
+            }
+        } else {
+            queryWrapper.eq("id", id);
+        }
         return this.remove(queryWrapper);
     }
 

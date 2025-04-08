@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.apache.ibatis.type.Alias;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -34,8 +35,10 @@ public class UseTime {
   private String preview;             // 미리보기(프리뷰, 썸네일)
 
   // 누적 잔류시간
+  @TableField(exist = false)
   private Long total;
   // today 잔류시간
+  @TableField(exist = false)
   private Long today;
   
   

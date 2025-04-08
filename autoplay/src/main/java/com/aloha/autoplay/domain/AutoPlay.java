@@ -37,8 +37,10 @@ public class AutoPlay {
   
 
   // 누적 오토플레이 시간
+  @TableField(exist = false)
   private Long total;
   // today 오토플레이 시간
+  @TableField(exist = false)
   private Long today;
   
   public AutoPlay() {
