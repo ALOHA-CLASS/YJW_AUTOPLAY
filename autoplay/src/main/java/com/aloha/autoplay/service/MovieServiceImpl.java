@@ -1,5 +1,6 @@
 package com.aloha.autoplay.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,6 +101,54 @@ public class MovieServiceImpl extends ServiceImpl<MovieMapper, Movies> implement
     public long todayCount() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'todayCount'");
+    }
+
+    @Override
+    public List<Movies> getListByType(String type) throws Exception {
+        QueryWrapper<Movies> queryWrapper = new QueryWrapper<Movies>();
+        queryWrapper.eq("type", type);
+        return this.list(queryWrapper);
+    }
+
+    @Override
+    public Movies getNextMovie(String id) throws Exception {
+        QueryWrapper<Movies> queryWrapper = new QueryWrapper<Movies>();
+        queryWrapper.eq("id", id);
+        Movies movie = this.getOne(queryWrapper);
+        if (movie == null) {
+            return null;
+        }
+        String type = movie.getType();
+        queryWrapper.clear();
+        queryWrapper.eq("type", type);
+        queryWrapper.gt("no", movie.getNo());
+        List<Movies> list = this.list(queryWrapper);
+        if (list.size() > 0) {
+            return list.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * id 로 해당 영화 조회하고,
+     * 해다 영화의 type 과 같은 영화 리스트 조회
+     */
+    @Override
+    public List<Movies> getRelatedMovie(String id) throws Exception {
+        QueryWrapper<Movies> queryWrapper = new QueryWrapper<Movies>();
+        queryWrapper.eq("id", id);
+        Movies movie = this.getOne(queryWrapper);
+        if (movie == null) {
+            return null;
+        }
+        String type = movie.getType();
+        queryWrapper.clear();
+        queryWrapper.eq("type", type);
+        queryWrapper.ne("id", id);
+        List<Movies> list = this.list(queryWrapper);
+        Collections.shuffle(list);
+        return list;
     }
     
 }

@@ -26,7 +26,8 @@
 		`created_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP	COMMENT '등록일자',
 		`updated_at`	TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP	COMMENT '수정일자',
 		`type` ENUM('고시각', '저시각') NOT NULL COMMENT '타입',
-		`preview` ENUM('프리뷰', '썸네일') NOT NULL COMMENT '프리뷰, 썸네일'
+		`preview` ENUM('프리뷰', '썸네일') NOT NULL COMMENT '프리뷰, 썸네일',
+		`session_time` TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP	COMMENT '세션시간'
 	) COMMENT '클릭';
 
 

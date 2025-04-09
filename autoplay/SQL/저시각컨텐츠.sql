@@ -4,7 +4,7 @@ TRUNCATE TABLE movies;
 INSERT INTO movies (`id`, `title`, `content`, `type`, `url`, `player_id`, `img`, `seq`) VALUES
 (UUID(), '오늘의 파스타', '우주는 석현과 연애한지 2년을 기념하기 위해 집에서 파스타를 해준다. 석현의 마음과 우주의 마음 그 둘 사이의 거리와 온도 모든게 다르다.', '저시각', 'https://youtu.be/Dn5Y9YAT3fw', 'Dn5Y9YAT3fw', '/img/thumb/low/오늘의파스타.jpg', 1),
 (UUID(), '외면받는 유기동물', '반려동물 인구 천만 시대. 한 해 버려지는 유기동물 약 12만 마리.새삶을 찾는 유기동물은 절반도 넘지 못한다.사랑이 필요한 유기동물을 어떻게 도와줄 수 있을까? 작은 관심으로 시작된 변화는 더이상 유기동물이 늘어나지 않는 세상을 만들 것이다.', '저시각', 'https://youtu.be/er7jbCCmVPE', 'er7jbCCmVPE', '/img/thumb/low/외면받는유기동물.png', 2),
-(UUID(), '불량주리', '프랑스의 아늑한 마을 카스티요네(Castillonnès) 에 있는 빵집에서 영국인 관광객을 영원히 몰아내려는 계획을 세운다. 하지만 제빵사와 한 영국 남성 사이에서 싹트는 여름 로맨스가 예상치 못한 변화를 가져오며, 뜻밖의 인물이 중심에 서게 된다.', '저시각', 'https://youtu.be/F-cUPrLQJ', 'F-cUPrLQJ', '/img/thumb/low/불량주리.png', 3),
+(UUID(), '불량주리', '프랑스의 아늑한 마을 카스티요네(Castillonnès) 에 있는 빵집에서 영국인 관광객을 영원히 몰아내려는 계획을 세운다. 하지만 제빵사와 한 영국 남성 사이에서 싹트는 여름 로맨스가 예상치 못한 변화를 가져오며, 뜻밖의 인물이 중심에 서게 된다.', '저시각', 'https://youtu.be/F-cUPrLQJ1s', 'F-cUPrLQJ1s', '/img/thumb/low/불량주리.png', 3),
 (UUID(), '은빛', '자식들을 모두 결혼시키고, 단 둘 뿐인 집. 이 노부부들은 서로의 일상을 숨긴 채 각자의 삶을 살아간다. 아내 모르게 지하철 택배 일을 하는 할아버지와 남편의 생일을 잊은 할머니의 하루.', '저시각', 'https://youtu.be/uZmdsCHR11E', 'uZmdsCHR11E', '/img/thumb/low/은빛.png', 4),
 (UUID(), '순환버스도 밤에는 차고지로 간다', '상우는 우연히 순환버스를 타게 된다. 그리고 창밖으로 자신의 모습들을 보게 된다.', '저시각', 'https://youtu.be/uGAhXyaBR2Y', 'uGAhXyaBR2Y', '/img/thumb/low/순환버스도밤에는차고지로간다.jpg', 5),
 (UUID(), '유쾌한 황당', '직장 상사에게 갖은 욕을 들어 먹고 자존감이 바닥을 친 한 사내의 소소한 일탈. 그래봤자, 외근 핑계로 하루 땡땡이를 치는 정도의 소심한 사내의 일탈이지만, 그 와중에 우연히 들어가게 된 비좁은 카페에서 그간 이 사내가 잊고 살았던 가치를 찾게 되는데..', '저시각', 'https://youtu.be/q2v4mHkNjnA', 'q2v4mHkNjnA', '/img/thumb/low/유쾌한황당.png', 6),

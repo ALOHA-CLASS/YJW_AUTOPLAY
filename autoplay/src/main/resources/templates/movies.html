@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{ui/layouts/user_layout}"
+      data-bs-theme="dark">
+      
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IFLIM</title>
+</head>
+
+<body layout:fragment="content">
+
+  <div class="container">
+
+    <section class="my-5">
+
+      <div class="row">
+        <div class="col-12 col-md-8">
+
+          <div class="video-player-container">
+            <div id="player-1" class="play object-fit-cover" style="height: 480px;"></div>
+          </div>
+        
+          <div class="video-details py-4">
+            <h2 class="video-title">
+              <th:block th:text="${movie.title}"></th:block>
+            </h2>
+            <p class="video-description mb-5">
+              <th:block th:text="${movie.content}"></th:block>
+            </p>
+            <div class="video-info d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center gap-2">
+
+                <th:block th:if="${ session.type == '저시각' and session.preview == '프리뷰'}">
+                  <a href="/auto-a" class="btn btn-light d-inline-flex align-items-center gap-2">
+                    <span class="material-icons">list</span> 목록
+                  </a>
+                </th:block>
+                <th:block th:if="${ session.type == '고시각' and session.preview == '프리뷰'}">
+                  <a href="/auto-b" class="btn btn-light d-inline-flex align-items-center gap-2">
+                    <span class="material-icons">list</span> 목록
+                  </a>
+                </th:block>
+                <th:block th:if="${ session.type == '저시각' and session.preview == '썸네일'}">
+                  <a href="/auto-x-a" class="btn btn-light d-inline-flex align-items-center gap-2">
+                    <span class="material-icons">list</span> 목록
+                  </a>
+                </th:block>
+                <th:block th:if="${ session.type == '고시각' and session.preview == '썸네일'}">
+                  <a href="/auto-x-a" class="btn btn-light d-inline-flex align-items-center gap-2">
+                    <span class="material-icons">list</span> 목록
+                  </a>
+                </th:block>
+
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <th:block th:if="${nextMovie != null}">
+                  <a th:href="|/movies/${ nextMovie.id }|" class="btn btn-light d-inline-flex align-items-center gap-2">
+                    <span class="material-icons">skip_next</span> 다음 영화
+                  </a>
+                </th:block>
+
+                <script>
+                  function nextMovie() {
+                    // Logic to load the next movie
+                    alert('다음 영화를 로드합니다.');
+                  }
+                </script>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-12 col-md-4">
+
+          <div class="related-videos">
+            <h5 class="mb-3">관련 동영상</h5>
+
+            <div class="d-flex flex-column gap-3">
+
+              <th:block th:each=" movie : ${relatedMovieList}">
+                <div class="row play-list-card justify-content-between">
+                  <div class="col-5 d-flex align-items-center">
+                    <img th:src="${movie.img}" class="thumb w-100 object-fit-cover" th:alt="${movie.title}">
+                  </div>
+                  <div class="col-7 px-2">
+                    <div class="d-flex flex-column justify-content-between align-items-between h-100">
+                      <h5 class="fs-6">
+                        <th:block th:text="${movie.title}"></th:block>
+                      </h5>
+                      <p class="text-ellipsis">
+                        <th:block th:text="${movie.content}"></th:block>
+                      </p>
+                      <div class="d-flex justify-content-start align-items-center">
+                        <a th:href="|javascript: watch( '/movies/${movie.id}', '${movie.title}'  ) ;|"
+                          class="btn btn-light d-inline-flex align-items-center gap-2 ">
+                          <span class="material-icons">smart_display</span> 
+                          Watch
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </th:block>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <script th:inline="javascript">
+    var movie = [[${movie}]];   // movie 객체를 JavaScript 변수로 변환
+    var playerId = [[${movie.playerId}]]; // playerId를 JavaScript 변수로 변환
+  </script>
+
+  <script>
+    
+    var playerList = [];
+    // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+    var player;
+    function onYouTubeIframeAPIReady() {
+      // newPlayer('player-1' , movie.playerId, );
+      newPlayer('player-1' , playerId, );
+      // newPlayer('player-1' , 'F-cUPrLQJ1s', 0);
+      console.log(playerList);
+      
+    }
+
+    function newPlayer(id, videoId, no) {
+      player = new YT.Player(id, {
+        videoId: videoId,
+        height: '100%',
+        width: '100%',
+        playerVars: {
+          'playsinline': 1,
+          'controls': 1,
+          'rel': 0,
+          'modestbranding': 1,
+        },
+        events: {
+          'onReady': onPlayerReady,
+          // 'onStateChange': onPlayerStateChange
+        }
+      });
+
+      playerList[no] = player;
+    }
+
+    // 4. The API will call this function when the video player is ready.
+    function onPlayerReady(event) {
+      // event.target.playVideo();
+      // playerList.push(event.target);
+      var iframe = event.target.getIframe();
+
+      // iframe.style.width = "100%";  // 너비 변경
+      // iframe.style.height = "340px";  // 높이 변경
+      // iframe.style.position = "absolute"; 
+      // iframe.style.top = "-58px"; 
+      // iframe.style.top = "-68px"; 
+      // iframe.style.left = "0px"; 
+    }
+
+   
+  </script>
+
+  <script th:inline="javascript">
+    // 로그인 여부 확인
+    let isLogin = [[ ${session.SPRING_SECURITY_CONTEXT != null } ]]
+    var username = [[${ session.SPRING_SECURITY_CONTEXT != null ? #authentication.principal.user.username : '' }]] == '' ? '비회원' : [[${ session.SPRING_SECURITY_CONTEXT != null ? #authentication.principal.user.username : '' }]];
+
+    // if( !isLogin ) {
+    //   alertLogin('/auto-a')
+    // }
+
+  </script>
+
+  <script>
+    /**
+     * 클릭 기록
+     * 
+    */
+    function watch( url, contentName ) {
+      console.log( contentName + '을(를) 시청합니다.' )
+      console.log( url );
+      
+      $ajax({
+        url: '/api/click',
+        type: 'POST',
+        data: {
+          username: username, // Replace with actual username
+          contentName: contentName,
+          type: '저시각',
+          preview: '프리뷰'
+        }
+      }).then(response => {
+        if (response === "FAIL") {
+          console.error('Failed to log click');
+          // $toast({
+          //   title: '클릭 기록 실패',
+          //   icon: 'error',            // success, error, warning, info, question
+          //   position: 'bottom-end',     
+          //   showConfirmButton: false,
+          //   timer: 3000
+          // })  
+        } else {
+          // $toast({
+          //     title: '클릭 기록 성공',
+          //     icon: 'success',            // success, error, warning, info, question
+          //     position: 'bottom-end',     
+          //     showConfirmButton: false,
+          //     timer: 3000
+          // })  
+          // window.open(url, '_blank'); // 새 창에서 열기
+          window.open(url, '_self'); // 현재 창에서 열기
+        }
+      });
+    }
+  </script>
+
+  
+</body>
+</html>
+

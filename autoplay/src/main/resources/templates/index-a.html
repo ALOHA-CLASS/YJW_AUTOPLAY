@@ -112,7 +112,33 @@
           
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 gx-3 gy-5">
 
-            <!-- 카드 -->
+            <th:block th:each="movie : ${list}">
+             <div class="col">
+              <div class="card border-0 rounded-4 overflow-hidden">
+                <div class="preview cursor-pointer">
+                    <img th:src="${movie.img}" class="thumb w-100 object-fit-cover" th:alt="${movie.title}">
+                    <div th:onmouseenter="|autoPlay( '${ movie.title }' , ${ movie.seq } )|"
+                         th:onmouseleave="|closePlay( '${ movie.title }', ${ movie.seq } )|">
+                      <div th:id="|player-${movie.seq}|" class="video object-fit-cover d-none"></div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title"><th:block th:text="${movie.title}"></th:block></h5>
+                    <p class="card-text">
+                      <th:block th:text="${movie.content}"></th:block>
+                    </p>
+                    <div class="d-flex justify-content-end align-items-center">
+                      <a th:href="|javascript: watch( '/movies/${movie.id}', '${movie.title}'  ) ;|" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                          <span class="material-icons">smart_display</span> 
+                          Watch
+                        </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </th:block>
+
+            <!--
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -127,7 +153,6 @@
                     우주는 석현과 연애한지 2년을 기념하기 위해 집에서 파스타를 해준다. 석현의 마음과 우주의 마음 그 둘 사이의 거리와 온도 모든게 다르다.
                   </p>
                   <div class="d-flex justify-content-end align-items-center">
-                    <!-- <a href="javascript:;" onclick="watch( 'https://www.cinehubkorea.com/bbs/board.php?bo_table=bbs01&wr_id=904&sca=%EB%A9%9C%EB%A1%9C%EB%A1%9C%EB%A7%A8%EC%8A%A4', '오늘의 파스타'  )" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme"> -->
                     <a href="javascript:;" onclick="watch( '/play/' + 'q2v4mHkNjnA' + '?type=고시각&preview=프리뷰', '오늘의 파스타'  )" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
                         <span class="material-icons">smart_display</span> 
                         Watch
@@ -137,7 +162,7 @@
               </div>
             </div>
 
-            <!-- 카드 -->
+            
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -161,7 +186,7 @@
               </div>
             </div>
 
-            <!-- 카드 -->
+            
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -185,7 +210,7 @@
               </div>
             </div>
 
-            <!-- 카드 -->
+            
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -210,7 +235,7 @@
             </div>
         
         
-            <!-- 카드 -->
+            
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
               <div class="preview cursor-pointer">
@@ -234,7 +259,7 @@
               </div>
             </div>
 
-            <!-- 카드 -->
+            
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -258,7 +283,7 @@
               </div>
             </div>
         
-            <!-- 카드 -->
+            
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -283,7 +308,7 @@
               </div>
             </div>
 
-            <!-- 카드 -->
+            
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -307,7 +332,7 @@
               </div>
             </div>
         
-            <!-- 카드 -->
+            
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -330,6 +355,7 @@
                 </div>
               </div>
             </div>
+            -->
         
           </div>
 
@@ -430,7 +456,8 @@
           //     showConfirmButton: false,
           //     timer: 3000
           // })  
-          window.open(url, '_blank');
+          // window.open(url, '_blank'); // 새 창에서 열기
+          window.open(url, '_self'); // 현재 창에서 열기
         }
       });
     }

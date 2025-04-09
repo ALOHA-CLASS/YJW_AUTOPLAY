@@ -29,6 +29,7 @@ public class Click {
   private Date updatedAt;             // 수정일
   private String type;                // 타입(저시각, 고시각) 
   private String preview;             // 미리보기(프리뷰, 썸네일)
+  private Date sessionTime;           // 세션시간(접속시간)
   
   public Click() {
       this.id = UUID.randomUUID().toString();         // UUID로 ID 생성

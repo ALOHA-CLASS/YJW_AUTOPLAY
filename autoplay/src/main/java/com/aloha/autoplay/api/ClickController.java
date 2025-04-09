@@ -12,6 +12,9 @@ import com.aloha.autoplay.domain.Click;
 import com.aloha.autoplay.domain.Pagination;
 import com.aloha.autoplay.service.ClickService;
 import com.github.pagehelper.PageInfo;
+
+import jakarta.servlet.http.HttpSession;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,8 +59,12 @@ public class ClickController {
   }
 
   @PostMapping()
-  public ResponseEntity<?> create(@RequestBody Click click) {
+  public ResponseEntity<?> create(
+    @RequestBody Click click,
+    HttpSession session
+  ) {
     try {
+      click.setSessionTime(new java.util.Date(session.getCreationTime()));    // 세션 시간 세팅
       boolean result = clickService.create(click);
       if (result) {
         return new ResponseEntity<>("SUCCESS", HttpStatus.CREATED);

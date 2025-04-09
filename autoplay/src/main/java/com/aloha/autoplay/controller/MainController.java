@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.aloha.autoplay.domain.Movies;
 import com.aloha.autoplay.domain.Users;
+import com.aloha.autoplay.service.MovieService;
 import com.aloha.autoplay.service.UserService;
 
 import jakarta.servlet.http.Cookie;
@@ -26,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MainController {
 
     @Autowired private UserService userService;
+    @Autowired private MovieService movieService;
 
     /**
      * 메인 화면
@@ -49,11 +52,16 @@ public class MainController {
     /**
      * 저시각 프리뷰
      * @return
+     * @throws Exception 
      */
     @GetMapping("/auto-a")
-    public String autoA(HttpSession session) {
+    public String autoA(
+        Model model,
+        HttpSession session
+    ) throws Exception {
         session.setAttribute("type", "저시각");
         session.setAttribute("preview", "프리뷰");
+        model.addAttribute("list", movieService.getListByType("저시각") );
         return "index-a";
     }
 
@@ -62,9 +70,13 @@ public class MainController {
      * @return
      */
     @GetMapping("/auto-b")
-    public String autoB(HttpSession session) {
+    public String autoB(
+        Model model,
+        HttpSession session
+    ) throws Exception {
         session.setAttribute("type", "고시각");
         session.setAttribute("preview", "프리뷰");
+        model.addAttribute("list", movieService.getListByType("고시각") );
         return "index-b";
     }
 
@@ -83,9 +95,13 @@ public class MainController {
      * @return
      */
     @GetMapping("/auto-x-a")
-    public String autoXA(HttpSession session) {
+    public String autoXA(
+        Model model,
+        HttpSession session
+    ) throws Exception {
         session.setAttribute("type", "저시각");
         session.setAttribute("preview", "썸네일");
+        model.addAttribute("list", movieService.getListByType("저시각") );
         return "index-x-a";
     }
 
@@ -94,9 +110,13 @@ public class MainController {
      * @return
      */
     @GetMapping("/auto-x-b")
-    public String autoXB(HttpSession session) {
+    public String autoXB(
+        Model model,
+        HttpSession session
+    ) throws Exception {
         session.setAttribute("type", "고시각");
         session.setAttribute("preview", "썸네일");
+        model.addAttribute("list", movieService.getListByType("고시각") );
         return "index-x-b";
     }
 
@@ -215,12 +235,26 @@ public class MainController {
     /**
      * 본편 영상 재생
      * @return
+     * @throws Exception 
      */
-    @GetMapping("/play/{id}")
-    public String play(@PathVariable("id") String id) {
+    @GetMapping("/movies/{id}")
+    public String play(
+        @PathVariable("id") String id,
+        Model model
+    ) throws Exception {
         log.info(":::::::::: 본편 영상 재생 ::::::::::");
         log.info("영상 ID : " + id);
-        return "play";
+        // 영화
+        Movies movie = movieService.getById(id);
+        log.info("영화 : " + movie);
+        model.addAttribute("movie", movie);
+        // 다음 영화
+        Movies nextMovie = movieService.getNextMovie(id);
+        log.info("다음 영화 : " + nextMovie);
+        model.addAttribute("nextMovie", nextMovie);
+        // 관련 영화 목록
+        model.addAttribute("relatedMovieList", movieService.getRelatedMovie(id));
+        return "movies";
     }
     
 }

@@ -111,7 +111,34 @@
         <section class="mb-5">
           
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3  gx-3 gy-5">
-            <!-- 카드 -->
+
+            <th:block th:each="movie : ${list}">
+              <div class="col">
+               <div class="card border-0 rounded-4 overflow-hidden">
+                 <div class="preview cursor-pointer">
+                     <img th:src="${movie.img}" class="thumb w-100 object-fit-cover" th:alt="${movie.title}">
+                     <div th:onmouseenter="|autoPlay( '${ movie.title }' , ${ movie.seq } )|"
+                          th:onmouseleave="|closePlay( '${ movie.title }', ${ movie.seq } )|">
+                       <div th:id="|player-${movie.seq}|" class="video object-fit-cover d-none"></div>
+                     </div>
+                   </div>
+                   <div class="card-body">
+                     <h5 class="card-title"><th:block th:text="${movie.title}"></th:block></h5>
+                     <p class="card-text">
+                       <th:block th:text="${movie.content}"></th:block>
+                     </p>
+                     <div class="d-flex justify-content-end align-items-center">
+                       <a th:href="|javascript: watch( '/movies/${movie.id}', '${movie.title}'  ) ;|" class="btn btn-outline-light d-flex align-items-center gap-2 btn-theme">
+                           <span class="material-icons">smart_display</span> 
+                           Watch
+                         </a>
+                     </div>
+                   </div>
+                </div>
+              </div>
+            </th:block>
+
+            <!--
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -137,7 +164,6 @@
               </div>
             </div>
         
-            <!-- 카드 -->
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -161,7 +187,6 @@
               </div>
             </div>
         
-            <!-- 카드 -->
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -185,7 +210,6 @@
               </div>
             </div>
 
-            <!-- 카드 -->
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -209,7 +233,6 @@
               </div>
             </div>
 
-            <!-- 카드 -->
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -233,7 +256,6 @@
               </div>
             </div>
         
-            <!-- 카드 -->
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -258,7 +280,6 @@
               </div>
             </div>
 
-            <!-- 카드 -->
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -282,7 +303,6 @@
               </div>
             </div>
         
-            <!-- 카드 -->
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -306,7 +326,6 @@
               </div>
             </div>
         
-            <!-- 카드 -->
             <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
@@ -329,6 +348,7 @@
                 </div>
               </div>
             </div>
+            -->
         
           </div>
 
@@ -426,7 +446,8 @@
           //     showConfirmButton: false,
           //     timer: 3000
           // })  
-          window.open(url, '_blank');
+          // window.open(url, '_blank');
+          window.open(url, '_self'); // 현재 창에서 열기
         }
       });
     }

@@ -180,14 +180,14 @@
                     title: 'no',
                     sortable: true,
                     align: 'center',
-                    width: '80px',
+                    width: '30px',
                 },
                 {
                   field: 'username',
                   title: '사용자ID',
                   sortable: true,
                   align: 'center',
-                  width: '120px',
+                  width: '60px',
                 },
                 {
                   field: 'contentName',
@@ -211,14 +211,43 @@
                   width: '50px',
                 },
                 {
+                  field: 'sessionTime',
+                  title: '접속시간',
+                  sortable: true,
+                  align: 'center',
+                  width: '120px',
+                  formatter: function(value) {
+                    return datetime(value);
+                  },
+                },
+                {
                   field: 'createdAt',
-                  title: '등록일자',
+                  title: '클릭시간(등록일자)',
                   sortable: true,
                   align: 'center',
                   formatter: function(value) {
-                  return datetime(value);
+                    return datetime(value);
                   },
                   width: '120px',
+                },
+                {
+                  field: 'timeDifference',
+                  title: '고민시간',
+                  sortable: true,
+                  align: 'center',
+                  width: '100px',
+                  formatter: function(value, row) {
+                    const sessionTime = new Date(row.sessionTime);
+                    const createdAt = new Date(row.createdAt);
+                    const difference = createdAt - sessionTime;
+
+                    if (!isNaN(difference)) {
+                      const minutes = Math.floor(difference / 60000);
+                      const seconds = Math.floor((difference % 60000) / 1000);
+                      return `${minutes}분 ${seconds}초`;
+                    }
+                    return '-';
+                  },
                 },
                
             ]
