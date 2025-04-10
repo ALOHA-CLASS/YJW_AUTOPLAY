@@ -9,6 +9,9 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public interface UserService extends BaseService<Users>  {
 
+    // 👩‍💼🔐 자동회원가입 & 자동 로그인
+    public boolean autoLogin(String usernamePrefix, HttpServletRequest request) throws Exception;
+
     // 🔐 로그인 
     public boolean login(Users user, HttpServletRequest request) throws Exception;
     

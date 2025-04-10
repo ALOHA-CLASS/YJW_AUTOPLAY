@@ -29,6 +29,7 @@ public class Movies {
     // private String preview;          // 프리뷰, 썸네일
     private String url;                 // URL
     private String playerId;            // 플레이어ID
+    private String fullId;              // 본편플레이어ID
     private String img;                 // 이미지
     private Integer seq;                // 순서
     private Date createdAt;             // 생성일

@@ -2,9 +2,11 @@ package com.aloha.autoplay.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -37,6 +39,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Value("${default.password}")
+    private String defaultPassword;  // 기본 비밀번호
 
     @Override
     public boolean login(Users user, HttpServletRequest request) throws Exception {
@@ -176,7 +181,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
     @Override
     public long count() {
         QueryWrapper<Users> queryWrapper = new QueryWrapper<>();
-        queryWrapper.isNotNull(true, "gender").or().isNotNull(true, "birth");
+        // queryWrapper.isNotNull(true, "gender").or().isNotNull(true, "birth");
         return userMapper.selectCount(queryWrapper);
     }
 
@@ -207,6 +212,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
             result -> (String) result.get("age").toString(),
             result -> (Long) result.get("count")
         ));
+    }
+
+    @Override
+    public boolean autoLogin(String usernamePrefix, HttpServletRequest request) throws Exception {
+        long count = this.count();
+        String username = usernamePrefix + "_" + count;
+        Users user = Users.builder()
+                .id(UUID.randomUUID().toString())
+                .username(username)
+                .password(defaultPassword) // 기본 비밀번호
+                .build();
+        // 회원 가입
+        int result = this.join(user);
+        if (result > 0) {
+            // 자동 로그인
+            user.setPassword(defaultPassword); // 기본 비밀번호로 설정
+            boolean loginResult = this.login(user, request);
+            return loginResult;
+        }
+        return false;
     }
     
 }

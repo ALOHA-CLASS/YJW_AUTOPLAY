@@ -115,7 +115,7 @@
             <th:block th:each="movie : ${list}">
               <div class="col">
                <div class="card border-0 rounded-4 overflow-hidden">
-                 <div class="preview cursor-pointer" th:onclick="watch( '/movies/[[${movie.id}]]', [[${movie.title}]] ) ">
+                 <div class="preview cursor-pointer" th:onclick="watch( '/movies/' + [[${movie.id}]], [[${movie.title}]] ) ">
                      <img th:src="${movie.img}" class="thumb w-100 object-fit-cover" th:alt="${movie.title}">
                      <div th:onmouseenter="|autoPlay( '${ movie.title }' , ${ movie.seq } )|"
                           th:onmouseleave="|closePlay( '${ movie.title }', ${ movie.seq } )|">

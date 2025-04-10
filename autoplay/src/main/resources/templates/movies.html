@@ -16,11 +16,11 @@
 
     <section class="my-5">
 
-      <div class="row">
-        <div class="col-12 col-md-8">
+      <div class="row justify-content-center">
+        <div class="col-10">
 
           <div class="video-player-container">
-            <div id="player-1" class="play object-fit-cover" style="height: 480px;"></div>
+            <div id="player-1" class="play object-fit-cover"></div>
           </div>
         
           <div class="video-details py-4">
@@ -30,7 +30,7 @@
             <p class="video-description mb-5">
               <th:block th:text="${movie.content}"></th:block>
             </p>
-            <div class="video-info d-flex justify-content-between align-items-center">
+            <div class="video-info d-flex justify-content-center align-items-center">
               <div class="d-flex align-items-center gap-2">
 
                 <th:block th:if="${ session.type == '저시각' and session.preview == '프리뷰'}">
@@ -55,7 +55,7 @@
                 </th:block>
 
               </div>
-              <div class="d-flex align-items-center gap-2">
+              <!-- <div class="d-flex align-items-center gap-2">
                 <th:block th:if="${nextMovie != null}">
                   <a th:href="|/movies/${ nextMovie.id }|" class="btn btn-light d-inline-flex align-items-center gap-2">
                     <span class="material-icons">skip_next</span> 다음 영화
@@ -68,13 +68,13 @@
                     alert('다음 영화를 로드합니다.');
                   }
                 </script>
-              </div>
+              </div> -->
             </div>
           </div>
 
         </div>
 
-        <div class="col-12 col-md-4">
+        <!-- <div class="col-12 col-md-4">
 
           <div class="related-videos">
             <h5 class="mb-3">관련 동영상</h5>
@@ -110,7 +110,7 @@
 
           </div>
 
-        </div>
+        </div> -->
       </div>
 
     </section>
@@ -118,8 +118,10 @@
   </div>
 
   <script th:inline="javascript">
-    var movie = [[${movie}]];   // movie 객체를 JavaScript 변수로 변환
-    var playerId = [[${movie.playerId}]]; // playerId를 JavaScript 변수로 변환
+    // movie 객체를 JavaScript 변수로 변환
+    var movie = [[${movie}]];   
+    // playerId를 JavaScript 변수로 변환
+    var playerId = [[${movie.fullId}]] ?? [[${movie.playerId}]]; 
   </script>
 
   <script>

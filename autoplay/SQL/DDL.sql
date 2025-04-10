@@ -88,6 +88,7 @@ CREATE TABLE movies (
 	-- `preview` ENUM('프리뷰', '썸네일') NOT NULL COMMENT '프리뷰, 썸네일',
   `url`       TEXT COMMENT 'URL',
   `player_id` VARCHAR(100) COMMENT '플레이어ID',
+	`full_id` VARCHAR(100) COMMENT '본편플레이어ID',
 	`img`       TEXT COMMENT '이미지',
   `seq`       INT COMMENT '순서',
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '등록일자',

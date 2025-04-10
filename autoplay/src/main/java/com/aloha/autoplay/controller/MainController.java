@@ -3,6 +3,7 @@ package com.aloha.autoplay.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.aloha.autoplay.domain.CustomUser;
 import com.aloha.autoplay.domain.Movies;
 import com.aloha.autoplay.domain.Users;
 import com.aloha.autoplay.service.MovieService;
@@ -35,8 +37,18 @@ public class MainController {
      * @return
      */
     @GetMapping({"", "/"})
-    public String home() {
-        return "index";
+    public String home(HttpSession session) {
+        String type = (String) session.getAttribute("type");
+        String preview = (String) session.getAttribute("preview");
+        log.info("type : " + type);
+        log.info("preview : " + preview);
+        switch (type + preview) {
+            case "저시각프리뷰":    return "redirect:/auto-a";
+            case "고시각프리뷰":    return "redirect:/auto-b";
+            case "저시각썸네일":    return "redirect:/auto-x-a";
+            case "고시각썸네일":    return "redirect:/auto-x-b";
+        }
+        return "redirect:/auto-a";
     }
 
 
@@ -57,12 +69,42 @@ public class MainController {
     @GetMapping("/auto-a")
     public String autoA(
         Model model,
-        HttpSession session
+        HttpSession session,
+        HttpServletRequest request,
+        @AuthenticationPrincipal CustomUser customUser,
+        @RequestParam(value="id", required = false) String id
     ) throws Exception {
+        // 세션 type, preivew 설정
         session.setAttribute("type", "저시각");
         session.setAttribute("preview", "프리뷰");
+        // 영화 목록
         model.addAttribute("list", movieService.getListByType("저시각") );
-        return "index-a";
+
+        // 로그인 ⭕, id ⭕
+        if( id != null && !id.isEmpty() ) {
+            log.info("id : " + id);
+            return "index-a";
+        }
+
+        // 로그인 여부 체크
+        Object securityContext = session.getAttribute("SPRING_SECURITY_CONTEXT");
+        // 로그인 ⭕, id ❌
+        if (securityContext != null) {
+            // 사용자 정보에서 id 가져오기
+            id = customUser.getUser().getId();
+            log.info("로그인된 사용자입니다. id : " + id);
+            return "redirect:/auto-a?id=" + id;
+        }
+
+        // 로그인 ❌
+        log.info("로그인되지 않은 사용자입니다.");
+        boolean autoLoginResult = userService.autoLogin("저시각프리뷰", request);
+        if (autoLoginResult) {
+            log.info("자동 로그인 성공");
+        } else {
+            log.info("자동 로그인 실패");
+        }
+        return "redirect:/auto-a";
     }
 
     /**
@@ -72,12 +114,40 @@ public class MainController {
     @GetMapping("/auto-b")
     public String autoB(
         Model model,
-        HttpSession session
+        HttpSession session,
+        HttpServletRequest request,
+        @AuthenticationPrincipal CustomUser customUser,
+        @RequestParam(value="id", required = false) String id
     ) throws Exception {
         session.setAttribute("type", "고시각");
         session.setAttribute("preview", "프리뷰");
         model.addAttribute("list", movieService.getListByType("고시각") );
-        return "index-b";
+
+        // 로그인 ⭕, id ⭕
+        if( id != null && !id.isEmpty() ) {
+            log.info("id : " + id);
+            return "index-b";
+        }
+
+        // 로그인 여부 체크
+        Object securityContext = session.getAttribute("SPRING_SECURITY_CONTEXT");
+        // 로그인 ⭕, id ❌
+        if (securityContext != null) {
+            // 사용자 정보에서 id 가져오기
+            id = customUser.getUser().getId();
+            log.info("로그인된 사용자입니다. id : " + id);
+            return "redirect:/auto-b?id=" + id;
+        }
+
+        // 로그인 ❌
+        log.info("로그인되지 않은 사용자입니다.");
+        boolean autoLoginResult = userService.autoLogin("고시각프리뷰", request);
+        if (autoLoginResult) {
+            log.info("자동 로그인 성공");
+        } else {
+            log.info("자동 로그인 실패");
+        }
+        return "redirect:/auto-b";
     }
 
     /**
@@ -97,12 +167,40 @@ public class MainController {
     @GetMapping("/auto-x-a")
     public String autoXA(
         Model model,
-        HttpSession session
+        HttpSession session,
+        HttpServletRequest request,
+        @AuthenticationPrincipal CustomUser customUser,
+        @RequestParam(value="id", required = false) String id
     ) throws Exception {
         session.setAttribute("type", "저시각");
         session.setAttribute("preview", "썸네일");
         model.addAttribute("list", movieService.getListByType("저시각") );
-        return "index-x-a";
+
+        // 로그인 ⭕, id ⭕
+        if( id != null && !id.isEmpty() ) {
+            log.info("id : " + id);
+            return "index-x-a";
+        }
+
+        // 로그인 여부 체크
+        Object securityContext = session.getAttribute("SPRING_SECURITY_CONTEXT");
+        // 로그인 ⭕, id ❌
+        if (securityContext != null) {
+            // 사용자 정보에서 id 가져오기
+            id = customUser.getUser().getId();
+            log.info("로그인된 사용자입니다. id : " + id);
+            return "redirect:/auto-x-a?id=" + id;
+        }
+
+        // 로그인 ❌
+        log.info("로그인되지 않은 사용자입니다.");
+        boolean autoLoginResult = userService.autoLogin("저시각썸네일", request);
+        if (autoLoginResult) {
+            log.info("자동 로그인 성공");
+        } else {
+            log.info("자동 로그인 실패");
+        }
+        return "redirect:/auto-x-a";
     }
 
     /**
@@ -112,12 +210,40 @@ public class MainController {
     @GetMapping("/auto-x-b")
     public String autoXB(
         Model model,
-        HttpSession session
+        HttpSession session,
+        HttpServletRequest request,
+        @AuthenticationPrincipal CustomUser customUser,
+        @RequestParam(value="id", required = false) String id
     ) throws Exception {
         session.setAttribute("type", "고시각");
         session.setAttribute("preview", "썸네일");
         model.addAttribute("list", movieService.getListByType("고시각") );
-        return "index-x-b";
+
+        // 로그인 ⭕, id ⭕
+        if( id != null && !id.isEmpty() ) {
+            log.info("id : " + id);
+            return "index-x-b";
+        }
+
+        // 로그인 여부 체크
+        Object securityContext = session.getAttribute("SPRING_SECURITY_CONTEXT");
+        // 로그인 ⭕, id ❌
+        if (securityContext != null) {
+            // 사용자 정보에서 id 가져오기
+            id = customUser.getUser().getId();
+            log.info("로그인된 사용자입니다. id : " + id);
+            return "redirect:/auto-x-b?id=" + id;
+        }
+
+        // 로그인 ❌
+        log.info("로그인되지 않은 사용자입니다.");
+        boolean autoLoginResult = userService.autoLogin("고시각썸네일", request);
+        if (autoLoginResult) {
+            log.info("자동 로그인 성공");
+        } else {
+            log.info("자동 로그인 실패");
+        }
+        return "redirect:/auto-x-b";
     }
 
 
@@ -257,4 +383,23 @@ public class MainController {
         return "movies";
     }
     
+
+    /**
+     * 세션 등록 시간 체크
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("/timer")
+    public ResponseEntity<Boolean> checkSessionTimeout(HttpSession session) {
+        log.info(":::::::::: 세션 등록 시간 체크 ::::::::::");
+        Long sessionStartTime = session.getCreationTime();
+        long currentTime = System.currentTimeMillis();
+        long elapsedTime = currentTime - sessionStartTime;
+        log.info("경과 시간(ms) : " + elapsedTime);
+        // 10분 = 600,000ms
+        boolean isTimeout = elapsedTime > 1000 * 60 * 1000;
+        log.info("세션 만료 여부 : " + isTimeout);
+        return new ResponseEntity<>(!isTimeout, HttpStatus.OK);
+    }
+
 }
