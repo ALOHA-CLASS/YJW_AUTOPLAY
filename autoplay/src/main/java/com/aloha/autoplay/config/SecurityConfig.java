@@ -21,6 +21,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import com.aloha.autoplay.security.CustomAccessDeniedHandler;
+import com.aloha.autoplay.security.CustomLogoutSuccessHandler;
 import com.aloha.autoplay.security.LoginFailureHandler;
 import com.aloha.autoplay.security.LoginSuccessHandler;
 import com.aloha.autoplay.service.UserDetailServiceImpl;
@@ -49,6 +50,9 @@ public class SecurityConfig {
 
     @Autowired
     private CustomAccessDeniedHandler customAccessDeniedHandler; 
+
+    @Autowired
+    private CustomLogoutSuccessHandler customLogoutSuccessHandler;
 
     // 스프링 시큐리티 설정 메소드
     @Bean
@@ -96,7 +100,9 @@ public class SecurityConfig {
         // 🔓 로그아웃 설정
         http.logout(logout -> logout
                             .logoutUrl("/logout")   // 로그아웃 요청 경로
-                            .logoutSuccessUrl("/login?logout") // 로그아웃 성공 시 URL
+                            // .logoutSuccessUrl("/login?logout") // 로그아웃 성공 시 URL
+                            .logoutSuccessHandler(customLogoutSuccessHandler) // 로그아웃 성공 처리자 설정
+                            .clearAuthentication(true) // 인증 정보 초기화
                             .invalidateHttpSession(true)  // 세션 초기화
                             .deleteCookies("remember-id") // 로그아웃 시, 아이디 저장 쿠키 삭제
                             // .logoutSuccessHandler(null)      // 로그아웃 성공 처리자 설정

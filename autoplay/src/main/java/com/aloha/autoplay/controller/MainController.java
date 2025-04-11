@@ -396,10 +396,13 @@ public class MainController {
         long currentTime = System.currentTimeMillis();
         long elapsedTime = currentTime - sessionStartTime;
         log.info("경과 시간(ms) : " + elapsedTime);
+        // 경과 시간 분 단위
+        long elapsedTimeInMinutes = elapsedTime / (1000 * 60);
+        log.info("경과 시간(분) : " + elapsedTimeInMinutes);
         // 10분 = 600,000ms
         boolean isTimeout = elapsedTime > 1000 * 60 * 1000;
         log.info("세션 만료 여부 : " + isTimeout);
-        return new ResponseEntity<>(!isTimeout, HttpStatus.OK);
+        return new ResponseEntity<>(isTimeout, HttpStatus.OK);
     }
 
 }
