@@ -111,8 +111,13 @@
         <section class="mb-5">
           
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 gx-3 gy-5">
-
+            <script>
+              var playerIdList = [];
+            </script>
             <th:block th:each="movie : ${list}">
+              <script th:inline="javascript">
+                playerIdList.push( [[${movie.playerId}]] );
+              </script>
               <div class="col">
                <div class="card border-0 rounded-4 overflow-hidden">
                  <div class="preview cursor-pointer">
@@ -405,9 +410,9 @@
     let isLogin = [[ ${session.SPRING_SECURITY_CONTEXT != null } ]]
     var username = [[${ session.SPRING_SECURITY_CONTEXT != null ? #authentication.principal.user.username : '' }]] == '' ? '비회원' : [[${ session.SPRING_SECURITY_CONTEXT != null ? #authentication.principal.user.username : '' }]];
   
-    if( !isLogin ) {
-      alertLogin('/auto-b')
-    }
+    // if( !isLogin ) {
+    //   alertLogin('/auto-b')
+    // }
 
   </script>
 
@@ -541,17 +546,19 @@
     //    after the API code downloads.
     var player;
     function onYouTubeIframeAPIReady() {
+
+      console.log(playerIdList[0])
       // 여기로
-      newPlayer('player-1' , '860CYYKMqms', 1);       // 전역하는날
-      newPlayer('player-2' , 'hxtIB159h-M', 2);       // 클로즈드
-      newPlayer('player-3' , '97pMQ6barhw', 3);       // 윌리 빙엄의 경우
-      newPlayer('player-4' , 'igQq_VrhTzk', 4);       // 로스트
-      newPlayer('player-5' , 'scYn-1JcLbM', 5);       // 프레데터 다크에이지
-      newPlayer('player-6' , 'fybhNSfKTbw', 6);       // 영원한 뱀파이어
-      newPlayer('player-7', 'H-dn-3tLxVE', 7);        // 세상이 망했으면 좋겠다
-      newPlayer('player-8', 'Ohm6WAaCjCk', 8);        // 인형
-      newPlayer('player-9', 'qyrmJ6aWX1o', 9);        // 시간 에이전트
-      console.log(playerList);
+      newPlayer('player-1', playerIdList[0], 1);       // 전역하는날
+      newPlayer('player-2', playerIdList[1], 2);       // 클로즈드
+      newPlayer('player-3', playerIdList[2], 3);       // 윌리 빙엄의 경우
+      newPlayer('player-4', playerIdList[3], 4);       // 로스트
+      newPlayer('player-5', playerIdList[4], 5);       // 프레데터 다크에이지
+      newPlayer('player-6', playerIdList[5], 6);       // 영원한 뱀파이어
+      newPlayer('player-7', playerIdList[6], 7);        // 세상이 망했으면 좋겠다
+      newPlayer('player-8', playerIdList[7], 8);        // 인형
+      newPlayer('player-9', playerIdList[8], 9);        // 시간 에이전트
+      console.log(playerIdList);
       
     }
 

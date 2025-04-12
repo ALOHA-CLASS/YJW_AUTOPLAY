@@ -547,9 +547,9 @@
     let isLogin = [[ ${session.SPRING_SECURITY_CONTEXT != null } ]]
     var username = [[${ session.SPRING_SECURITY_CONTEXT != null ? #authentication.principal.user.username : '' }]] == '' ? '비회원' : [[${ session.SPRING_SECURITY_CONTEXT != null ? #authentication.principal.user.username : '' }]];
   
-    if( !isLogin ) {
-      alertLogin()
-    }
+    // if( !isLogin ) {
+    //   alertLogin()
+    // }
 
   </script>
 

@@ -400,7 +400,8 @@ public class MainController {
         long elapsedTimeInMinutes = elapsedTime / (1000 * 60);
         log.info("경과 시간(분) : " + elapsedTimeInMinutes);
         // 10분 = 600,000ms
-        boolean isTimeout = elapsedTime > 1000 * 60 * 1000;
+        boolean isTimeout = elapsedTime > (10 * 60 * 1000); // 10분 초과
+        // 세션 만료 여부
         log.info("세션 만료 여부 : " + isTimeout);
         return new ResponseEntity<>(isTimeout, HttpStatus.OK);
     }

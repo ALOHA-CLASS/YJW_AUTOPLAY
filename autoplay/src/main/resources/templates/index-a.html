@@ -111,15 +111,20 @@
         <section class="mb-5">
           
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 gx-3 gy-5">
-
+            <script>
+              var playerIdList = [];
+            </script>
             <th:block th:each="movie : ${list}">
+              <script th:inline="javascript">
+                playerIdList.push( [[${movie.playerId}]] );
+              </script>
              <div class="col">
               <div class="card border-0 rounded-4 overflow-hidden">
                 <div class="preview cursor-pointer">
                     <img th:src="${movie.img}" class="thumb w-100 object-fit-cover" th:alt="${movie.title}">
                     <div th:onmouseenter="|autoPlay( '${ movie.title }' , ${ movie.seq } )|"
                          th:onmouseleave="|closePlay( '${ movie.title }', ${ movie.seq } )|">
-                      <div th:id="|player-${movie.seq}|" class="video object-fit-cover d-none"></div>
+                      <div th:id="|player-${movie.seq}|" class="video object-fit-cover d-none" th:playerId="${movie.playerId}"></div>
                     </div>
                   </div>
                   <div class="card-body">
@@ -412,9 +417,9 @@
     let isLogin = [[ ${session.SPRING_SECURITY_CONTEXT != null } ]]
     var username = [[${ session.SPRING_SECURITY_CONTEXT != null ? #authentication.principal.user.username : '' }]] == '' ? '비회원' : [[${ session.SPRING_SECURITY_CONTEXT != null ? #authentication.principal.user.username : '' }]];
   
-    if( !isLogin ) {
-      alertLogin('/auto-a')
-    }
+    // if( !isLogin ) {
+    //   alertLogin('/auto-a')
+    // }
 
   </script>
 
@@ -548,17 +553,17 @@
     //    after the API code downloads.
     var player;
     function onYouTubeIframeAPIReady() {
-      // 여기로
-      newPlayer('player-1' , 'Dn5Y9YAT3fw', 1);       // 오늘의 파스타
-      newPlayer('player-2' , 'er7jbCCmVPE', 2);       // 외면받는 유기동물
-      newPlayer('player-3' , 'F-cUPrLQJ1s', 3);       // 불량주리
-      newPlayer('player-4' , 'uZmdsCHR11E', 4);       // 은빛
-      newPlayer('player-5' , 'uGAhXyaBR2Y', 5);       // 순환버스도 밤에는 차고지로 간다
-      newPlayer('player-6' , 'q2v4mHkNjnA', 6);       // 유쾌한 황당
-      newPlayer('player-7' , 'Zwidok1WsbI', 7);       // 비온 뒤 차차 
-      newPlayer('player-8', 'RTROgAP5jP0', 8);        // 히키코모루
-      newPlayer('player-9', 'gW1bCuahX-M', 9);        // 거리의 연기자
-      console.log(playerList);
+
+      newPlayer('player-1', playerIdList[0], 1);       // 오늘의 파스타
+      newPlayer('player-2', playerIdList[1], 2);       // 외면받는 유기동물
+      newPlayer('player-3', playerIdList[2], 3);       // 불량주리
+      newPlayer('player-4', playerIdList[3], 4);       // 은빛
+      newPlayer('player-5', playerIdList[4], 5);       // 순환버스도 밤에는 차고지로 간다
+      newPlayer('player-6', playerIdList[5], 6);       // 유쾌한 황당
+      newPlayer('player-7', playerIdList[6], 7);       // 비온 뒤 차차 
+      newPlayer('player-8', playerIdList[7], 8);        // 히키코모루
+      newPlayer('player-9', playerIdList[8], 9);        // 거리의 연기자
+      console.log(playerIdList);
       
     }
 

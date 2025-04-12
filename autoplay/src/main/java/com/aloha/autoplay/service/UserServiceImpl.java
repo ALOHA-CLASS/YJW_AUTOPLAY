@@ -43,6 +43,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
     @Value("${default.password}")
     private String defaultPassword;  // 기본 비밀번호
 
+    @Value("${default.user.count}")
+    private int defaultUserCount;  // 기본 회원 수
+
     @Override
     public boolean login(Users user, HttpServletRequest request) throws Exception {
         // 💍 토큰 생성
@@ -217,7 +220,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
     @Override
     public boolean autoLogin(String usernamePrefix, HttpServletRequest request) throws Exception {
         long count = this.count();
-        String username = usernamePrefix + "_" + count;
+        String username = usernamePrefix + "_" + (count+1-defaultUserCount); // 아이디 생성
         Users user = Users.builder()
                 .id(UUID.randomUUID().toString())
                 .username(username)
