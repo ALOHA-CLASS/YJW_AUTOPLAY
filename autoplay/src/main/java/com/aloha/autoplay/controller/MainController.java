@@ -1,5 +1,8 @@
 package com.aloha.autoplay.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,11 +75,19 @@ public class MainController {
         HttpSession session,
         HttpServletRequest request,
         @AuthenticationPrincipal CustomUser customUser,
-        @RequestParam(value="id", required = false) String id
+        @RequestParam(value="id", required = false) String id,
+        @RequestParam(value="fid", required = false) String fid
     ) throws Exception {
         // 세션 type, preivew 설정
         session.setAttribute("type", "저시각");
         session.setAttribute("preview", "프리뷰");
+        // 세션 fid 설정
+        String originFid = (String) session.getAttribute("fid");
+        if( originFid == null || originFid.isEmpty() ) {
+            session.setAttribute("fid", fid);
+            log.info("fid : " + fid);
+        }
+
         // 영화 목록
         model.addAttribute("list", movieService.getListByType("저시각") );
 
@@ -117,10 +128,17 @@ public class MainController {
         HttpSession session,
         HttpServletRequest request,
         @AuthenticationPrincipal CustomUser customUser,
-        @RequestParam(value="id", required = false) String id
+        @RequestParam(value="id", required = false) String id,
+        @RequestParam(value="fid", required = false) String fid
     ) throws Exception {
         session.setAttribute("type", "고시각");
         session.setAttribute("preview", "프리뷰");
+        // 세션 fid 설정
+        String originFid = (String) session.getAttribute("fid");
+        if( originFid == null || originFid.isEmpty() ) {
+            session.setAttribute("fid", fid);
+            log.info("fid : " + fid);
+        }
         model.addAttribute("list", movieService.getListByType("고시각") );
 
         // 로그인 ⭕, id ⭕
@@ -170,10 +188,17 @@ public class MainController {
         HttpSession session,
         HttpServletRequest request,
         @AuthenticationPrincipal CustomUser customUser,
-        @RequestParam(value="id", required = false) String id
+        @RequestParam(value="id", required = false) String id,
+        @RequestParam(value="fid", required = false) String fid
     ) throws Exception {
         session.setAttribute("type", "저시각");
         session.setAttribute("preview", "썸네일");
+        // 세션 fid 설정
+        String originFid = (String) session.getAttribute("fid");
+        if( originFid == null || originFid.isEmpty() ) {
+            session.setAttribute("fid", fid);
+            log.info("fid : " + fid);
+        }
         model.addAttribute("list", movieService.getListByType("저시각") );
 
         // 로그인 ⭕, id ⭕
@@ -213,10 +238,17 @@ public class MainController {
         HttpSession session,
         HttpServletRequest request,
         @AuthenticationPrincipal CustomUser customUser,
-        @RequestParam(value="id", required = false) String id
+        @RequestParam(value="id", required = false) String id,
+        @RequestParam(value="fid", required = false) String fid
     ) throws Exception {
         session.setAttribute("type", "고시각");
         session.setAttribute("preview", "썸네일");
+        // 세션 fid 설정
+        String originFid = (String) session.getAttribute("fid");
+        if( originFid == null || originFid.isEmpty() ) {
+            session.setAttribute("fid", fid);
+            log.info("fid : " + fid);
+        }
         model.addAttribute("list", movieService.getListByType("고시각") );
 
         // 로그인 ⭕, id ⭕
@@ -390,7 +422,7 @@ public class MainController {
      */
     @ResponseBody
     @GetMapping("/timer")
-    public ResponseEntity<Boolean> checkSessionTimeout(HttpSession session) {
+    public ResponseEntity<?> checkSessionTimeout(HttpSession session) {
         log.info(":::::::::: 세션 등록 시간 체크 ::::::::::");
         Long sessionStartTime = session.getCreationTime();
         long currentTime = System.currentTimeMillis();
@@ -401,9 +433,16 @@ public class MainController {
         log.info("경과 시간(분) : " + elapsedTimeInMinutes);
         // 10분 = 600,000ms
         boolean isTimeout = elapsedTime > (10 * 60 * 1000); // 10분 초과
-        // 세션 만료 여부
         log.info("세션 만료 여부 : " + isTimeout);
-        return new ResponseEntity<>(isTimeout, HttpStatus.OK);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("isTimeout", isTimeout); // 세션 만료 여부
+        // fid
+        String fid = (String) session.getAttribute("fid");
+        log.info("fid : " + fid);
+        result.put("fid", fid); // fid
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 }

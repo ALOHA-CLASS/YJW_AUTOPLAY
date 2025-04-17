@@ -5,13 +5,17 @@ $(function() {
       type: 'GET',
       data: {}
     });
-    if (response === true) {
+
+    let isTimeout = response.isTimeout;
+    let fid = response.fid;
+    if (isTimeout === true) {
       // $alert('알림', '접속 후 10분이 지났습니다. 설문조사에 응해주세요', 'info');
-      $confirm('설문조사 알림', '접속 후 10분이 지났습니다. 설문조사에 응해주세요', 'info', '설문조사 하러가기', '')
+      $confirm('설문조사 알림', `접속 후 10분이 지났습니다. 설문조사에 응해주세요.`, 'info', '설문조사 하러가기', '')
         .then((result) => {
           if (result.isConfirmed) {
             // TODO: 설문조사 URL 변경
-            window.open('/survey', '_blank');
+            let url = `https://www.surveys.kr/2025/04/P25041502/isDone.asp?fid=${fid}`;
+            window.open(url, '_blank');
           }
         });
     }
